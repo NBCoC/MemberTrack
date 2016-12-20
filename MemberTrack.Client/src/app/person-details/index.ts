@@ -1,0 +1,1 @@
+export { PersonDetailsComponent } from './person-details.component';

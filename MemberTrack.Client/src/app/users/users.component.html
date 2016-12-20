@@ -1,0 +1,49 @@
+<member-track-prompt-delete-dialog (dismiss)="dismissPromptDeleteDialog($event)"></member-track-prompt-delete-dialog>
+<member-track-user-dialog (dismiss)="dismissDialog($event)"></member-track-user-dialog>
+<section>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group">
+                <input type="text" class="form-control" id="filterControl" name="filterControl" placeholder="Filter users..."
+                    #filterControl (keyup)="0">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-success" (click)="displayDialog()"><span class="glyphicon glyphicon-plus"></span></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of users | orderBy : 'displayName' : true | filterBy : 'displayName' : filterControl.value">
+                            <td>{{ user.displayName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.roleName }}</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="...">
+                                    <button type="button" class="btn btn-primary" (click)="displayDialog(user)"><span class="glyphicon glyphicon-edit"></span></button>
+                                    <button type="button" class="btn btn-danger" (click)="displayPromptDeleteDialog(user)"><span class="glyphicon glyphicon-remove"></span></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

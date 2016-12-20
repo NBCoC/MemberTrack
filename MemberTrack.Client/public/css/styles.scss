@@ -1,0 +1,116 @@
+@mixin fadeIn-animation($second) {
+  -webkit-animation: fadeIn $second;
+  animation: fadeIn $second;
+}
+@mixin rotate-animation($second) {
+  -webkit-animation: rotate $second infinite ease-in-out;
+  animation: rotate $second infinite ease-in-out;
+}
+@mixin fadeIn-animation-definition($name) {
+   @-webkit-keyframes #{$name}{
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+     @content;
+  }
+  @-ms-keyframes #{$name} {
+     @content;
+  }
+  @keyframes #{$name} {
+     @content;
+  }
+}
+@mixin rotate-animation-definition($name) {
+   @-webkit-keyframes #{$name}{
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+     @content;
+  }
+  @-ms-keyframes #{$name} {
+     @content;
+  }
+  @keyframes #{$name} {
+     @content;
+  }
+}
+@include fadeIn-animation-definition(fadeIn) {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@include rotate-animation-definition(rotate) {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+section {
+  margin-top: 70px;
+  @include fadeIn-animation(1s);
+}
+
+.splash {
+  text-align: center;
+  margin: 10% 0 0;
+  box-sizing: border-box;
+
+  .splash-text {
+    font-size: 72px;
+    line-height: 72px;
+    text-shadow: rgba(0, 0, 0, 0.5) 0 0 15px;
+    text-transform: uppercase;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .splash-animation {
+    width: 60px;
+    height: 60px;
+    background-color: #676a6c;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    margin: 100px auto;
+    @include rotate-animation(1.2s);
+  }
+}
+
+.ng-valid.required,
+.ng-valid[required] {
+  border: 1px solid #42A948;
+}
+
+.ng-invalid:not(form) {
+  border: 1px solid #a94442;
+}
+
+.floating-btn {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 15px;
+  margin-bottom: 20px;
+  z-index: 900;
+}
+
+table tbody tr td {
+  vertical-align: middle !important;
+}
