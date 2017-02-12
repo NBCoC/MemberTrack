@@ -9,7 +9,11 @@
   "dependencies": { },
 
   "frameworks": {
-    "net452": { }
+    "net452": {
+      "dependencies": {
+        "System.Reactive": "3.0.0"
+      }
+    }
   },
 
   "tooling": {
