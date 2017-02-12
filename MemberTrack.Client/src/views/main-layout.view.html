@@ -1,0 +1,38 @@
+<template>
+  <div membertrack-mdl="layout" class="demo-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">${viewTitle}</span>
+        <div class="mdl-layout-spacer"></div>
+        <button membertrack-mdl="button" class="mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+            <i class="material-icons">more_vert</i>
+          </button>
+        <ul membertrack-mdl="menu" class="mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+          <li class="mdl-menu__item">Change Password</li>
+          <li class="mdl-menu__item--full-bleed-divider"></li>
+          <li class="mdl-menu__item" click.trigger="signOut($event)">Sign Out</li>
+        </ul>
+      </div>
+    </header>
+    <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+      <header class="demo-drawer-header">
+        <div id="app-title">MemberTrack</div>
+        <div id="current-user">
+          <span>${contextUser.displayName}</span>
+        </div>
+      </header>
+      <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+        <a class="mdl-navigation__link" membertrack-toggle-drawer href="#main/home">
+          <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
+        <a class="mdl-navigation__link" membertrack-toggle-drawer href="#main/search">
+          <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">search</i>Search</a>
+        <a class="mdl-navigation__link" membertrack-toggle-drawer href="#main/administration/users">
+          <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Users</a>
+        <div class="mdl-layout-spacer"></div>
+      </nav>
+    </div>
+    <main class="mdl-layout__content mdl-color--grey-100">
+      <router-view></router-view>
+    </main>
+  </div>
+</template>

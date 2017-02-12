@@ -1,0 +1,10 @@
+<template>
+  <require from="../view-models/member-dialog.view-model"></require>
+  <membertrack-member-dialog view-model.ref="memberDialogVm" dismiss.delegate="dismissMemberDialog($event)"></membertrack-member-dialog>
+  <section>
+    <button membertrack-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
+      click.trigger="displayMemberDialog()">
+      New Member
+      </button>
+  </section>
+</template>

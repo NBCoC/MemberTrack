@@ -1,0 +1,35 @@
+<template>
+  <dialog id="children-info-dialog" class="mdl-dialog">
+    <form role="form" submit.delegate="save($event)">
+      <h6>Edit Children's' Age Group</h6>
+      <hr>
+      <div class="mdl-dialog__content">
+        <label membertrack-mdl="checkbox" class="mdl-js-ripple-effect" for="infantControl">
+            <input type="checkbox" id="infantControl" class="mdl-checkbox__input" checked.bind="model.hasInfantKids">
+            <span class="mdl-checkbox__label">Infant</span>
+        </label>
+        <label membertrack-mdl="checkbox" class="mdl-js-ripple-effect" for="toddlerControl">
+            <input type="checkbox" id="toddlerControl" class="mdl-checkbox__input" checked.bind="model.hasToddlerKids">
+            <span class="mdl-checkbox__label">Toddler</span>
+        </label>
+        <label membertrack-mdl="checkbox" class="mdl-js-ripple-effect" for="elementaryControl">
+            <input type="checkbox" id="elementaryControl" class="mdl-checkbox__input" checked.bind="model.hasElementaryKids">
+            <span class="mdl-checkbox__label">Elementary</span>
+        </label>
+        <label membertrack-mdl="checkbox" class="mdl-js-ripple-effect" for="juniorHighControl">
+            <input type="checkbox" id="juniorHighControl" class="mdl-checkbox__input" checked.bind="model.hasJuniorHighKids">
+            <span class="mdl-checkbox__label">Junior High</span>
+        </label>
+        <label membertrack-mdl="checkbox" class="mdl-js-ripple-effect" for="highSchoolControl">
+            <input type="checkbox" id="highSchoolControl" class="mdl-checkbox__input" checked.bind="model.hasHighSchoolKids">
+            <span class="mdl-checkbox__label">High School</span>
+        </label>
+      </div>
+      <hr>
+      <div class="mdl-dialog__actions">
+        <button membertrack-mdl="button" type="button" click.trigger="cancel()">Cancel</button>
+        <button membertrack-mdl="button" type="submit" class="mdl-button--accent">Save</button>
+      </div>
+    </form>
+  </dialog>
+</template>

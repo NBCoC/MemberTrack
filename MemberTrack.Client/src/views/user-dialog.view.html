@@ -1,0 +1,35 @@
+<template>
+  <dialog id="user-dialog" class="mdl-dialog">
+    <form role="form" submit.delegate="save($event)">
+      <h6>${model.id ? 'Edit' : 'Add'} User</h6>
+      <hr>
+      <div class="mdl-dialog__content">
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label full-width">
+          <input class="mdl-textfield__input" type="email" id="emailControl" name="emailControl"
+            value.bind="model.email" required>
+            <label class="mdl-textfield__label" for="emailControl">Email...</label>
+        </div>
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label full-width">
+          <input class="mdl-textfield__input" type="text" id="displayNameControl" name="displayNameControl"
+            value.bind="model.displayName" required>
+            <label class="mdl-textfield__label" for="displayNameControl">Display Name...</label>
+        </div>
+        <div membertrack-mdl="selectfield" class="mdl-selectfield--floating-label full-width">
+          <select id="roleControl" name="roleControl" class="mdl-selectfield__select" value.bind="model.role"
+            required>
+            <option model.bind="null">Select role...</option>
+            <option repeat.for="role of roles | sort : 'name'" model.bind="role.id">
+              ${role.name}
+            </option>
+            </select>
+            <label class="mdl-selectfield__label" for="roleControl">Role...</label>
+        </div>
+      </div>
+      <hr>
+      <div class="mdl-dialog__actions">
+        <button membertrack-mdl="button" type="button" click.trigger="cancel()">Cancel</button>
+        <button membertrack-mdl="button" type="submit" class="mdl-button--accent">Save</button>
+      </div>
+    </form>
+  </dialog>
+</template>

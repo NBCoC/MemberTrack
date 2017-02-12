@@ -1,0 +1,18 @@
+{
+  "title": "MemberTrack.WinServ",
+  "version": "1.0.0.0",
+
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": { },
+
+  "frameworks": {
+    "net452": { }
+  },
+
+  "tooling": {
+    "defaultNamespace": "MemberTrack.WinServ"
+  }
+}

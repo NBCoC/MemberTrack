@@ -1,0 +1,42 @@
+<template>
+  <section membertrack-view="search">
+    <div class="mdl-grid demo-content">
+      <div class="mdl-layout-spacer"></div>
+      <div membertrack-mdl="textfield" class="mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="text" id="searchControl" name="searchControl"
+          value.two-way="searchText & debounce:400">
+          <label class="mdl-textfield__label" for="searchControl">Search for members...</label>
+      </div>
+      <div class="mdl-layout-spacer"></div>
+    </div>
+    <div class="mdl-grid demo-content">
+      <div class="mdl-layout-spacer"></div>
+      <span class="loading-text" if.bind="!hasResults">
+          No results found...
+      </span>
+      <table membertrack-mdl="data-table" class="mdl-shadow--2dp" show.two-way="people.length">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Age Group</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="person of people | sort : 'firstName'">
+            <td>${person.firstName} ${person.lastName}</td>
+            <td>${person.statusName}</td>
+            <td>${person.ageGroupName}</td>
+            <td>
+              <a membertrack-mdl="button" class="mdl-button--accent" href="#main/member-details/${person.id}">
+                    View Details
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mdl-layout-spacer"></div>
+    </div>
+  </section>
+</template>

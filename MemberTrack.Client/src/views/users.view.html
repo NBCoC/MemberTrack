@@ -1,0 +1,42 @@
+<template>
+  <require from="../view-models/prompt-delete-dialog.view-model"></require>
+  <require from="../view-models/user-dialog.view-model"></require>
+  <membertrack-prompt-delete-dialog view-model.ref="promptDeleteDialogVm" dismiss.delegate="dismissPromptDeleteDialog($event)"></membertrack-prompt-delete-dialog>
+  <membertrack-user-dialog view-model.ref="userDialogVm" dismiss.delegate="dismissUserDialog($event)"></membertrack-user-dialog>
+  <section membertrack-view="users">
+    <div class="mdl-grid demo-content">
+      <div class="mdl-layout-spacer"></div>
+      <div class="loading-text">${loadingText}</div>
+      <table membertrack-mdl="data-table" class="mdl-shadow--2dp" show.two-way="users.length">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="user of users | sort : 'displayName'">
+            <td>${user.displayName}</td>
+            <td>${user.email}</td>
+            <td>${user.roleName}</td>
+            <td>
+              <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayUserDialog(user)">
+                    Edit
+              </button>
+              <button membertrack-mdl="button" click.trigger="displayPromptDeleteDialog(user)">
+                    Delete
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="mdl-layout-spacer"></div>
+    </div>
+    <button membertrack-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
+      click.trigger="displayUserDialog()">
+      New User
+      </button>
+  </section>
+</template>
