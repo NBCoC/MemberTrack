@@ -13,21 +13,19 @@ export class SortValueConverter {
         }
 
         let func = (a: any, b: any) => {
-            let result = 0;
-
             let condition = asc ? (a[propertyName] > b[propertyName]) : (b[propertyName] > a[propertyName]);
 
             if (condition) {
-                result = 1;
+               return 1;
             }
 
             condition = asc ? (a[propertyName] < b[propertyName]) : (b[propertyName] < a[propertyName]);
 
             if (condition) {
-                result = -1;
+               return -1;
             }
 
-            return result;
+            return 0;
         };
 
         return array.sort(func);
