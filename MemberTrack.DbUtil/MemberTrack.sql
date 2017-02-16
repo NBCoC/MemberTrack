@@ -258,3 +258,32 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170216222741_RemoveDocumentTables')
+BEGIN
+    DROP TABLE [DocumentData];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170216222741_RemoveDocumentTables')
+BEGIN
+    DROP TABLE [DocumentTag];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170216222741_RemoveDocumentTables')
+BEGIN
+    DROP TABLE [Document];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170216222741_RemoveDocumentTables')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20170216222741_RemoveDocumentTables', N'1.0.0-rtm-21431');
+END;
+
+GO
+
