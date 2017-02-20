@@ -6,8 +6,7 @@ Step by step guide for running the app:
 Web API
 
 1. Using Visual Studio, open MemberTrack.WebApi project
-2. Run the project. A console app should launch stating that the Web API is running on port 5000.
-3. Navigate to http://localhost:5000/membertrack/api/user/contextuser to make sure its working...
+2. Run the project (Do not use IIS Express environment). A console app should launch stating that the Web API is running on port 5000.
 
 Client
 
