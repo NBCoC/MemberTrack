@@ -1,15 +1,12 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using MemberTrack.Common;
-using MemberTrack.Data;
-using MemberTrack.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-
 namespace MemberTrack.DbUtil
 {
+    using System;
+    using System.Threading.Tasks;
+    using Common;
+    using Data;
+    using Data.Entities;
+    using Microsoft.EntityFrameworkCore;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -25,8 +22,6 @@ namespace MemberTrack.DbUtil
 
                 using (var dbContext = new DatabaseContextFactory().Create(arguments.Datasource, arguments.Catalog))
                 {
-                    Console.WriteLine("Runnig migration script...");
-                    ExecuteSql(dbContext).Wait();
                     Console.WriteLine("Creating system account...");
                     SeedSystemAccount(dbContext).Wait();
                 }
@@ -54,44 +49,11 @@ namespace MemberTrack.DbUtil
                 var query = $@"SET IDENTITY_INSERT dbo.[User] ON
 								INSERT INTO dbo.[User]
 									(Id, DisplayName, Role, Password, Email) 
-								VALUES({SystemAccountHelper.UserId}, 'Alberto De Pena', 
+								VALUES({SystemAccountHelper.UserId}, 'MemberTrack', 
                     {(int) UserRoleEnum.SystemAdmin}, '{SystemAccountHelper.Password}', '{SystemAccountHelper.Email}')
 								SET IDENTITY_INSERT dbo.[User] OFF";
 
                 await context.Database.ExecuteSqlCommandAsync(query);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToDetail());
-            }
-        }
-
-        private static async Task ExecuteSql(DbContext context)
-        {
-            try
-            {
-                var file = $@"{AppDomain.CurrentDomain.BaseDirectory}\MemberTrack.sql";
-
-                if (!File.Exists(file))
-                {
-                    throw new InvalidOperationException($"{file} not found.");
-                }
-
-                string sql;
-
-                using (var reader = File.OpenText(file))
-                {
-                    sql = await reader.ReadToEndAsync();
-                }
-
-                var commands =
-                    Regex.Split(sql, @"^\s*GO\s*$", RegexOptions.Multiline | RegexOptions.IgnoreCase).Where(
-                        str => !string.IsNullOrEmpty(str));
-
-                foreach (var command in commands)
-                {
-                    await context.Database.ExecuteSqlCommandAsync(command);
-                }
             }
             catch (Exception e)
             {

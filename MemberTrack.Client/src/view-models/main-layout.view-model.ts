@@ -1,3 +1,4 @@
+import { ChangePasswordDialogViewModel } from './change-password-dialog.view-model';
 import { autoinject, computedFrom } from 'aurelia-framework';
 import { RouterConfiguration, Router } from 'aurelia-router';
 
@@ -9,6 +10,7 @@ export class MainLayoutViewModel {
     public router: Router;
     private authService: AuthService;
     public contextUser: UserDto;
+    public changePasswordDialogVm: ChangePasswordDialogViewModel;
 
     constructor(authService: AuthService) {
         this.authService = authService;
@@ -73,6 +75,14 @@ export class MainLayoutViewModel {
     }
 
     public signOut(e: Event): void {
+        this.authService.signOut();
+    }
+
+    public displayChangePasswordDialog(): void {
+        this.changePasswordDialogVm.show(this.contextUser.id);
+    }
+
+    public dismissChangePasswordDialog(e: Event): void {
         this.authService.signOut();
     }
 }

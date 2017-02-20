@@ -1,4 +1,6 @@
 <template>
+  <require from="../view-models/change-password-dialog.view-model"></require>
+  <membertrack-change-password-dialog view-model.ref="changePasswordDialogVm" dismiss.delegate="dismissChangePasswordDialog($event)"></membertrack-change-password-dialog>
   <div membertrack-mdl="layout" class="demo-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
       <div class="mdl-layout__header-row">
@@ -8,7 +10,7 @@
             <i class="material-icons">more_vert</i>
           </button>
         <ul membertrack-mdl="menu" class="mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-          <li class="mdl-menu__item">Change Password</li>
+          <li class="mdl-menu__item" click.trigger="displayChangePasswordDialog($event)">Change Password</li>
           <li class="mdl-menu__item--full-bleed-divider"></li>
           <li class="mdl-menu__item" click.trigger="signOut($event)">Sign Out</li>
         </ul>

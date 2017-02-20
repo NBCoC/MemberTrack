@@ -5,17 +5,12 @@ namespace MemberTrack.Data
 
     public class Arguments
     {
-        public string Datasource { get; set; } = "localhost";
+        public string Datasource { get; set; }
 
-        public string Catalog { get; set; } = "MemberTrack";
+        public string Catalog { get; set; }
 
         public Arguments Parse(string[] args)
         {
-            if (args.Length == 0)
-            {
-                return this;
-            }
-
             var parser = new FluentCommandLineParser<Arguments>();
 
             parser.Setup(arg => arg.Catalog).As('c', "Catalog").Required();
@@ -24,10 +19,7 @@ namespace MemberTrack.Data
 
             var result = parser.Parse(args);
 
-            if (result.HasErrors)
-            {
-                throw new InvalidOperationException($"Failed to parse application arguments: {result.ErrorText}");
-            }
+            if (result.HasErrors) throw new InvalidOperationException($"Failed to parse application arguments: {result.ErrorText}");
 
             return parser.Object;
         }

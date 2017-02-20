@@ -30,7 +30,7 @@ export abstract class BaseDialog {
         });
     }
 
-    protected dismiss(args: any): void {
+    protected dismiss(args?: any): void {
         let dismissEvent: CustomEvent;
 
         if ((window as any).CustomEvent) {

@@ -30,9 +30,11 @@ export class UserService extends BaseService {
             .catch(this.handleError);
     }
 
-    public updatePassword(id: number, dto: UpdatePasswordDto): Promise<UserDto> {
+    public updatePassword(id: number, dto: UpdatePasswordDto): Promise<boolean> {
         return this.client.put(`user/updatePassword/${id}`, dto)
-            .then(result => JSON.parse(result.response))
+            .then(result => {
+                return true;
+            })
             .catch(this.handleError);
     }
 
