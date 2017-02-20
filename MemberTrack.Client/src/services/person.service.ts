@@ -3,7 +3,7 @@ import { HttpClient } from 'aurelia-http-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
 import { BaseService } from './base.service';
-import { SearchResultDto, PersonDto, ChildrenInfoDto, PersonCheckListItemDto } from '../core/dtos';
+import { SearchResultDto, PersonDto, ChildrenInfoDto, PersonCheckListItemDto, DatesDto } from '../core/dtos';
 
 @autoinject
 export class PersonService extends BaseService {
@@ -46,6 +46,12 @@ export class PersonService extends BaseService {
 
     public insertOrUpdateChildrenInfo(id: number, dto: ChildrenInfoDto): Promise<PersonDto> {
         return this.client.post(`person/childrenInfo/${id}`, dto)
+            .then(result => JSON.parse(result.response))
+            .catch(this.handleError);
+    }
+
+    public updateDates(id: number, dto: DatesDto): Promise<PersonDto> {
+        return this.client.post(`person/dates/${id}`, dto)
             .then(result => JSON.parse(result.response))
             .catch(this.handleError);
     }

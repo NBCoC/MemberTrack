@@ -64,6 +64,12 @@ export interface PersonCheckListItemDto {
     date: Date;
 }
 
+export interface DatesDto {
+    baptismDate?: Date;
+    firstVisitDate?: Date;
+    membershipDate?: Date;
+}
+
 export interface PersonDto {
     id: number;
     firstName: string;
@@ -77,6 +83,7 @@ export interface PersonDto {
     genderName: string;
     ageGroup?: number;
     ageGroupName: string;
+    dates: DatesDto;
     address: AddressDto;
     childrenInfo: ChildrenInfoDto;
     checkListItems: PersonCheckListItemDto[];

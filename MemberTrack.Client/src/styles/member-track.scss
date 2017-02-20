@@ -105,6 +105,10 @@ dialog {
   text-align: center;
 }
 
+.person-dates {
+  font-style: italic;
+  @extend .pull-right;
+}
 
 /* MDL overrides */
 
@@ -150,4 +154,8 @@ td.align {
   left: 70px;
   bottom: 50px;
   z-index: 999;
+}
+
+.pull-right {
+  float: right !important;
 }

@@ -45,6 +45,7 @@ export class MemberDetailsViewModel extends BaseViewModel {
 
     private initDefaultModel(): void {
         this.person = {
+            dates: {},
             address: {},
             childrenInfo: {},
             checkListItems: []

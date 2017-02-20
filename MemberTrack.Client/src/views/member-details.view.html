@@ -16,42 +16,42 @@
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="fnControl" value.two-way="person.firstName"
               readonly>
-              <label class="mdl-textfield__label" for="fnControl">First Name</label>
+            <label class="mdl-textfield__label" for="fnControl">First Name</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="mnControl" value.two-way="person.middleName"
               readonly>
-              <label class="mdl-textfield__label" for="mnControl">Middle Name</label>
+            <label class="mdl-textfield__label" for="mnControl">Middle Name</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="lnControl" value.two-way="person.lastName"
               readonly>
-              <label class="mdl-textfield__label" for="lnControl">Last Name</label>
+            <label class="mdl-textfield__label" for="lnControl">Last Name</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="ageGroupControl" value.two-way="person.ageGroupName"
               readonly>
-              <label class="mdl-textfield__label" for="ageGroupControl">Age Group</label>
+            <label class="mdl-textfield__label" for="ageGroupControl">Age Group</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="genderControl" value.two-way="person.genderName"
               readonly>
-              <label class="mdl-textfield__label" for="genderControl">Gender</label>
+            <label class="mdl-textfield__label" for="genderControl">Gender</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="statusControl" value.two-way="person.statusName"
               readonly>
-              <label class="mdl-textfield__label" for="statusControl">Status</label>
+            <label class="mdl-textfield__label" for="statusControl">Status</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="contactNumberControl" value.two-way="person.contactNumber"
               readonly>
-              <label class="mdl-textfield__label" for="contactNumberControl">Contact #</label>
+            <label class="mdl-textfield__label" for="contactNumberControl">Contact #</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="email" id="emailControl" value.two-way="person.email"
               readonly>
-              <label class="mdl-textfield__label" for="emailControl">Email</label>
+            <label class="mdl-textfield__label" for="emailControl">Email</label>
           </div>
         </div>
         <div class="mdl-card__actions mdl-card--border">
@@ -68,22 +68,22 @@
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="streetControl" value.two-way="person.address.street"
               readonly>
-              <label class="mdl-textfield__label" for="streetControl">Street</label>
+            <label class="mdl-textfield__label" for="streetControl">Street</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="cityControl" value.two-way="person.address.city"
               readonly>
-              <label class="mdl-textfield__label" for="cityControl">City</label>
+            <label class="mdl-textfield__label" for="cityControl">City</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="text" id="stateControl" value.two-way="person.address.stateName"
               readonly>
-              <label class="mdl-textfield__label" for="stateControl">State</label>
+            <label class="mdl-textfield__label" for="stateControl">State</label>
           </div>
           <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
             <input class="mdl-textfield__input" type="number" id="zipCodeControl" value.two-way="person.address.zipCode"
               readonly>
-              <label class="mdl-textfield__label" for="zipCodeControl">Zip Code</label>
+            <label class="mdl-textfield__label" for="zipCodeControl">Zip Code</label>
           </div>
         </div>
         <div class="mdl-card__actions mdl-card--border">
@@ -116,6 +116,21 @@
         </div>
         <div class="mdl-card__actions mdl-card--border">
           <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayChildrenInfoDialog()">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div class="mdl-grid demo-content">
+      <div class="mdl-card mdl-shadow--2dp full-width">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Dates</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <p><span class="mdl-checkbox__label">1st Visit</span> <span class="person-dates" if.bind="person.dates.firstVisitDate">${person.dates.firstVisitDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+          <p><span class="mdl-checkbox__label">Baptism</span> <span class="person-dates" if.bind="person.dates.baptismDate">${person.dates.baptismDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+          <p><span class="mdl-checkbox__label">Membership Placement</span:> <span class="person-dates" if.bind="person.dates.membershipDate">${person.dates.membershipDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayDatesDialog()">Edit</button>
         </div>
       </div>
     </div>
