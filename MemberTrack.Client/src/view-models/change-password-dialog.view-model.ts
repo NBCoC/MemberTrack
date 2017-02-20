@@ -25,6 +25,7 @@ export class ChangePasswordDialogViewModel extends BaseDialog {
     }
 
     public show(contextUserId: number): void {
+        this.model = {} as UpdatePasswordDto;
         this.contextUserId = contextUserId;
         this.showModal();
     }

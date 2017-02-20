@@ -83,6 +83,6 @@ export class MainLayoutViewModel {
     }
 
     public dismissChangePasswordDialog(e: Event): void {
-        this.authService.signOut();
+        setTimeout(() => { this.authService.signOut(); }, 3000);
     }
 }
