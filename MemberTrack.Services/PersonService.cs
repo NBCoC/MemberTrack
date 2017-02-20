@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
-using MemberTrack.Data;
-using MemberTrack.Data.Entities;
-using MemberTrack.Services.Contracts;
-using MemberTrack.Services.Dtos;
-using MemberTrack.Services.Exceptions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-
-namespace MemberTrack.Services
+﻿namespace MemberTrack.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Contracts;
+    using Data;
+    using Data.Entities;
+    using Dtos;
+    using Exceptions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Storage;
+
     public class PersonService : IPersonService
     {
         private readonly DatabaseContext _context;
@@ -57,8 +57,10 @@ namespace MemberTrack.Services
 
             var entity =
                 await
-                    _context.People.Include(p => p.Address).Include(p => p.CheckLists)
-                        .ThenInclude(cl => cl.PersonCheckListItem).FirstOrDefaultAsync(predicate);
+                    _context.People.Include(p => p.Address).
+                        Include(p => p.CheckLists).
+                        ThenInclude(cl => cl.PersonCheckListItem).
+                        FirstOrDefaultAsync(predicate);
 
             if (entity == null)
             {
@@ -71,13 +73,16 @@ namespace MemberTrack.Services
 
             var checkListItems =
                 await
-                    _context.PersonCheckListItems.Where(pcli => existingItems.All(cli => cli.Id != pcli.Id)).Select
-                        (v => new PersonCheckListItemDto
-                    {
-                            Description = v.Description,
-                            Id = v.Id,
-                            Type = v.CheckListItemType
-                        }).ToListAsync();
+                    _context.PersonCheckListItems.Where(pcli => existingItems.All(cli => cli.Id != pcli.Id)).
+                        Select(
+                            v =>
+                                new PersonCheckListItemDto
+                                {
+                                    Description = v.Description,
+                                    Id = v.Id,
+                                    Type = v.CheckListItemType
+                                }).
+                        ToListAsync();
 
             existingItems.AddRange(checkListItems);
 
@@ -99,7 +104,8 @@ namespace MemberTrack.Services
 
             contains = contains.ToLower();
 
-            query = query.Where(x => x.FirstName.ToLower().Contains(contains) || x.LastName.ToLower().Contains(contains));
+            query = query.Where(
+                x => x.FirstName.ToLower().Contains(contains) || x.LastName.ToLower().Contains(contains));
 
             var count = await _context.People.CountAsync();
 
@@ -154,6 +160,29 @@ namespace MemberTrack.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateDates(string contextUserEmail, DatesDto dto, long personId)
+        {
+            await _userService.ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Editor);
+
+            if (dto == null)
+            {
+                throw new ArgumentNullException(nameof(DatesDto));
+            }
+
+            var entity = await _context.People.FirstOrDefaultAsync(p => p.Id == personId);
+
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(personId);
+            }
+
+            entity.BaptismDate = dto.BaptismDate;
+            entity.FirstVisitDate = dto.FirstVisitDate;
+            entity.MembershipDate = dto.MembershipDate;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task InsertChildrenInfo(string contextUserEmail, ChildrenInfoDto dto, long personId)
         {
             await _userService.ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Editor);
@@ -175,7 +204,7 @@ namespace MemberTrack.Services
             entity.HasInfantKids = dto.HasInfantKids;
             entity.HasJuniorHighKids = dto.HasJuniorHighKids;
             entity.HasToddlerKids = dto.HasToddlerKids;
-            
+
             await _context.SaveChangesAsync();
         }
 

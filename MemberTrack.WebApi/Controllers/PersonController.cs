@@ -1,12 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using MemberTrack.Services.Contracts;
-using MemberTrack.Services.Dtos;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-namespace MemberTrack.WebApi.Controllers
+﻿namespace MemberTrack.WebApi.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using Services.Contracts;
+    using Services.Dtos;
+
     [Route("api/[controller]")]
     public class PersonController : BaseController
     {
@@ -117,7 +117,7 @@ namespace MemberTrack.WebApi.Controllers
                 return Exception(e);
             }
         }
-        
+
         [HttpPost("ChildrenInfo/{id}")]
         public async Task<IActionResult> ChildrenInfo(long id, [FromBody] ChildrenInfoDto dto)
         {
@@ -140,7 +140,30 @@ namespace MemberTrack.WebApi.Controllers
                 return Exception(e);
             }
         }
-        
+
+        [HttpPost("Dates/{id}")]
+        public async Task<IActionResult> Dates(long id, [FromBody] DatesDto dto)
+        {
+            var trans = await _personService.BeginTransactionAsync();
+
+            try
+            {
+                await _personService.UpdateDates(ContextUserEmail, dto, id);
+
+                trans.Commit();
+
+                var data = await _personService.Find(x => x.Id == id);
+
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                trans.Rollback();
+
+                return Exception(e);
+            }
+        }
+
         [HttpPost("CheckListItem/{id}")]
         public async Task<IActionResult> CheckListItem(long id, [FromBody] PersonCheckListItemDto dto)
         {

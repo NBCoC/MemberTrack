@@ -21,6 +21,12 @@ namespace MemberTrack.Services.Dtos
                 AgeGroup = entity.AgeGroup,
                 Status = entity.Status,
                 Address = entity.Address?.ToDto(),
+                Dates = new DatesDto
+                {
+                    BaptismDate = entity.BaptismDate,
+                    FirstVisitDate = entity.FirstVisitDate,
+                    MembershipDate = entity.MembershipDate
+                },
                 ChildrenInfo =
                     new ChildrenInfoDto
                     {

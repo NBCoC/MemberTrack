@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
-using MemberTrack.Data.Entities;
-using MemberTrack.Services.Dtos;
-using Microsoft.EntityFrameworkCore.Storage;
-
-namespace MemberTrack.Services.Contracts
+﻿namespace MemberTrack.Services.Contracts
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Data.Entities;
+    using Dtos;
+    using Microsoft.EntityFrameworkCore.Storage;
+
     public interface IPersonService
     {
         IDbContextTransaction BeginTransaction();
 
-        Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default(CancellationToken));
+        Task<IDbContextTransaction> BeginTransactionAsync(
+            CancellationToken cancellationToken = default(CancellationToken));
 
         Task Delete(string contextUserEmail, long personId);
 
@@ -22,6 +23,8 @@ namespace MemberTrack.Services.Contracts
         Task<long> Insert(string contextUserEmail, PersonInsertOrUpdateDto dto);
 
         Task Update(string contextUserEmail, PersonInsertOrUpdateDto dto, long personId);
+
+        Task UpdateDates(string contextUserEmail, DatesDto dto, long personId);
 
         Task InsertChildrenInfo(string contextUserEmail, ChildrenInfoDto dto, long personId);
 

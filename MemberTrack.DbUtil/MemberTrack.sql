@@ -287,3 +287,18 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170220204701_PersonFirstVisitDate')
+BEGIN
+    ALTER TABLE [Person] ADD [FirstVisitDate] datetimeoffset;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170220204701_PersonFirstVisitDate')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20170220204701_PersonFirstVisitDate', N'1.0.0-rtm-21431');
+END;
+
+GO
+

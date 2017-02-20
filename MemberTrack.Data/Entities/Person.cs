@@ -24,6 +24,8 @@ namespace MemberTrack.Data.Entities
 
         public DateTimeOffset? BaptismDate { get; set; }
 
+        public DateTimeOffset? FirstVisitDate { get; set; }
+
         public GenderEnum Gender { get; set; }
 
         public AgeGroupEnum AgeGroup { get; set; }
