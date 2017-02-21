@@ -30,14 +30,20 @@ export class DatesDialogViewModel extends BaseDialog {
         if (model) {
             if (model.baptismDate) {
                 this.model.baptismDate = moment(model.baptismDate).format(Format) as any;
+            } else {
+                this.model.baptismDate = null;
             }
 
             if (model.firstVisitDate) {
                 this.model.firstVisitDate = moment(model.firstVisitDate).format(Format) as any;
+            } else {
+                this.model.firstVisitDate = null;
             }
 
             if (model.membershipDate) {
                 this.model.membershipDate = moment(model.membershipDate).format(Format) as any;
+            } else {
+                this.model.membershipDate = null;
             }
         }
         this.showModal();
@@ -49,9 +55,9 @@ export class DatesDialogViewModel extends BaseDialog {
         }
 
         let data = {
-            baptismDate: new Date(this.model.baptismDate),
-            membershipDate: new Date(this.model.membershipDate),
-            firstVisitDate: new Date(this.model.firstVisitDate)
+            baptismDate: !this.model.baptismDate ? null : new Date(this.model.baptismDate),
+            membershipDate: !this.model.membershipDate ? null : new Date(this.model.membershipDate),
+            firstVisitDate: !this.model.firstVisitDate ? null : new Date(this.model.firstVisitDate)
         } as DatesDto;
 
         this.personService.updateDates(this.memberId, data).then(dto => {
