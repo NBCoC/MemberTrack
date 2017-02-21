@@ -20,8 +20,6 @@ const MdlControls = {
     'selectfield': { type: 'MaterialSelectfield', classes: ['mdl-selectfield', 'mdl-js-selectfield'], rippleEffectSupport: false }
 };
 
-declare var componentHandler: any;
-
 @customAttribute('membertrack-mdl')
 @autoinject
 export class MdlAttribute {
