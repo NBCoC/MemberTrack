@@ -4,11 +4,13 @@
   <require from="../view-models/address-dialog.view-model"></require>
   <require from="../view-models/children-info-dialog.view-model"></require>
   <require from="../view-models/check-list-item-dialog.view-model"></require>
+  <require from="../view-models/dates-dialog.view-model"></require>
   <membertrack-prompt-delete-dialog view-model.ref="promptDeleteDialogVm" dismiss.delegate="dismissPromptDeleteDialog($event)"></membertrack-prompt-delete-dialog>
   <membertrack-member-dialog view-model.ref="memberDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-member-dialog>
   <membertrack-address-dialog view-model.ref="addressDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-address-dialog>
   <membertrack-children-info-dialog view-model.ref="childrenInfoDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-children-info-dialog>
   <membertrack-check-list-item-dialog view-model.ref="checkListItemDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-check-list-item-dialog>
+  <membertrack-dates-dialog view-model.ref="datesDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-dates-dialog>
   <section membertrack-view="member-details">
     <div class="mdl-grid demo-content">
       <div class="mdl-card mdl-shadow--2dp full-width">
@@ -125,8 +127,10 @@
           <h2 class="mdl-card__title-text">Dates</h2>
         </div>
         <div class="mdl-card__supporting-text">
-          <p><span class="mdl-checkbox__label">1st Visit</span> <span class="person-dates" if.bind="person.dates.firstVisitDate">${person.dates.firstVisitDate | dateFormat : 'MMMM Do YYYY'}</span></p>
-          <p><span class="mdl-checkbox__label">Baptism</span> <span class="person-dates" if.bind="person.dates.baptismDate">${person.dates.baptismDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+          <p><span class="mdl-checkbox__label">1st Visit</span> <span class="person-dates"
+              if.bind="person.dates.firstVisitDate">${person.dates.firstVisitDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+          <p><span class="mdl-checkbox__label">Baptism</span> <span class="person-dates"
+              if.bind="person.dates.baptismDate">${person.dates.baptismDate | dateFormat : 'MMMM Do YYYY'}</span></p>
           <p><span class="mdl-checkbox__label">Membership Placement</span:> <span class="person-dates" if.bind="person.dates.membershipDate">${person.dates.membershipDate | dateFormat : 'MMMM Do YYYY'}</span></p>
         </div>
         <div class="mdl-card__actions mdl-card--border">

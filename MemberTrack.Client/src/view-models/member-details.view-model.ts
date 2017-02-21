@@ -6,6 +6,7 @@ import { MemberDialogViewModel } from './member-dialog.view-model';
 import { AddressDialogViewModel } from './address-dialog.view-model';
 import { ChildrenInfoDialogViewModel } from './children-info-dialog.view-model';
 import { CheckListItemDialogViewModel } from './check-list-item-dialog.view-model';
+import { DatesDialogViewModel } from './dates-dialog.view-model';
 import { PersonService } from '../services/person.service';
 import { LookupService } from '../services/lookup.service';
 import { PersonDto, PersonCheckListItemDto, DtoHelper } from '../core/dtos';
@@ -22,6 +23,7 @@ export class MemberDetailsViewModel extends BaseViewModel {
     public addressDialogVm: AddressDialogViewModel;
     public childrenInfoDialogVm: ChildrenInfoDialogViewModel;
     public checkListItemDialogVm: CheckListItemDialogViewModel;
+    public datesDialogVm: DatesDialogViewModel;
 
     constructor(personService: PersonService, lookupService: LookupService, dtoHelper: DtoHelper) {
         super('member-details');
@@ -62,6 +64,10 @@ export class MemberDetailsViewModel extends BaseViewModel {
 
     public displayChildrenInfoDialog(): void {
         this.childrenInfoDialogVm.show(this.person.id, Object.assign({}, this.person.childrenInfo));
+    }
+
+    public displayDatesDialog(): void {
+        this.datesDialogVm.show(this.person.id, Object.assign({}, this.person.dates));
     }
 
     public checkListItemChange(e: Event, item: PersonCheckListItemDto): void {
