@@ -1,13 +1,36 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
-import { AppModule } from './app/app.module';
+import { Aurelia, LogManager, ViewLocator, Origin } from 'aurelia-framework';
 
-import '../public/css/styles.scss';
+import environment from './environment';
+import { CustomLogAppender } from './core/custom-log-appender';
 
-declare var process: any;
+// Configure Bluebird Promises.
+(<any>Promise).config({
+  warnings: {
+    wForgottenReturn: false
+  }
+});
 
-if (process.env.ENV === 'production') {
-  enableProdMode();
+LogManager.addAppender(new CustomLogAppender());
+LogManager.setLevel(LogManager.logLevel.debug);
+
+export function configure(aurelia: Aurelia) {
+  aurelia.use
+    .standardConfiguration()
+    .feature('resources');
+
+  ViewLocator.prototype.convertOriginToViewUrl = (origin: Origin): string => {
+    let moduleId = origin.moduleId;
+
+    let isVm = moduleId.endsWith('.view-model');
+
+    let id = isVm ? moduleId.split('/')[1].split('.')[0] : moduleId;
+
+    return isVm ? `views/${id}.view.html` : `${id}.html`;
+  };
+
+  if (environment.testing) {
+    aurelia.use.plugin('aurelia-testing');
+  }
+
+  aurelia.start().then(() => aurelia.setRoot());
 }
-
-platformBrowserDynamic().bootstrapModule(AppModule);

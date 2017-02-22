@@ -1,0 +1,164 @@
+<template>
+  <require from="../view-models/prompt-delete-dialog.view-model"></require>
+  <require from="../view-models/member-dialog.view-model"></require>
+  <require from="../view-models/address-dialog.view-model"></require>
+  <require from="../view-models/children-info-dialog.view-model"></require>
+  <require from="../view-models/check-list-item-dialog.view-model"></require>
+  <require from="../view-models/dates-dialog.view-model"></require>
+  <membertrack-prompt-delete-dialog view-model.ref="promptDeleteDialogVm" dismiss.delegate="dismissPromptDeleteDialog($event)"></membertrack-prompt-delete-dialog>
+  <membertrack-member-dialog view-model.ref="memberDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-member-dialog>
+  <membertrack-address-dialog view-model.ref="addressDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-address-dialog>
+  <membertrack-children-info-dialog view-model.ref="childrenInfoDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-children-info-dialog>
+  <membertrack-check-list-item-dialog view-model.ref="checkListItemDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-check-list-item-dialog>
+  <membertrack-dates-dialog view-model.ref="datesDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-dates-dialog>
+  <section membertrack-view="member-details">
+    <div class="mdl-grid demo-content">
+      <div class="mdl-card mdl-shadow--2dp full-width">
+        <div class="mdl-card__supporting-text">
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="fnControl" value.two-way="person.firstName"
+              readonly>
+            <label class="mdl-textfield__label" for="fnControl">First Name</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="mnControl" value.two-way="person.middleName"
+              readonly>
+            <label class="mdl-textfield__label" for="mnControl">Middle Name</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="lnControl" value.two-way="person.lastName"
+              readonly>
+            <label class="mdl-textfield__label" for="lnControl">Last Name</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="ageGroupControl" value.two-way="person.ageGroupName"
+              readonly>
+            <label class="mdl-textfield__label" for="ageGroupControl">Age Group</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="genderControl" value.two-way="person.genderName"
+              readonly>
+            <label class="mdl-textfield__label" for="genderControl">Gender</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="statusControl" value.two-way="person.statusName"
+              readonly>
+            <label class="mdl-textfield__label" for="statusControl">Status</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="contactNumberControl" value.two-way="person.contactNumber"
+              readonly>
+            <label class="mdl-textfield__label" for="contactNumberControl">Contact #</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="email" id="emailControl" value.two-way="person.email"
+              readonly>
+            <label class="mdl-textfield__label" for="emailControl">Email</label>
+          </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayMemberDialog()">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div class="mdl-grid demo-content">
+      <div class="mdl-card mdl-shadow--2dp full-width">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Address</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="streetControl" value.two-way="person.address.street"
+              readonly>
+            <label class="mdl-textfield__label" for="streetControl">Street</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="cityControl" value.two-way="person.address.city"
+              readonly>
+            <label class="mdl-textfield__label" for="cityControl">City</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="text" id="stateControl" value.two-way="person.address.stateName"
+              readonly>
+            <label class="mdl-textfield__label" for="stateControl">State</label>
+          </div>
+          <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+            <input class="mdl-textfield__input" type="number" id="zipCodeControl" value.two-way="person.address.zipCode"
+              readonly>
+            <label class="mdl-textfield__label" for="zipCodeControl">Zip Code</label>
+          </div>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayAddressDialog()">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div class="mdl-grid demo-content">
+      <div class="mdl-card mdl-shadow--2dp full-width">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Children's Age Group</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <span class="mdl-chip children-info" if.bind="person.childrenInfo.hasInfantKids">
+                <span class="mdl-chip__text">Infant</span>
+          </span>
+          <span class="mdl-chip children-info" if.bind="person.childrenInfo.hasToddlerKids">
+                <span class="mdl-chip__text">Toddler</span>
+          </span>
+          <span class="mdl-chip children-info" if.bind="person.childrenInfo.hasElementaryKids">
+                <span class="mdl-chip__text">Elementary</span>
+          </span>
+          <span class="mdl-chip children-info" if.bind="person.childrenInfo.hasJuniorHighKids">
+                <span class="mdl-chip__text">Junior High</span>
+          </span>
+          <span class="mdl-chip children-info" if.bind="person.childrenInfo.hasHighSchoolKids">
+                <span class="mdl-chip__text">High School</span>
+          </span>
+          <span><br><br><br><br></span>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayChildrenInfoDialog()">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div class="mdl-grid demo-content">
+      <div class="mdl-card mdl-shadow--2dp full-width">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Dates</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <p><span class="mdl-checkbox__label">1st Visit</span> <span class="person-dates"
+              if.bind="person.dates.firstVisitDate">${person.dates.firstVisitDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+          <p><span class="mdl-checkbox__label">Baptism</span> <span class="person-dates"
+              if.bind="person.dates.baptismDate">${person.dates.baptismDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+          <p><span class="mdl-checkbox__label">Membership Placement</span:> <span class="person-dates" if.bind="person.dates.membershipDate">${person.dates.membershipDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+        </div>
+        <div class="mdl-card__actions mdl-card--border">
+          <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayDatesDialog()">Edit</button>
+        </div>
+      </div>
+    </div>
+    <div class="mdl-grid demo-content">
+      <div class="mdl-card mdl-shadow--2dp full-width">
+        <div class="mdl-card__title">
+          <h2 class="mdl-card__title-text">Check List</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+          <div class="check-list-items" repeat.for="group of person.checkListItems | group : 'typeName' | sort : 'groupName'">
+            <div>
+              <h6>${group.groupName}</h6>
+              <div repeat.for="item of group.items">
+                <label membertrack-mdl="checkbox" class="mdl-js-ripple-effect" for="${item.id}">
+                    <input type="checkbox" id="${item.id}" class="mdl-checkbox__input" checked.bind="item.isSelected" change.delegate="checkListItemChange($event, item)">
+                    <span class="mdl-checkbox__label">${item.description} &nbsp;<span class="check-list-item-date" if.bind="item.date">(checked on ${item.date | dateFormat : 'MMMM Do YYYY, h:mm:ss a'})</span></span>
+                </label>
+                <div if.bind="item.note" class="check-list-item-note">
+                  <p>${item.note}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+</template>

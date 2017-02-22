@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using MemberTrack.Common;
 using MemberTrack.Common.Contracts;
@@ -11,6 +12,7 @@ using MemberTrack.Services.Contracts;
 using MemberTrack.Services.Dtos;
 using MemberTrack.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MemberTrack.Services
 {
@@ -24,6 +26,12 @@ namespace MemberTrack.Services
             _context = context;
             _hashProvider = hashProvider;
         }
+
+        public IDbContextTransaction BeginTransaction() => _context.Database.BeginTransaction();
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync(
+                CancellationToken cancellationToken = new CancellationToken())
+            => await _context.Database.BeginTransactionAsync(cancellationToken);
 
         public async Task<UserDto> Find(Expression<Func<User, bool>> predicate)
         {
@@ -100,11 +108,11 @@ namespace MemberTrack.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<UserDto>> Where(Expression<Func<User, bool>> predicate)
+        public async Task<IEnumerable<UserDto>> Where(Expression<Func<User, bool>> predicate = null)
         {
             if (predicate == null)
             {
-                throw new ArgumentNullException(nameof(predicate));
+                predicate = x => !string.IsNullOrEmpty(x.Email);
             }
 
             var entities = await _context.Users.Where(predicate).ToListAsync();

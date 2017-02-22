@@ -21,22 +21,59 @@ namespace MemberTrack.Services.Dtos
                 AgeGroup = entity.AgeGroup,
                 Status = entity.Status,
                 Address = entity.Address?.ToDto(),
-                ChildrenInfo = new ChildrenInfoDto {AgeGroups = entity.ChildrenInfos?.Select(ci => ci.AgeGroup)},
-                Visits =
-                    entity.Visits?.Select(
+                Dates = new DatesDto
+                {
+                    BaptismDate = entity.BaptismDate,
+                    FirstVisitDate = entity.FirstVisitDate,
+                    MembershipDate = entity.MembershipDate
+                },
+                ChildrenInfo =
+                    new ChildrenInfoDto
+                    {
+                        HasElementaryKids = entity.HasElementaryKids,
+                        HasHighSchoolKids = entity.HasHighSchoolKids,
+                        HasInfantKids = entity.HasInfantKids,
+                        HasJuniorHighKids = entity.HasJuniorHighKids,
+                        HasToddlerKids = entity.HasToddlerKids
+                    },
+                CheckListItems =
+                    entity.CheckLists?.Select(
                         v =>
-                            new VisitDto
+                            new PersonCheckListItemDto
                             {
                                 Note = v.Note,
                                 Date = v.Date,
-                                CheckListItems = v.CheckList?.Select(cl => new VisitCheckListItemDto
-                                {
-                                    Description = cl.VisitCheckListItem?.Description,
-                                    Id = cl.VisitCheckListItemId,
-                                    Group = cl.VisitCheckListItem?.Group ?? 0
-                                })
+                                Description = v.PersonCheckListItem?.Description,
+                                Id = v.PersonCheckListItemId,
+                                Type = v.PersonCheckListItem?.CheckListItemType ?? CheckListItemTypeEnum.Unknown
                             })
             };
+
+        public static IEnumerable<PersonSearchDto> ToDtos(this IEnumerable<Person> entities)
+            =>
+            entities.Select(
+                entity =>
+                    new PersonSearchDto
+                    {
+                        Id = entity.Id,
+                        AgeGroup = entity.AgeGroup,
+                        FirstName = entity.FirstName,
+                        MiddleName = entity.MiddleName,
+                        LastName = entity.LastName,
+                        Status = entity.Status
+                    });
+
+        public static PersonCheckListItemLookupDto ToDto(this PersonCheckListItem entity)
+            =>
+            new PersonCheckListItemLookupDto
+            {
+                Id = entity.Id,
+                Type = entity.CheckListItemType,
+                Description = entity.Description
+            };
+
+        public static IEnumerable<PersonCheckListItemLookupDto> ToDtos(this IEnumerable<PersonCheckListItem> entities)
+            => entities.Select(ToDto);
 
         public static AddressDto ToDto(this Address entity)
             =>
@@ -56,14 +93,21 @@ namespace MemberTrack.Services.Dtos
                 ContactNumber = dto.ContactNumber,
                 Gender = dto.Gender,
                 AgeGroup = dto.AgeGroup ?? AgeGroupEnum.Unknown,
-                Status = PersonStatusEnum.Visitor
+                Status = dto.Status
             };
 
         public static UserDto ToDto(this User entity)
             => new UserDto {Id = entity.Id, DisplayName = entity.DisplayName, Email = entity.Email, Role = entity.Role};
 
         public static User ToEntity(this UserInsertDto dto)
-            => new User {DisplayName = dto.DisplayName, Email = dto.Email, Role = dto.Role, Password = SystemAccountHelper.DefaultPassword };
+            =>
+            new User
+            {
+                DisplayName = dto.DisplayName,
+                Email = dto.Email,
+                Role = dto.Role,
+                Password = SystemAccountHelper.DefaultPassword
+            };
 
         public static IEnumerable<UserDto> ToDtos(this IEnumerable<User> entities) => entities.Select(ToDto);
     }

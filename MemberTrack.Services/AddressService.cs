@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using MemberTrack.Data;
 using MemberTrack.Data.Entities;
@@ -6,6 +7,7 @@ using MemberTrack.Services.Contracts;
 using MemberTrack.Services.Dtos;
 using MemberTrack.Services.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace MemberTrack.Services
 {
@@ -19,6 +21,12 @@ namespace MemberTrack.Services
             _context = context;
             _userService = userService;
         }
+
+        public IDbContextTransaction BeginTransaction() => _context.Database.BeginTransaction();
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync(
+                CancellationToken cancellationToken = new CancellationToken())
+            => await _context.Database.BeginTransactionAsync(cancellationToken);
 
         public async Task Delete(string contextUserEmail, long personId)
         {

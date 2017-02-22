@@ -24,13 +24,23 @@ namespace MemberTrack.Data.Entities
 
         public DateTimeOffset? BaptismDate { get; set; }
 
+        public DateTimeOffset? FirstVisitDate { get; set; }
+
         public GenderEnum Gender { get; set; }
 
         public AgeGroupEnum AgeGroup { get; set; }
 
-        public virtual ICollection<Visit> Visits { get; set; } = new List<Visit>();
+        public bool HasInfantKids { get; set; }
 
-        public virtual ICollection<ChildrenInfo> ChildrenInfos { get; set; } = new List<ChildrenInfo>();
+        public bool HasToddlerKids { get; set; }
+
+        public bool HasElementaryKids { get; set; }
+
+        public bool HasJuniorHighKids { get; set; }
+
+        public bool HasHighSchoolKids { get; set; }
+
+        public virtual ICollection<PersonCheckList> CheckLists { get; set; } = new List<PersonCheckList>();
 
         public long Id { get; set; }
     }

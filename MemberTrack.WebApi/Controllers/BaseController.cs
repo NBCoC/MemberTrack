@@ -2,7 +2,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using MemberTrack.Common;
-using MemberTrack.Data;
 using MemberTrack.Services.Exceptions;
 using MemberTrack.WebApi.Security;
 using Microsoft.AspNetCore.Authorization;
@@ -15,13 +14,7 @@ namespace MemberTrack.WebApi.Controllers
     [Authorize]
     public abstract class BaseController : Controller
     {
-        protected BaseController(DatabaseContext context, ILogger logger)
-        {
-            Context = context;
-            Logger = logger;
-        }
-
-        protected DatabaseContext Context { get; }
+        protected BaseController(ILogger logger) { Logger = logger; }
 
         protected ILogger Logger { get; }
 

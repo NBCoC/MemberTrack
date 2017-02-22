@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using MemberTrack.Common;
-using MemberTrack.Data;
 using MemberTrack.Services.Contracts;
 using MemberTrack.Services.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -14,8 +13,8 @@ namespace MemberTrack.WebApi.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(DatabaseContext context, ILoggerFactory loggerFactory, IUserService userService)
-            : base(context, loggerFactory.CreateLogger<UserController>())
+        public UserController(ILoggerFactory loggerFactory, IUserService userService)
+            : base(loggerFactory.CreateLogger<UserController>())
         {
             _userService = userService;
         }
@@ -53,7 +52,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserInsertDto dto)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _userService.BeginTransactionAsync();
 
             try
             {
@@ -76,7 +75,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(long id, [FromBody] UserUpdateDto dto)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _userService.BeginTransactionAsync();
 
             try
             {
@@ -99,7 +98,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _userService.BeginTransactionAsync();
 
             try
             {
@@ -120,7 +119,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpPut("UpdatePassword/{id}")]
         public async Task<IActionResult> UpdatePassword(long id, [FromBody] UserUpdatePasswordDto dto)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _userService.BeginTransactionAsync();
 
             try
             {
@@ -141,7 +140,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpPost("ResetPassword/{id}")]
         public async Task<IActionResult> ResetPassword(long id)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _userService.BeginTransactionAsync();
 
             try
             {
@@ -173,6 +172,14 @@ namespace MemberTrack.WebApi.Controllers
             {
                 return Exception(e);
             }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult IsAuthenticated()
+        {
+            // If token hasnt been issued or is expired, consumer wont be able to access this method...
+            return Ok();
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MemberTrack.Data;
 using MemberTrack.Services.Contracts;
 using MemberTrack.Services.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -12,17 +11,19 @@ namespace MemberTrack.WebApi.Controllers
     public class AddressController : BaseController
     {
         private readonly IAddressService _addressService;
+        private readonly IPersonService _personService;
 
-        public AddressController(DatabaseContext context, ILoggerFactory loggerFactory, IAddressService addressService)
-            : base(context, loggerFactory.CreateLogger<AddressController>())
+        public AddressController(ILoggerFactory loggerFactory, IAddressService addressService, IPersonService personService)
+            : base(loggerFactory.CreateLogger<AddressController>())
         {
             _addressService = addressService;
+            _personService = personService;
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _addressService.BeginTransactionAsync();
 
             try
             {
@@ -43,7 +44,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpPost("{id}")]
         public async Task<IActionResult> Post(long id, [FromBody] AddressInsertOrUpdateDto dto)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _addressService.BeginTransactionAsync();
 
             try
             {
@@ -51,7 +52,9 @@ namespace MemberTrack.WebApi.Controllers
 
                 trans.Commit();
 
-                return Ok();
+                var data = await _personService.Find(x => x.Id == id);
+
+                return Ok(data);
             }
             catch (Exception e)
             {

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Threading.Tasks;
-using MemberTrack.Data;
-using MemberTrack.Services.Contracts;
-using MemberTrack.Services.Dtos;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-
-namespace MemberTrack.WebApi.Controllers
+﻿namespace MemberTrack.WebApi.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
+    using Services.Contracts;
+    using Services.Dtos;
+
     [Route("api/[controller]")]
     public class PersonController : BaseController
     {
         private readonly IPersonService _personService;
 
-        public PersonController(DatabaseContext context, ILoggerFactory loggerFactory, IPersonService personService)
-            : base(context, loggerFactory.CreateLogger<PersonController>())
+        public PersonController(ILoggerFactory loggerFactory, IPersonService personService)
+            : base(loggerFactory.CreateLogger<PersonController>())
         {
             _personService = personService;
         }
@@ -25,6 +24,8 @@ namespace MemberTrack.WebApi.Controllers
             try
             {
                 var data = await _personService.Find(x => x.Id == id);
+
+                //TODO: load check items....
 
                 return Ok(data);
             }
@@ -37,7 +38,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _personService.BeginTransactionAsync();
 
             try
             {
@@ -58,7 +59,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] PersonInsertOrUpdateDto dto)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _personService.BeginTransactionAsync();
 
             try
             {
@@ -66,7 +67,9 @@ namespace MemberTrack.WebApi.Controllers
 
                 trans.Commit();
 
-                return Ok(id);
+                var data = await _personService.Find(x => x.Id == id);
+
+                return Ok(data);
             }
             catch (Exception e)
             {
@@ -79,7 +82,7 @@ namespace MemberTrack.WebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(long id, [FromBody] PersonInsertOrUpdateDto dto)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _personService.BeginTransactionAsync();
 
             try
             {
@@ -87,7 +90,9 @@ namespace MemberTrack.WebApi.Controllers
 
                 trans.Commit();
 
-                return Ok();
+                var data = await _personService.Find(x => x.Id == id);
+
+                return Ok(data);
             }
             catch (Exception e)
             {
@@ -98,10 +103,25 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [Route("[action]")]
-        [HttpPost("{id}")]
+        [HttpGet]
+        public async Task<IActionResult> Search(string contains)
+        {
+            try
+            {
+                var data = await _personService.Search(contains);
+
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return Exception(e);
+            }
+        }
+
+        [HttpPost("ChildrenInfo/{id}")]
         public async Task<IActionResult> ChildrenInfo(long id, [FromBody] ChildrenInfoDto dto)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _personService.BeginTransactionAsync();
 
             try
             {
@@ -109,7 +129,9 @@ namespace MemberTrack.WebApi.Controllers
 
                 trans.Commit();
 
-                return Ok();
+                var data = await _personService.Find(x => x.Id == id);
+
+                return Ok(data);
             }
             catch (Exception e)
             {
@@ -119,19 +141,43 @@ namespace MemberTrack.WebApi.Controllers
             }
         }
 
-        [Route("[action]")]
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Visit(long id, [FromBody] VisitDto dto)
+        [HttpPost("Dates/{id}")]
+        public async Task<IActionResult> Dates(long id, [FromBody] DatesDto dto)
         {
-            var trans = await Context.Database.BeginTransactionAsync();
+            var trans = await _personService.BeginTransactionAsync();
 
             try
             {
-                await _personService.InsertOrUpdateVisit(ContextUserEmail, dto, id);
+                await _personService.UpdateDates(ContextUserEmail, dto, id);
 
                 trans.Commit();
 
-                return Ok();
+                var data = await _personService.Find(x => x.Id == id);
+
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                trans.Rollback();
+
+                return Exception(e);
+            }
+        }
+
+        [HttpPost("CheckListItem/{id}")]
+        public async Task<IActionResult> CheckListItem(long id, [FromBody] PersonCheckListItemDto dto)
+        {
+            var trans = await _personService.BeginTransactionAsync();
+
+            try
+            {
+                await _personService.InsertOrRemoveCheckListItem(ContextUserEmail, dto, id);
+
+                trans.Commit();
+
+                var data = await _personService.Find(x => x.Id == id);
+
+                return Ok(data);
             }
             catch (Exception e)
             {

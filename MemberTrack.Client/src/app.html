@@ -1,0 +1,10 @@
+<template>
+  <require from="material-design-lite/material.min.css"></require>
+  <require from="mdl-selectfield/mdl-selectfield.css"></require>
+  <require from="dialog-polyfill/dialog-polyfill.css"></require>
+  <require from="./styles/dashboard.css"></require>
+  <require from="./styles/member-track.css"></require>
+  <router-view></router-view>
+  <membertrack-snackbar></membertrack-snackbar>
+  <div membertrack-mdl="spinner" loading-indicator class="is-active" if.bind="isLoading"></div>
+</template>

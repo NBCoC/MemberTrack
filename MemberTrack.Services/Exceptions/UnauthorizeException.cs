@@ -4,6 +4,6 @@ namespace MemberTrack.Services.Exceptions
 {
     public class UnauthorizeException : Exception
     {
-        public UnauthorizeException() : base("You are not authorized to perform this action") { }
+        public UnauthorizeException() : base("You are not authorized to perform this action. Please contact System Administrator.") { }
     }
 }

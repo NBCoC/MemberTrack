@@ -1,0 +1,161 @@
+/* animations */
+
+@mixin fadeIn-animation($second) {
+  -webkit-animation: fadeIn $second;
+  animation: fadeIn $second;
+}
+
+@mixin fadeIn-animation-definition($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@include fadeIn-animation-definition(fadeIn) {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+section {
+  @include fadeIn-animation(1s);
+}
+
+
+/* Helper classes */
+
+.full-width {
+  width: 100%;
+}
+
+dialog {
+  position: fixed;
+  top: 5%;
+  width: 340px !important;
+}
+
+#prompt-delete-dialog .mdl-dialog__content p span {
+  font-weight: bolder;
+  padding: 0 5px;
+}
+
+#app-title {
+  text-align: center;
+  font-size: xx-large;
+  margin-bottom: 30px;
+}
+
+#current-user {
+  text-align: center;
+}
+
+#sign-in-btn {
+  width: 100%;
+  padding: 0;
+}
+
+.check-list-items {
+  margin-bottom: 5px;
+  span.check-list-item-date {
+    font-style: italic;
+    font-size: small;
+  }
+}
+
+.check-list-item-note {
+  padding-left: 25px;
+  p {
+    font-style: italic;
+  }
+}
+
+.children-info {
+  margin-right: 5px;
+}
+
+#children-info-dialog {
+  label[membertrack-mdl="checkbox"] {
+    margin-bottom: 5px;
+  }
+}
+
+.page-redirect-text {
+  font-size: 30px;
+  line-height: 72px;
+  text-shadow: rgba(0, 0, 0, 0.5) 0 0 15px;
+  text-transform: uppercase;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.loading-text {
+  @extend .page-redirect-text;
+  font-size: 20px;
+  text-align: center;
+}
+
+.person-dates {
+  font-style: italic;
+  @extend .pull-right;
+}
+
+/* MDL overrides */
+
+td.align {
+  vertical-align: middle !important;
+}
+
+.mdl-data-table {
+  th {
+    text-align: left;
+  }
+  td {
+    text-align: left;
+  }
+}
+
+.mdl-card__title-text {
+  font-size: 16px;
+}
+
+.mdl-card__supporting-text {
+  width: initial;
+}
+
+.float-btn {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  z-index: 900;
+}
+
+.add-btn {
+  @extend .float-btn;
+  margin-right: 40px;
+  margin-bottom: 40px;
+}
+
+[loading-indicator] {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 70px;
+  bottom: 50px;
+  z-index: 999;
+}
+
+.pull-right {
+  float: right !important;
+}

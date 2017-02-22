@@ -1,16 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using MemberTrack.Data;
-using MemberTrack.Data.Entities;
-using MemberTrack.Services.Contracts;
-using MemberTrack.Services.Dtos;
-using MemberTrack.Services.Exceptions;
-using Microsoft.EntityFrameworkCore;
-
-namespace MemberTrack.Services
+﻿namespace MemberTrack.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Contracts;
+    using Data;
+    using Data.Entities;
+    using Dtos;
+    using Exceptions;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Storage;
+
     public class PersonService : IPersonService
     {
         private readonly DatabaseContext _context;
@@ -21,6 +24,13 @@ namespace MemberTrack.Services
             _context = context;
             _userService = userService;
         }
+
+
+        public IDbContextTransaction BeginTransaction() => _context.Database.BeginTransaction();
+
+        public async Task<IDbContextTransaction> BeginTransactionAsync(
+                CancellationToken cancellationToken = new CancellationToken())
+            => await _context.Database.BeginTransactionAsync(cancellationToken);
 
         public async Task Delete(string contextUserEmail, long personId)
         {
@@ -45,14 +55,63 @@ namespace MemberTrack.Services
                 throw new ArgumentNullException(nameof(predicate));
             }
 
-            var entity = await _context.People.FirstOrDefaultAsync(predicate);
+            var entity =
+                await
+                    _context.People.Include(p => p.Address).
+                        Include(p => p.CheckLists).
+                        ThenInclude(cl => cl.PersonCheckListItem).
+                        FirstOrDefaultAsync(predicate);
 
             if (entity == null)
             {
                 throw new EntityNotFoundException();
             }
 
-            return entity.ToDto();
+            var dto = entity.ToDto();
+
+            var existingItems = dto.CheckListItems.ToList();
+
+            var checkListItems =
+                await
+                    _context.PersonCheckListItems.Where(pcli => existingItems.All(cli => cli.Id != pcli.Id)).
+                        Select(
+                            v =>
+                                new PersonCheckListItemDto
+                                {
+                                    Description = v.Description,
+                                    Id = v.Id,
+                                    Type = v.CheckListItemType
+                                }).
+                        ToListAsync();
+
+            existingItems.AddRange(checkListItems);
+
+            dto.CheckListItems = existingItems;
+
+            return dto;
+        }
+
+        public async Task<SearchResultDto<PersonSearchDto>> Search(string contains)
+        {
+            if (string.IsNullOrEmpty(contains))
+            {
+                return new SearchResultDto<PersonSearchDto>(new List<PersonSearchDto>(), 0);
+            }
+
+            var query = _context.People.AsQueryable();
+
+            query = query.Take(25);
+
+            contains = contains.ToLower();
+
+            query = query.Where(
+                x => x.FirstName.ToLower().Contains(contains) || x.LastName.ToLower().Contains(contains));
+
+            var count = await _context.People.CountAsync();
+
+            var data = (await query.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToListAsync()).ToDtos();
+
+            return new SearchResultDto<PersonSearchDto>(data, count);
         }
 
         public async Task<long> Insert(string contextUserEmail, PersonInsertOrUpdateDto dto)
@@ -101,6 +160,29 @@ namespace MemberTrack.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateDates(string contextUserEmail, DatesDto dto, long personId)
+        {
+            await _userService.ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Editor);
+
+            if (dto == null)
+            {
+                throw new ArgumentNullException(nameof(DatesDto));
+            }
+
+            var entity = await _context.People.FirstOrDefaultAsync(p => p.Id == personId);
+
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(personId);
+            }
+
+            entity.BaptismDate = dto.BaptismDate;
+            entity.FirstVisitDate = dto.FirstVisitDate;
+            entity.MembershipDate = dto.MembershipDate;
+
+            await _context.SaveChangesAsync();
+        }
+
         public async Task InsertChildrenInfo(string contextUserEmail, ChildrenInfoDto dto, long personId)
         {
             await _userService.ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Editor);
@@ -110,49 +192,58 @@ namespace MemberTrack.Services
                 throw new ArgumentNullException(nameof(ChildrenInfoDto));
             }
 
-            var childrenInfo = await _context.ChildrenInfos.Where(ci => ci.PersonId == personId).ToListAsync();
+            var entity = await _context.People.FirstOrDefaultAsync(p => p.Id == personId);
 
-            childrenInfo.ForEach(item => _context.ChildrenInfos.Remove(item));
-
-            await _context.SaveChangesAsync();
-
-            foreach (var ageGroup in dto.AgeGroups)
+            if (entity == null)
             {
-                _context.ChildrenInfos.Add(new ChildrenInfo {PersonId = personId, AgeGroup = ageGroup});
+                throw new EntityNotFoundException(personId);
             }
+
+            entity.HasElementaryKids = dto.HasElementaryKids;
+            entity.HasHighSchoolKids = dto.HasHighSchoolKids;
+            entity.HasInfantKids = dto.HasInfantKids;
+            entity.HasJuniorHighKids = dto.HasJuniorHighKids;
+            entity.HasToddlerKids = dto.HasToddlerKids;
 
             await _context.SaveChangesAsync();
         }
 
-        public async Task InsertOrUpdateVisit(string contextUserEmail, VisitDto dto, long personId)
+        public async Task InsertOrRemoveCheckListItem(
+            string contextUserEmail, PersonCheckListItemDto dto, long personId)
         {
             await _userService.ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Editor);
 
             if (dto == null)
             {
-                throw new ArgumentNullException(nameof(VisitDto));
+                throw new ArgumentNullException(nameof(PersonCheckListItemDto));
             }
 
-            var visit = await _context.Visits.FirstOrDefaultAsync(v => v.Date == dto.Date && v.VisitorId == personId);
+            var model =
+                await
+                    _context.PersonCheckLists.FirstOrDefaultAsync(
+                        pcl => pcl.PersonCheckListItemId == dto.Id && pcl.PersonId == personId);
 
-            var checkList =
-                dto.CheckListItems.Select(
-                    cli => new VisitCheckList {VisitorId = personId, VisitCheckListItemId = cli.Id}).ToList();
-
-            if (visit == null)
+            if (model == null)
             {
-                visit = new Visit {Note = dto.Note, Date = dto.Date, VisitorId = personId, CheckList = checkList};
+                model = new PersonCheckList
+                {
+                    PersonId = personId,
+                    PersonCheckListItemId = dto.Id,
+                    Note = dto.Note,
+                    Date = DateTimeOffset.UtcNow
+                };
 
-                _context.Visits.Add(visit);
+                _context.PersonCheckLists.Add(model);
             }
             else
             {
-                visit.Note = dto.Note;
-
-                checkList.ForEach(item => visit.CheckList.Add(item));
+                _context.PersonCheckLists.Remove(model);
             }
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<PersonCheckListItemLookupDto>> GetCheckListItemLookup()
+            => (await _context.PersonCheckListItems.ToListAsync()).ToDtos();
     }
 }

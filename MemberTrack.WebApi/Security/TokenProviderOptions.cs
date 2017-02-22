@@ -14,7 +14,7 @@ namespace MemberTrack.WebApi.Security
 
         public string Audience { get; set; }
 
-        public TimeSpan Expiration => TimeSpan.FromMinutes(25);
+        public TimeSpan Expiration => TimeSpan.FromMinutes(30);
 
         public SigningCredentials SigningCredentials { get; set; }
 

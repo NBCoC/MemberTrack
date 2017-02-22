@@ -6,7 +6,7 @@ namespace MemberTrack.Data.Entities
 {
     public enum StateEnum
     {
-        [Description("Alabama")] AL,
+        [Description("Alabama")] AL = 1,
 
         [Description("Alaska")] AK,
 

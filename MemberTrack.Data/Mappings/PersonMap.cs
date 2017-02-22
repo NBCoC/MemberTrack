@@ -27,9 +27,7 @@ namespace MemberTrack.Data.Mappings
 
             builder.Entity<Person>().Property(x => x.LastName).IsRequired().HasMaxLength(75);
 
-            builder.Entity<Person>().HasMany(x => x.Visits).WithOne(x => x.Visitor).HasForeignKey(x => x.VisitorId);
-
-            builder.Entity<Person>().HasMany(x => x.ChildrenInfos).WithOne(x => x.Person).HasForeignKey(x => x.PersonId);
+            builder.Entity<Person>().HasMany(x => x.CheckLists).WithOne(x => x.Person).HasForeignKey(x => x.PersonId);
         }
     }
 }
