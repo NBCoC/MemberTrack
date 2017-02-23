@@ -1,12 +1,11 @@
-using System;
-using System.Threading.Tasks;
-using MemberTrack.Common;
-using MemberTrack.Data;
-using MemberTrack.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-
 namespace MemberTrack.DbUtil
 {
+    using System;
+    using System.Threading.Tasks;
+    using Common;
+    using Data;
+    using Microsoft.EntityFrameworkCore;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -19,9 +18,10 @@ namespace MemberTrack.DbUtil
 
                 Console.WriteLine("Datasource: {0}", arguments.Datasource);
                 Console.WriteLine("Catalog: {0}", arguments.Catalog);
+
                 if (arguments.ForceReseeding)
                 {
-                    Console.WriteLine("Forcing the reseeding of the system accounts", arguments.Catalog);
+                    Console.WriteLine("Forcing the reseeding of the system accounts");
                 }
 
                 using (var dbContext = new DatabaseContextFactory().Create(arguments.Datasource, arguments.Catalog))
@@ -44,7 +44,7 @@ namespace MemberTrack.DbUtil
 
         private static async Task SeedSystemAccount(DatabaseContext context, bool forced)
         {
-            const string UserTableName = "dbo.[User]";
+            const string userTableName = "dbo.[User]";
 
             try
             {
@@ -52,19 +52,20 @@ namespace MemberTrack.DbUtil
 
                 if (seeded && !forced) return;
 
-                if (forced)
+                foreach (var userAccount in SystemAccountHelper.SystemAccounts)
                 {
-                    context.Database.ExecuteSqlCommand($"TRUNCATE TABLE {UserTableName}");
-                }
+                    if (forced)
+                    {
+                        context.Database.ExecuteSqlCommand(
+                            $"DELETE FROM {userTableName} WHERE Email = '{userAccount.Email}'");
+                    }
 
-                foreach (User userAccount in SystemAccountHelper.SystemAccounts)
-                {
-                    var query = $@"SET IDENTITY_INSERT {UserTableName} ON
-								INSERT INTO {UserTableName}
+                    var query = $@"SET IDENTITY_INSERT {userTableName} ON
+								INSERT INTO {userTableName}
 									(Id, DisplayName, Role, Password, Email) 
 								VALUES({userAccount.Id}, '{userAccount.DisplayName}', 
-                    {(int)userAccount.Role}, '{userAccount.Password}', '{userAccount.Email}')
-								SET IDENTITY_INSERT {UserTableName} OFF";
+                    {(int) userAccount.Role}, '{userAccount.Password}', '{userAccount.Email}')
+								SET IDENTITY_INSERT {userTableName} OFF";
 
                     await context.Database.ExecuteSqlCommandAsync(query);
                 }
@@ -74,6 +75,5 @@ namespace MemberTrack.DbUtil
                 Console.WriteLine(e.ToDetail());
             }
         }
-
     }
 }
