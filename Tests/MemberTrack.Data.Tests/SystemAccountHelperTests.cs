@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using MemberTrack.Common;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace MemberTrack.Data.Tests
         public void IsSystemAccount_ID_Success()
         {
             var systemAccounts = SystemAccountHelper.SystemAccounts;
-            
+
             foreach (var systemAccount in systemAccounts)
             {
                 var isSystemAccount = SystemAccountHelper.IsSystemAccount(systemAccount.Id);
@@ -60,5 +61,12 @@ namespace MemberTrack.Data.Tests
             Assert.IsFalse(SystemAccountHelper.IsSystemAccount("Jesus.Wept@John1135.com"));
         }
 
+        [TestMethod]
+        public void DefaultPassword_Verfiy()
+        {
+            var hashProvider = new HashProvider();
+            var hash = hashProvider.Hash("P@55word");
+            Assert.AreEqual(SystemAccountHelper.DefaultPassword, hash);
+        }
     }
 }

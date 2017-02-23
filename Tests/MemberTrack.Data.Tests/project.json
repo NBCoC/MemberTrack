@@ -4,6 +4,7 @@
 
     "dependencies": {
         "dotnet-test-mstest": "1.1.2-preview",
+        "MemberTrack.Common": "1.0.0.0",
         "MemberTrack.Data": "1.0.0.0",
         "MSTest.TestFramework": "1.1.11"
     },
