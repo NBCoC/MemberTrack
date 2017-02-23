@@ -5,6 +5,7 @@ Step by step guide for running the app in debug mode:
 
 Setup
 1. In Microsoft SQL Server Management Studio, open a connection to localhost.
+
 2. Create a new database by the name of 'MemberTrack'  (default database name in .\MemberTrack.WebApi\appsettings.Development.json )
 3. Open .\MemberTrack.DbUti\MemberTrack.sql in SQL Server Management Studio and run it against the new database.
 4. Open .\MemberTrack.sln in Visual Studio and build it.
