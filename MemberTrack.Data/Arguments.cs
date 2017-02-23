@@ -1,14 +1,16 @@
-using System;
-using Fclp;
-
 namespace MemberTrack.Data
 {
+    using System;
+    using Fclp;
+
     public class Arguments
     {
         public string Datasource { get; set; } = "localhost";
 
         public string Catalog { get; set; } = "MemberTrack";
-        
+
+        public bool ForceReseeding { get; set; }
+
         public Arguments Parse(string[] args)
         {
             if (args.Length == 0)
@@ -21,7 +23,9 @@ namespace MemberTrack.Data
             parser.Setup(arg => arg.Catalog).As('c', "Catalog").Required();
 
             parser.Setup(arg => arg.Datasource).As('d', "Datasource").Required();
-            
+
+            parser.Setup(arg => arg.ForceReseeding).As('f', "ForceReseeding").SetDefault(false);
+
             var result = parser.Parse(args);
 
             if (result.HasErrors)

@@ -5,6 +5,7 @@ using MemberTrack.Services.Contracts;
 using MemberTrack.Services.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MemberTrack.Data;
 
 namespace MemberTrack.WebApi.Controllers
 {
@@ -24,7 +25,7 @@ namespace MemberTrack.WebApi.Controllers
         {
             try
             {
-                var data = await _userService.Find(x => x.Id == id && x.Id != SystemAccountHelper.UserId);
+                var data = await _userService.Find(x => x.Id == id && !SystemAccountHelper.IsSystemAccount(x.Id));
 
                 return Ok(data);
             }
@@ -39,7 +40,7 @@ namespace MemberTrack.WebApi.Controllers
         {
             try
             {
-                var data = await _userService.Where(x => x.Id != SystemAccountHelper.UserId);
+                var data = await _userService.Where(x => !SystemAccountHelper.IsSystemAccount(x.Id));
 
                 return Ok(data);
             }

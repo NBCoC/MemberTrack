@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MemberTrack.Common;
 using MemberTrack.Data.Entities;
+using MemberTrack.Data;
 
 namespace MemberTrack.Services.Dtos
 {

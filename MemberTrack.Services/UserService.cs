@@ -60,7 +60,7 @@ namespace MemberTrack.Services
             }
 
             var entity = dto.ToEntity();
-            
+
             _context.Users.Add(entity);
 
             await _context.SaveChangesAsync();
@@ -73,7 +73,7 @@ namespace MemberTrack.Services
             await ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Admin);
 
             var entity =
-                await _context.Users.FirstOrDefaultAsync(u => u.Id == userId && u.Id != SystemAccountHelper.UserId);
+                await _context.Users.FirstOrDefaultAsync(u => u.Id == userId && !SystemAccountHelper.IsSystemAccount(u.Id));
 
             if (entity == null)
             {
@@ -95,7 +95,7 @@ namespace MemberTrack.Services
             }
 
             var entity =
-                await _context.Users.FirstOrDefaultAsync(u => u.Id == userId && u.Id != SystemAccountHelper.UserId);
+                await _context.Users.FirstOrDefaultAsync(u => u.Id == userId && !SystemAccountHelper.IsSystemAccount(u.Id));
 
             if (entity == null)
             {
@@ -136,7 +136,7 @@ namespace MemberTrack.Services
             await ThrowIfNotInRole(contextUserEmail, UserRoleEnum.SystemAdmin);
 
             var entity =
-                await _context.Users.FirstOrDefaultAsync(u => u.Id == userId && u.Id != SystemAccountHelper.UserId);
+                await _context.Users.FirstOrDefaultAsync(u => u.Id == userId && !SystemAccountHelper.IsSystemAccount(u.Id));
 
             if (entity == null)
             {
@@ -167,7 +167,7 @@ namespace MemberTrack.Services
             var entity =
                 await
                     _context.Users.FirstOrDefaultAsync(
-                        u => u.Id == userId && u.Password.Equals(hashedPassword) && u.Id != SystemAccountHelper.UserId);
+                        u => u.Id == userId && u.Password.Equals(hashedPassword) && !SystemAccountHelper.IsSystemAccount(u.Id));
 
             if (entity == null)
             {
@@ -186,7 +186,7 @@ namespace MemberTrack.Services
 
         public async Task ThrowIfNotInRole(string email, UserRoleEnum role)
         {
-            if (email.Equals(SystemAccountHelper.Email)) return;
+            if (SystemAccountHelper.IsSystemAccount(email)) return;
 
             var entity = await _context.Users.FirstOrDefaultAsync(u => u.Email.Equals(email));
 

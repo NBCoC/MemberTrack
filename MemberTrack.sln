@@ -15,6 +15,15 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.WinServ", "Memb
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.WebApi", "MemberTrack.WebApi\MemberTrack.WebApi.xproj", "{7AAA3FE8-5D63-474E-AB64-EE0DE4B1AB9C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E3EC8856-1635-406B-B856-4B2041E8341B}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.Data.Tests", "Tests\MemberTrack.Data.Tests\MemberTrack.Data.Tests.xproj", "{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B201729-3D76-4AED-8953-CEFEF40BEA42}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,8 +54,15 @@ Global
 		{7AAA3FE8-5D63-474E-AB64-EE0DE4B1AB9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AAA3FE8-5D63-474E-AB64-EE0DE4B1AB9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AAA3FE8-5D63-474E-AB64-EE0DE4B1AB9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8} = {E3EC8856-1635-406B-B856-4B2041E8341B}
 	EndGlobalSection
 EndGlobal
