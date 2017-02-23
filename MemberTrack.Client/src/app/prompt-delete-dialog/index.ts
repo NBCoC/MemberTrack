@@ -1,1 +1,0 @@
-export { PromptDeleteDialogComponent } from './prompt-delete-dialog.component';
