@@ -1,14 +1,14 @@
+import { EventDispatcher } from './event-dispatcher';
 import * as dialogPolyfill from 'dialog-polyfill/dialog-polyfill';
 
 import { MdlHelper } from './mdl-helper';
 
-export abstract class BaseDialog {
+export abstract class BaseDialog extends EventDispatcher {
     private dialogId: string;
     private dialog: any;
-    private element: Element;
 
     constructor(element: Element, dialogId: string) {
-        this.element = element;
+        super(element);
         this.dialogId = dialogId;
     }
 
@@ -30,26 +30,10 @@ export abstract class BaseDialog {
         });
     }
 
-    protected dismiss(args?: any): void {
-        let dismissEvent: CustomEvent;
-
-        if ((window as any).CustomEvent) {
-            dismissEvent = new CustomEvent('dismiss', {
-                detail: {
-                    args: args,
-                }, bubbles: true
-            });
-        } else {
-            dismissEvent = document.createEvent('CustomEvent');
-            dismissEvent.initCustomEvent('dismiss', true, true, {
-                detail: {
-                    args: args
-                }
-            });
-        }
-
-        this.element.dispatchEvent(dismissEvent);
+    protected dismiss(args?: any): boolean {
         this.dialog.close();
+
+        return this.dispatchEvent('dismiss', args);
     }
 
     public cancel(): void {

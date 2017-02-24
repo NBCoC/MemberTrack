@@ -1,0 +1,23 @@
+<template>
+  <require from="../view-models/dates-dialog.view-model"></require>
+  <!--Dialog-->
+  <membertrack-dates-dialog view-model.ref="datesDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-dates-dialog>
+  <!--Content-->
+  <div class="mdl-grid demo-content">
+    <div class="mdl-card mdl-shadow--2dp full-width">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Dates</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        <p><span class="mdl-checkbox__label">1st Visit</span> <span class="person-dates"
+            if.bind="person.dates.firstVisitDate">${person.dates.firstVisitDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+        <p><span class="mdl-checkbox__label">Baptism</span> <span class="person-dates"
+            if.bind="person.dates.baptismDate">${person.dates.baptismDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+        <p><span class="mdl-checkbox__label">Membership Placement</span:> <span class="person-dates" if.bind="person.dates.membershipDate">${person.dates.membershipDate | dateFormat : 'MMMM Do YYYY'}</span></p>
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayDialog()">Edit</button>
+      </div>
+    </div>
+  </div>
+</template>

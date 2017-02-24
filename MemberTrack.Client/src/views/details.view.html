@@ -1,0 +1,55 @@
+<template>
+  <require from="../view-models/member-dialog.view-model"></require>
+  <!--Dialog-->
+  <membertrack-member-dialog view-model.ref="memberDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-member-dialog>
+  <!--Content-->
+  <div class="mdl-grid demo-content">
+    <div class="mdl-card mdl-shadow--2dp full-width">
+      <div class="mdl-card__supporting-text">
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="fnControl" value.two-way="person.firstName"
+            readonly>
+          <label class="mdl-textfield__label" for="fnControl">First Name</label>
+        </div>
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="mnControl" value.two-way="person.middleName"
+            readonly>
+          <label class="mdl-textfield__label" for="mnControl">Middle Name</label>
+        </div>
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="lnControl" value.two-way="person.lastName"
+            readonly>
+          <label class="mdl-textfield__label" for="lnControl">Last Name</label>
+        </div>
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="ageGroupControl" value.two-way="person.ageGroupName"
+            readonly>
+          <label class="mdl-textfield__label" for="ageGroupControl">Age Group</label>
+        </div>
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="genderControl" value.two-way="person.genderName"
+            readonly>
+          <label class="mdl-textfield__label" for="genderControl">Gender</label>
+        </div>
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="statusControl" value.two-way="person.statusName"
+            readonly>
+          <label class="mdl-textfield__label" for="statusControl">Status</label>
+        </div>
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="contactNumberControl" value.two-way="person.contactNumber"
+            readonly>
+          <label class="mdl-textfield__label" for="contactNumberControl">Contact #</label>
+        </div>
+        <div membertrack-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="email" id="emailControl" value.two-way="person.email"
+            readonly>
+          <label class="mdl-textfield__label" for="emailControl">Email</label>
+        </div>
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayDialog()">Edit</button>
+      </div>
+    </div>
+  </div>
+</template>
