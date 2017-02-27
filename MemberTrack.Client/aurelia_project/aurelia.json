@@ -123,6 +123,11 @@
             "env": "dev"
           },
           {
+            "name": "aurelia-dialog",
+            "path": "../node_modules/aurelia-dialog/dist/amd",
+            "main": "aurelia-dialog"
+          },
+          {
             "name": "material-design-lite",
             "path": "../node_modules/material-design-lite/dist",
             "main": "material.min",
