@@ -62,6 +62,7 @@ export interface PersonCheckListItemDto {
     isSelected: boolean;
     note: string;
     date: Date;
+    sortOrder: number;
 }
 
 export interface DatesDto {

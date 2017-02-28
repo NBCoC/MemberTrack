@@ -302,3 +302,18 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170228142412_CheckListItemSortOrder')
+BEGIN
+    ALTER TABLE [PersonCheckListItem] ADD [SortOrder] int NOT NULL DEFAULT 0;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170228142412_CheckListItemSortOrder')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20170228142412_CheckListItemSortOrder', N'1.0.0-rtm-21431');
+END;
+
+GO
+

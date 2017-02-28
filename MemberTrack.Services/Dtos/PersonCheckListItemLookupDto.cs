@@ -12,5 +12,7 @@ namespace MemberTrack.Services.Dtos
         public CheckListItemTypeEnum Type { get; set; }
 
         public string TypeName => Type.ToDescription();
+
+        public int SortOrder { get; set; }
     }
 }

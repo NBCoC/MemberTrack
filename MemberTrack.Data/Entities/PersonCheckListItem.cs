@@ -11,6 +11,8 @@ namespace MemberTrack.Data.Entities
 
         public virtual ICollection<PersonCheckList> CheckLists { get; set; } = new List<PersonCheckList>();
 
+        public int SortOrder { get; set; }
+
         public long Id { get; set; }
     }
 }

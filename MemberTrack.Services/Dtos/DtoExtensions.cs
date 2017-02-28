@@ -46,7 +46,8 @@ namespace MemberTrack.Services.Dtos
                                 Date = v.Date,
                                 Description = v.PersonCheckListItem?.Description,
                                 Id = v.PersonCheckListItemId,
-                                Type = v.PersonCheckListItem?.CheckListItemType ?? CheckListItemTypeEnum.Unknown
+                                Type = v.PersonCheckListItem?.CheckListItemType ?? CheckListItemTypeEnum.Unknown,
+                                SortOrder = v.PersonCheckListItem?.SortOrder ?? 0
                             })
             };
 
@@ -70,7 +71,8 @@ namespace MemberTrack.Services.Dtos
             {
                 Id = entity.Id,
                 Type = entity.CheckListItemType,
-                Description = entity.Description
+                Description = entity.Description,
+                SortOrder = entity.SortOrder
             };
 
         public static IEnumerable<PersonCheckListItemLookupDto> ToDtos(this IEnumerable<PersonCheckListItem> entities)
