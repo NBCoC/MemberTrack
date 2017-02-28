@@ -10,7 +10,6 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.0",
     "aurelia-bootstrapper": "^1.0.0",
-    "aurelia-dialog": "^1.0.0-beta.3.0.1",
     "aurelia-http-client": "^0.1.4",
     "bluebird": "^3.4.1",
     "dialog-polyfill": "^0.4.5",
