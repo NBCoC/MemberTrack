@@ -33,5 +33,7 @@
         Task<IEnumerable<PersonCheckListItemLookupDto>> GetCheckListItemLookup();
 
         Task<SearchResultDto<PersonSearchDto>> Search(string contains);
+
+        Task<PersonReportDto> GetReport();
     }
 }

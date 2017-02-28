@@ -96,6 +96,17 @@ export interface SearchResultDto {
     data: any[];
 }
 
+export interface PersonReportItemDto {
+    memberCount: number;
+    visitorCount: number;
+    month: number;
+    monthName: string;
+}
+
+export interface PersonReportDto {
+    items: PersonReportItemDto[];
+}
+
 let getIndex = (array: any[], value: string | number): number => {
     let index = -1, count = array.length;
 

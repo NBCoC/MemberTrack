@@ -150,6 +150,11 @@
             "name": "moment",
             "path": "../node_modules/moment/min",
             "main": "moment.min"
+          },
+          {
+            "name": "chart.js",
+            "path": "../node_modules/chart.js/dist",
+            "main": "Chart.min.js"
           }
         ]
       }

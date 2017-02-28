@@ -3,13 +3,19 @@ import { HttpClient } from 'aurelia-http-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
 import { BaseService } from './base.service';
-import { SearchResultDto, PersonDto, ChildrenInfoDto, PersonCheckListItemDto, DatesDto } from '../core/dtos';
+import { SearchResultDto, PersonDto, ChildrenInfoDto, PersonCheckListItemDto, DatesDto, PersonReportDto } from '../core/dtos';
 
 @autoinject
 export class PersonService extends BaseService {
 
     constructor(client: HttpClient, eventAggregator: EventAggregator) {
         super(client, LogManager.getLogger('PersonService'), eventAggregator);
+    }
+
+     public getReport(): Promise<PersonReportDto> {
+        return this.client.get('person/report')
+            .then(result => JSON.parse(result.response))
+            .catch(this.handleError);
     }
 
     public search(contains: string): Promise<SearchResultDto> {

@@ -245,5 +245,53 @@
 
         public async Task<IEnumerable<PersonCheckListItemLookupDto>> GetCheckListItemLookup()
             => (await _context.PersonCheckListItems.ToListAsync()).ToDtos();
+
+        public async Task<PersonReportDto> GetReport()
+        {
+            var dto = new PersonReportDto();
+
+            var date = DateTimeOffset.UtcNow;
+
+            var lastYear = new DateTimeOffset(date.Year, date.Month, date.Day, 0, 0, 0, TimeSpan.Zero).AddYears(-1);
+
+            var entities =
+                await
+                    _context.People.Where(
+                            x =>
+                                (x.MembershipDate != null && x.FirstVisitDate != null) && (x.MembershipDate >= lastYear) ||
+                                (x.FirstVisitDate >= lastYear)).
+                        Select(x => new {x.FirstVisitDate, x.MembershipDate, x.Status}).
+                        ToListAsync();
+
+            var groups =
+                entities.Where(x => x.MembershipDate.HasValue && x.Status == PersonStatusEnum.Member).
+                    GroupBy(x => x.MembershipDate.Value.Month).
+                    ToList();
+
+            foreach (var group in groups)
+            {
+                var item = dto.Items.FirstOrDefault(x => x.Month == group.Key);
+
+                if (item == null) continue;
+
+                item.MemberCount = group.Count();
+            }
+
+            groups =
+                entities.Where(x => x.FirstVisitDate.HasValue && x.Status == PersonStatusEnum.Visitor).
+                    GroupBy(x => x.FirstVisitDate.Value.Month).
+                    ToList();
+
+            foreach (var group in groups)
+            {
+                var item = dto.Items.FirstOrDefault(x => x.Month == group.Key);
+
+                if (item == null) continue;
+
+                item.VisitorCount = group.Count();
+            }
+
+            return dto;
+        }
     }
 }

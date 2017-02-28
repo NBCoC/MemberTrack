@@ -317,3 +317,18 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170228160441_PersonCreatedDate')
+BEGIN
+    ALTER TABLE [Person] ADD [CreatedDate] datetimeoffset NOT NULL DEFAULT '0001-01-01T00:00:00.000+00:00';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170228160441_PersonCreatedDate')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20170228160441_PersonCreatedDate', N'1.0.0-rtm-21431');
+END;
+
+GO
+

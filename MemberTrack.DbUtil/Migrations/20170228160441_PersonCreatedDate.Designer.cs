@@ -8,9 +8,10 @@ using MemberTrack.Data;
 namespace MemberTrack.DbUtil.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20170228160441_PersonCreatedDate")]
+    partial class PersonCreatedDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
@@ -53,9 +54,7 @@ namespace MemberTrack.DbUtil.Migrations
                     b.Property<string>("ContactNumber")
                         .HasAnnotation("MaxLength", 15);
 
-                    b.Property<DateTimeOffset>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    b.Property<DateTimeOffset>("CreatedDate");
 
                     b.Property<string>("Email")
                         .HasAnnotation("MaxLength", 256);
