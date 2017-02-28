@@ -42,7 +42,7 @@ section {
 
 dialog {
   position: fixed;
-  top: 5%;
+  top: 80px;
   width: 340px !important;
 }
 
@@ -109,6 +109,14 @@ dialog {
   font-style: italic;
   @extend .pull-right;
 }
+
+dialog {
+  form {
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+  }
+}
+
 
 /* MDL overrides */
 
