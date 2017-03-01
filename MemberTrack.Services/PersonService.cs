@@ -93,25 +93,25 @@
 
         public async Task<SearchResultDto<PersonSearchDto>> Search(string contains)
         {
+            var count = await _context.People.CountAsync();
+
             if (string.IsNullOrEmpty(contains))
             {
-                return new SearchResultDto<PersonSearchDto>(new List<PersonSearchDto>(), 0);
+                return new SearchResultDto<PersonSearchDto>(new List<PersonSearchDto>(), count);
             }
-
-            var query = _context.People.AsQueryable();
-
-            query = query.Take(25);
 
             contains = contains.ToLower();
 
-            query = query.Where(
-                x => x.FirstName.ToLower().Contains(contains) || x.LastName.ToLower().Contains(contains));
+            var query =
+                await
+                    _context.People.Where(
+                            x => x.FirstName.ToLower().Contains(contains) || x.LastName.ToLower().Contains(contains)).
+                        Take(25).
+                        OrderBy(x => x.FirstName).
+                        ThenBy(x => x.LastName).
+                        ToListAsync();
 
-            var count = await _context.People.CountAsync();
-
-            var data = (await query.OrderBy(x => x.FirstName).ThenBy(x => x.LastName).ToListAsync()).ToDtos();
-
-            return new SearchResultDto<PersonSearchDto>(data, count);
+            return new SearchResultDto<PersonSearchDto>(query.ToDtos(), count);
         }
 
         public async Task<long> Insert(string contextUserEmail, PersonInsertOrUpdateDto dto)
@@ -254,41 +254,48 @@
 
             var lastYear = new DateTimeOffset(date.Year, date.Month, date.Day, 0, 0, 0, TimeSpan.Zero).AddYears(-1);
 
-            var entities =
+            var memberGroups =
                 await
                     _context.People.Where(
                             x =>
-                                (x.MembershipDate != null && x.FirstVisitDate != null) && (x.MembershipDate >= lastYear) ||
-                                (x.FirstVisitDate >= lastYear)).
-                        Select(x => new {x.FirstVisitDate, x.MembershipDate, x.Status}).
+                                (x.MembershipDate != null) && (x.MembershipDate <= date && x.MembershipDate >= lastYear) &&
+                                x.Status == PersonStatusEnum.Member).
+                        Select(x => new {x.MembershipDate}).
+                        GroupBy(x => new {x.MembershipDate.Value.Year, x.MembershipDate.Value.Month}).
                         ToListAsync();
 
-            var groups =
-                entities.Where(x => x.MembershipDate.HasValue && x.Status == PersonStatusEnum.Member).
-                    GroupBy(x => x.MembershipDate.Value.Month).
-                    ToList();
-
-            foreach (var group in groups)
+            foreach (var group in memberGroups)
             {
-                var item = dto.Items.FirstOrDefault(x => x.Month == group.Key);
+                var item = dto.Items.FirstOrDefault(x => x.Month == group.Key.Month);
 
                 if (item == null) continue;
 
-                item.MemberCount = group.Count();
+                if (group.Key.Month == date.Month &&
+                    group.Key.Year < date.Year) continue;
+
+                item.MemberCount += group.Count();
             }
 
-            groups =
-                entities.Where(x => x.FirstVisitDate.HasValue && x.Status == PersonStatusEnum.Visitor).
-                    GroupBy(x => x.FirstVisitDate.Value.Month).
-                    ToList();
+            var visitorGroups =
+                await
+                    _context.People.Where(
+                            x =>
+                                (x.FirstVisitDate != null) && (x.FirstVisitDate <= date && x.FirstVisitDate >= lastYear) &&
+                                x.Status == PersonStatusEnum.Visitor).
+                        Select(x => new {x.FirstVisitDate}).
+                        GroupBy(x => new {x.FirstVisitDate.Value.Year, x.FirstVisitDate.Value.Month}).
+                        ToListAsync();
 
-            foreach (var group in groups)
+            foreach (var group in visitorGroups)
             {
-                var item = dto.Items.FirstOrDefault(x => x.Month == group.Key);
+                var item = dto.Items.FirstOrDefault(x => x.Month == group.Key.Month);
 
                 if (item == null) continue;
 
-                item.VisitorCount = group.Count();
+                if (group.Key.Month == date.Month &&
+                    group.Key.Year < date.Year) continue;
+
+                item.VisitorCount += group.Count();
             }
 
             return dto;
