@@ -280,8 +280,7 @@
                 await
                     _context.People.Where(
                             x =>
-                                (x.FirstVisitDate != null) && (x.FirstVisitDate <= date && x.FirstVisitDate >= lastYear) &&
-                                x.Status == PersonStatusEnum.Visitor).
+                                (x.FirstVisitDate != null) && x.FirstVisitDate <= date && x.FirstVisitDate >= lastYear).
                         Select(x => new {x.FirstVisitDate}).
                         GroupBy(x => new {x.FirstVisitDate.Value.Year, x.FirstVisitDate.Value.Month}).
                         ToListAsync();
