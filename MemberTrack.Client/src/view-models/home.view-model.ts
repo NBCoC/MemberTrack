@@ -3,22 +3,34 @@ import { Router } from 'aurelia-router';
 
 import { MemberDialogViewModel } from '../view-models/member-dialog.view-model';
 import { PersonService } from '../services/person.service';
+import { AuthService } from '../services/auth.service';
 import { PersonEvent } from '../core/custom-events';
 import { PersonReportDto } from '../core/dtos';
 
 @autoinject
 export class HomeViewModel {
     private personService: PersonService;
+    private authService: AuthService;
     private router: Router;
     public memberDialogVm: MemberDialogViewModel;
     public report: PersonReportDto;
+    public isEditor: boolean;
 
-    constructor(personService: PersonService, router: Router) {
+    constructor(personService: PersonService, router: Router, authService: AuthService) {
         this.personService = personService;
+        this.authService = authService;
         this.router = router;
+        this.isEditor = false;
     }
 
     public attached(): void {
+        this.authService.getContextUser().then(user => {
+            if (!user) {
+                return;
+            }
+            this.isEditor = user.isEditor;
+        });
+
         this.personService.getReport().then(data => {
             if (!data) {
                 return;

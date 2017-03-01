@@ -7,6 +7,7 @@ import { bindable, customElement } from 'aurelia-framework';
 @customElement('membertrack-address')
 export class AddressViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
+    @bindable isEditor: boolean;
     public addressDialogVm: AddressDialogViewModel;
 
     constructor(element: Element) {

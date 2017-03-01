@@ -7,7 +7,7 @@
     <membertrack-report data.bind="report"></membertrack-report>
 
     <button membertrack-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
-      click.trigger="displayMemberDialog()">
+      click.trigger="displayMemberDialog()" if.bind="isEditor">
       New Member / Visitor
       </button>
   </section>

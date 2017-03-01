@@ -15,7 +15,9 @@ namespace MemberTrack.Services.Dtos
 
         public string RoleName => Role.ToDescription();
 
-        public bool IsAdmin => Role == UserRoleEnum.SystemAdmin || Role == UserRoleEnum.Admin;
+        public bool IsSystemAdmin => Role == UserRoleEnum.SystemAdmin;
+
+        public bool IsAdmin => IsSystemAdmin || Role == UserRoleEnum.Admin;
 
         public bool IsEditor => IsAdmin || Role == UserRoleEnum.Editor;
     }

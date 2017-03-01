@@ -10,6 +10,7 @@ import { bindable, customElement } from 'aurelia-framework';
 @customElement('membertrack-check-list')
 export class CheckListViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
+    @bindable isEditor: boolean;
     public checkListItemDialogVm: CheckListItemDialogViewModel;
     public promptDialogVm: PromptDialogViewModel;
     private personService: PersonService;
@@ -31,6 +32,10 @@ export class CheckListViewModel extends EventDispatcher {
         item.isSelected = !item.isSelected;
 
         this.initMdl();
+
+        if (!this.isEditor) {
+            return;
+        }
 
         if (!item.date) {
             this.checkListItemDialogVm.show(this.person.id, Object.assign({}, item));

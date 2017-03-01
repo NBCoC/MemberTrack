@@ -6,14 +6,14 @@
   <require from="../view-models/check-list.view-model"></require>
   <!--Content-->
   <section membertrack-view="member-details">
-    <membertrack-details person.bind="person" change.delegate="personChanged($event)"></membertrack-details>
+    <membertrack-details person.bind="person" is-editor.bind="isEditor" change.delegate="personChanged($event)"></membertrack-details>
 
-    <membertrack-address person.bind="person" change.delegate="personChanged($event)"></membertrack-address>
+    <membertrack-address person.bind="person" is-editor.bind="isEditor" change.delegate="personChanged($event)"></membertrack-address>
 
-    <membertrack-children-info person.bind="person" change.delegate="personChanged($event)"></membertrack-children-info>
+    <membertrack-children-info person.bind="person" is-editor.bind="isEditor" change.delegate="personChanged($event)"></membertrack-children-info>
 
-    <membertrack-dates person.bind="person" change.delegate="personChanged($event)"></membertrack-dates>
+    <membertrack-dates person.bind="person" is-editor.bind="isEditor" change.delegate="personChanged($event)"></membertrack-dates>
 
-    <membertrack-check-list person.bind="person" change.delegate="personChanged($event)"></membertrack-check-list>
+    <membertrack-check-list person.bind="person" is-editor.bind="isEditor" change.delegate="personChanged($event)"></membertrack-check-list>
   </section>
 </template>

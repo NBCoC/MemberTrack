@@ -36,6 +36,7 @@ export interface UserDto {
     roleName: string;
     isAdmin: boolean;
     isEditor: boolean;
+    isSystemAdmin: boolean;
 }
 
 export interface AddressDto {

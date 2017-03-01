@@ -9,8 +9,6 @@ import { BaseViewModel } from '../core/base-view-model';
 import { UserDto, DtoHelper } from '../core/dtos';
 import { PromptEvent, UserEvent, SnackbarEvent } from '../core/custom-events';
 
-const SystemAdminRole = 4;
-
 @autoinject
 export class UsersViewModel extends BaseViewModel {
     private userService: UserService;
@@ -21,7 +19,7 @@ export class UsersViewModel extends BaseViewModel {
     public promptDialogVm: PromptDialogViewModel;
     public userDialogVm: UserDialogViewModel;
     private deleteMode: boolean;
-    public canResetPassword: boolean;
+    public isSystemAdmin: boolean;
 
     constructor(userService: UserService, authService: AuthService, eventAggregator: EventAggregator, dtoHelper: DtoHelper) {
         super('users');
@@ -30,6 +28,7 @@ export class UsersViewModel extends BaseViewModel {
         this.eventAggregator = eventAggregator;
         this.dtoHelper = dtoHelper;
         this.users = [];
+        this.isSystemAdmin = false;
         this.deleteMode = true;
     }
 
@@ -38,7 +37,7 @@ export class UsersViewModel extends BaseViewModel {
             if (!user) {
                 return;
             }
-            this.canResetPassword = user.role === SystemAdminRole;
+            this.isSystemAdmin = user.isSystemAdmin;
         });
 
         this.userService.getAll().then(dtos => {

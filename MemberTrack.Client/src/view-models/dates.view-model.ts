@@ -7,6 +7,7 @@ import { bindable, customElement } from 'aurelia-framework';
 @customElement('membertrack-dates')
 export class DatesViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
+    @bindable isEditor: boolean;
     public datesDialogVm: DatesDialogViewModel;
 
     constructor(element: Element) {

@@ -15,7 +15,7 @@
             if.bind="person.dates.baptismDate">${person.dates.baptismDate | dateFormat : 'MMMM Do YYYY'}</span></p>
         <p><span class="mdl-checkbox__label">Membership Placement</span:> <span class="person-dates" if.bind="person.dates.membershipDate">${person.dates.membershipDate | dateFormat : 'MMMM Do YYYY'}</span></p>
       </div>
-      <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-card__actions mdl-card--border" if.bind="isEditor">
         <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayDialog()">Edit</button>
       </div>
     </div>

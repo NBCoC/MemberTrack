@@ -47,7 +47,7 @@
           <label class="mdl-textfield__label" for="emailControl">Email</label>
         </div>
       </div>
-      <div class="mdl-card__actions mdl-card--border">
+      <div class="mdl-card__actions mdl-card--border" if.bind="isEditor">
         <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayDialog()">Edit</button>
       </div>
     </div>

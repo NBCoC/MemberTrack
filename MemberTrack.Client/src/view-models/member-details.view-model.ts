@@ -2,17 +2,22 @@ import { PersonEvent } from '../core/custom-events';
 import { autoinject } from 'aurelia-framework';
 import { BaseViewModel } from '../core/base-view-model';
 import { PersonService } from '../services/person.service';
+import { AuthService } from '../services/auth.service';
 import { PersonDto } from '../core/dtos';
 
 @autoinject
 export class MemberDetailsViewModel extends BaseViewModel {
     private personService: PersonService;
+    private authService: AuthService;
     public person: PersonDto;
+    public isEditor: boolean;
 
-    constructor(personService: PersonService) {
+    constructor(personService: PersonService, authService: AuthService) {
         super('member-details');
         this.personService = personService;
+        this.authService = authService;
         this.initDefaultModel();
+        this.isEditor = false;
     }
 
     public activate(params: any): void {
@@ -25,6 +30,13 @@ export class MemberDetailsViewModel extends BaseViewModel {
             }
 
             this.refreshModel(dto);
+        });
+
+        this.authService.getContextUser().then(user => {
+            if (!user) {
+                return;
+            }
+            this.isEditor = user.isEditor;
         });
     }
 

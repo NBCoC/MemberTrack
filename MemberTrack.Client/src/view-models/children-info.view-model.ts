@@ -7,6 +7,7 @@ import { bindable, customElement } from 'aurelia-framework';
 @customElement('membertrack-children-info')
 export class ChildrenInfoViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
+    @bindable isEditor: boolean;
     public childrenInfoDialogVm: ChildrenInfoDialogViewModel;
 
     constructor(element: Element) {
