@@ -24,8 +24,7 @@
             _context = context;
             _userService = userService;
         }
-
-
+        
         public IDbContextTransaction BeginTransaction() => _context.Database.BeginTransaction();
 
         public async Task<IDbContextTransaction> BeginTransactionAsync(
@@ -156,6 +155,16 @@
             entity.Gender = dto.Gender;
             entity.Status = dto.Status;
             entity.AgeGroup = dto.AgeGroup ?? AgeGroupEnum.Unknown;
+
+            if (!entity.FirstVisitDate.HasValue && entity.Status == PersonStatusEnum.Visitor)
+            {
+                entity.FirstVisitDate = DateTimeOffset.UtcNow;
+            }
+
+            if (!entity.MembershipDate.HasValue && entity.Status == PersonStatusEnum.Member)
+            {
+                entity.MembershipDate = DateTimeOffset.UtcNow;
+            }
 
             await _context.SaveChangesAsync();
         }

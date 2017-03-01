@@ -1,9 +1,9 @@
 import { UserDto, PersonDto } from './dtos';
 
-export class DeleteItemEvent {
+export class PromptEvent {
     public data: number;
 
-    constructor(id: number) {
+    constructor(id?: number) {
         this.data = id;
     }
 }

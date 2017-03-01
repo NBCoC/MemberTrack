@@ -1,8 +1,8 @@
 <template>
-  <require from="../view-models/prompt-delete-dialog.view-model"></require>
+  <require from="../view-models/prompt-dialog.view-model"></require>
   <require from="../view-models/check-list-item-dialog.view-model"></require>
   <!--Dialog-->
-  <membertrack-prompt-delete-dialog view-model.ref="promptDeleteDialogVm" dismiss.delegate="dismissPromptDeleteDialog($event)"></membertrack-prompt-delete-dialog>
+  <membertrack-prompt-dialog view-model.ref="promptDialogVm" dismiss.delegate="dismissPromptDialog($event)"></membertrack-prompt-dialog>
   <membertrack-check-list-item-dialog view-model.ref="checkListItemDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-check-list-item-dialog>
   <!--Content-->
   <div class="mdl-grid demo-content">

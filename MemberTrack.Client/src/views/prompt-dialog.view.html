@@ -1,12 +1,10 @@
 <template>
-  <dialog id="prompt-delete-dialog" class="mdl-dialog">
+  <dialog id="prompt-dialog" class="mdl-dialog">
     <form role="form" submit.delegate="ok($event)">
       <h6>${title} ${model.name}</h6>
       <hr>
       <div class="mdl-dialog__content">
-        <p>
-          Are you sure you want to <span>${title}</span> ${model.name}?
-        </p>
+        <p>${message}</p>
       </div>
       <hr>
       <div class="mdl-dialog__actions">

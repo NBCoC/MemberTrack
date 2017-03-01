@@ -1,8 +1,8 @@
 <template>
-  <require from="../view-models/prompt-delete-dialog.view-model"></require>
+  <require from="../view-models/prompt-dialog.view-model"></require>
   <require from="../view-models/user-dialog.view-model"></require>
   <!--Dialog-->
-  <membertrack-prompt-delete-dialog view-model.ref="promptDeleteDialogVm" dismiss.delegate="dismissPromptDeleteDialog($event)"></membertrack-prompt-delete-dialog>
+  <membertrack-prompt-dialog view-model.ref="promptDialogVm" dismiss.delegate="dismissPromptDialog($event)"></membertrack-prompt-dialog>
   <membertrack-user-dialog view-model.ref="userDialogVm" dismiss.delegate="dismissUserDialog($event)"></membertrack-user-dialog>
   <!--Content-->
   <section membertrack-view="users">
@@ -27,7 +27,7 @@
               <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayUserDialog(user)">
                     Edit
               </button>
-              <button membertrack-mdl="button" click.trigger="displayPromptDeleteDialog(user)">
+              <button membertrack-mdl="button" click.trigger="displayPromptDialog(user)">
                     Delete
                 </button>
             </td>

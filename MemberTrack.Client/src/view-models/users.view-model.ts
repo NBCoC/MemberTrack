@@ -1,18 +1,18 @@
 import { autoinject } from 'aurelia-framework';
 
-import { PromptDeleteDialogViewModel } from '../view-models/prompt-delete-dialog.view-model';
+import { PromptDialogViewModel } from '../view-models/prompt-dialog.view-model';
 import { UserDialogViewModel } from '../view-models/user-dialog.view-model';
 import { UserService } from '../services/user.service';
 import { BaseViewModel } from '../core/base-view-model';
 import { UserDto, DtoHelper } from '../core/dtos';
-import { DeleteItemEvent, UserEvent } from '../core/custom-events';
+import { PromptEvent, UserEvent } from '../core/custom-events';
 
 @autoinject
 export class UsersViewModel extends BaseViewModel {
     private userService: UserService;
     private dtoHelper: DtoHelper;
     public users: UserDto[];
-    public promptDeleteDialogVm: PromptDeleteDialogViewModel;
+    public promptDialogVm: PromptDialogViewModel;
     public userDialogVm: UserDialogViewModel;
 
     constructor(userService: UserService, dtoHelper: DtoHelper) {
@@ -22,7 +22,7 @@ export class UsersViewModel extends BaseViewModel {
         this.users = [];
     }
 
-    public attached(argument: any): void {
+    public attached(): void {
         this.userService.getAll().then(dtos => {
             if (!dtos) {
                 return;
@@ -42,12 +42,12 @@ export class UsersViewModel extends BaseViewModel {
         this.updateLoadingText(this.users.length);
     }
 
-    public displayPromptDeleteDialog(dto: UserDto): void {
-        this.promptDeleteDialogVm.show(dto.id, dto.displayName);
+    public displayPromptDialog(dto: UserDto): void {
+        this.promptDialogVm.show('Delete', 'Are you sure want to delete this user?', dto.displayName, dto.id);
     }
 
-    public dismissPromptDeleteDialog(e: CustomEvent): void {
-        let event = e.detail.args as DeleteItemEvent;
+    public dismissPromptDialog(e: CustomEvent): void {
+        let event = e.detail.args as PromptEvent;
 
         this.userService.remove(event.data).then(ok => {
             if (!ok) {
