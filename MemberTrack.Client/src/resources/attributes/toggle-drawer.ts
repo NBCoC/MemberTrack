@@ -1,7 +1,6 @@
-import { autoinject, customAttribute } from 'aurelia-framework';
+import { customAttribute } from 'aurelia-framework';
 
 @customAttribute('membertrack-toggle-drawer')
-@autoinject
 export class ToggleDrawerAttribute {
     private element: Element;
 

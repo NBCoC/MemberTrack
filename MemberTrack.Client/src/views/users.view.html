@@ -1,8 +1,10 @@
 <template>
   <require from="../view-models/prompt-delete-dialog.view-model"></require>
   <require from="../view-models/user-dialog.view-model"></require>
+  <!--Dialog-->
   <membertrack-prompt-delete-dialog view-model.ref="promptDeleteDialogVm" dismiss.delegate="dismissPromptDeleteDialog($event)"></membertrack-prompt-delete-dialog>
   <membertrack-user-dialog view-model.ref="userDialogVm" dismiss.delegate="dismissUserDialog($event)"></membertrack-user-dialog>
+  <!--Content-->
   <section membertrack-view="users">
     <div class="mdl-grid demo-content">
       <div class="mdl-layout-spacer"></div>

@@ -1,31 +1,31 @@
 import { PersonReportDto } from '../../core/dtos';
-import { bindable, customAttribute } from 'aurelia-framework';
+import { bindable, customElement } from 'aurelia-framework';
 import * as Chart from 'chart.js';
 
-@customAttribute('membertrack-report')
+@customElement('membertrack-report')
 export class Report {
-    @bindable report: PersonReportDto = null;
+    @bindable data: PersonReportDto = null;
     private element: Element;
 
     constructor(element: Element) {
         this.element = element;
     }
 
-    public reportChanged(newValue: PersonReportDto): void {
+    public dataChanged(newValue: PersonReportDto): void {
         if (!newValue) {
             return;
         }
 
-        let ctx = (this.element as any).getContext('2d');
+        let ctx = (this.element.querySelector('canvas') as any).getContext('2d');
 
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: this.report.items.map(item => item.monthName),
+                labels: this.data.items.map(item => item.monthName),
                 datasets: [
                     {
                         label: 'Members',
-                        data: this.report.items.map(item => item.memberCount),
+                        data: this.data.items.map(item => item.memberCount),
                         borderWidth: 1,
                         fill: false,
                         lineTension: 0.1,
@@ -48,7 +48,7 @@ export class Report {
                     },
                     {
                         label: 'Visitors',
-                        data: this.report.items.map(item => item.visitorCount),
+                        data: this.data.items.map(item => item.visitorCount),
                         borderWidth: 1,
                         fill: false,
                         lineTension: 0.1,

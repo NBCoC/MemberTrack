@@ -1,6 +1,8 @@
 <template>
   <require from="../view-models/change-password-dialog.view-model"></require>
+  <!--Dialog-->
   <membertrack-change-password-dialog view-model.ref="changePasswordDialogVm" dismiss.delegate="dismissChangePasswordDialog($event)"></membertrack-change-password-dialog>
+  <!--Content-->
   <div membertrack-mdl="layout" class="demo-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
       <div class="mdl-layout__header-row">

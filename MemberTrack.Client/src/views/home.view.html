@@ -4,13 +4,7 @@
   <membertrack-member-dialog view-model.ref="memberDialogVm" dismiss.delegate="dismissMemberDialog($event)"></membertrack-member-dialog>
   <!--Content-->
   <section>
-    <div class="mdl-grid demo-content">
-      <div class="mdl-card mdl-shadow--2dp full-width">
-        <div class="mdl-card__supporting-text">
-          <canvas membertrack-report="report.bind: report"></canvas>
-        </div>
-      </div>
-    </div>
+    <membertrack-report data.bind="report"></membertrack-report>
 
     <button membertrack-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
       click.trigger="displayMemberDialog()">

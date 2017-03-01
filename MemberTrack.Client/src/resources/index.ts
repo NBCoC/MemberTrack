@@ -4,11 +4,11 @@ export function configure(config: FrameworkConfiguration) {
   config.globalResources([
     './attributes/toggle-drawer',
     './attributes/mdl',
-    './attributes/report',
     './value-converters/sort',
     './value-converters/group',
     './value-converters/filter',
     './value-converters/date-format',
-    './elements/snackbar'
+    './elements/snackbar',
+    './elements/report'
   ]);
 }

@@ -1,4 +1,4 @@
-import { autoinject, customAttribute } from 'aurelia-framework';
+import { customAttribute } from 'aurelia-framework';
 
 const MdlControls = {
     'button': { type: 'MaterialButton', classes: ['mdl-button', 'mdl-js-button'], rippleEffectSupport: true },
@@ -21,7 +21,6 @@ const MdlControls = {
 };
 
 @customAttribute('membertrack-mdl')
-@autoinject
 export class MdlAttribute {
     private element: Element;
 
