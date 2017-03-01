@@ -38,6 +38,14 @@ export class UserService extends BaseService {
             .catch(this.handleError);
     }
 
+    public resetPassword(id: number): Promise<boolean> {
+        return this.client.post(`user/resetPassword/${id}`, {})
+            .then(result => {
+                return true;
+            })
+            .catch(this.handleError);
+    }
+
     public remove(id: number): Promise<boolean> {
         return this.client.delete(`user/${id}`)
             .then(result => {

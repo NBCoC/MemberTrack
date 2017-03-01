@@ -30,6 +30,9 @@
               <button membertrack-mdl="button" click.trigger="displayPromptDialog(user)">
                     Delete
                 </button>
+              <button membertrack-mdl="button" click.trigger="displayResetDialog(user)" if.bind="canResetPassword">
+                    Reset Password
+                </button>
             </td>
           </tr>
         </tbody>
