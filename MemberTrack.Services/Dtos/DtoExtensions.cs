@@ -6,6 +6,8 @@ using MemberTrack.Data;
 
 namespace MemberTrack.Services.Dtos
 {
+    using System;
+
     public static class DtoExtensions
     {
         public static PersonDto ToDto(this Person entity)
@@ -96,7 +98,8 @@ namespace MemberTrack.Services.Dtos
                 ContactNumber = dto.ContactNumber,
                 Gender = dto.Gender,
                 AgeGroup = dto.AgeGroup ?? AgeGroupEnum.Unknown,
-                Status = dto.Status
+                Status = dto.Status,
+                CreatedDate = DateTimeOffset.UtcNow
             };
 
         public static UserDto ToDto(this User entity)
