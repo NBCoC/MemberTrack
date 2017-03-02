@@ -25,7 +25,7 @@ Creating DB migrations
 2. To create a new entity, make sure to create a corresponding mapping file (.CS) in .\MemberTrack.Data\Mappings directory
 3. Open command prompt and navigate to the root directory of the .\MemberTrack.DbUtil project
 4. Run the following command:
-	1. dotnet ef migrations add <name of the migration>
+	1. dotnet ef migrations add 'name of the migration'
 	2. dotnet ef database update
 5. If the migrations was added with no errors, make sure to re-generate the MemberTrack.sql file
 	1. dotnet ef migrations script -o MemberTrack.sql -i
