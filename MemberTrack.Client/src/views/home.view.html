@@ -6,6 +6,46 @@
   <section>
     <membertrack-report data.bind="report"></membertrack-report>
 
+    <div class="mdl-grid demo-content">
+      <table membertrack-mdl="data-table" class="mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+        show.two-way="recentVisitors.length">
+        <thead>
+          <tr>
+            <th class="recent-items">Recent Visitors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="person of recentVisitors | sort : 'lastModifiedDate'">
+            <td>
+              <a href="#main/member-details/${person.id}" class="recent-item-link">
+                <span>${person.name}</span>
+                <span class="pull-right">${person.lastModifiedDate | dateFormat : 'MMMM Do YYYY, h:mm:ss a'}</span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table membertrack-mdl="data-table" class="mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+        show.two-way="recentMembers.length">
+        <thead>
+          <tr>
+            <th class="recent-items">Recent Members</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="person of recentMembers | sort : 'lastModifiedDate'">
+            <td>
+              <a href="#main/member-details/${person.id}" class="recent-item-link">
+                <span>${person.name}</span>
+                <span class="pull-right">${person.lastModifiedDate | dateFormat : 'MMMM Do YYYY, h:mm:ss a'}</span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <button membertrack-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
       click.trigger="displayMemberDialog()" if.bind="isEditor">
       New Member / Visitor

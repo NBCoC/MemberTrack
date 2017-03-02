@@ -1,29 +1,27 @@
 /* animations */
-
 @mixin fadeIn-animation($second) {
   -webkit-animation: fadeIn $second;
   animation: fadeIn $second;
 }
-
 @mixin fadeIn-animation-definition($name) {
-  @-webkit-keyframes #{$name} {
+   @-webkit-keyframes #{$name}{
     @content;
   }
   @-moz-keyframes #{$name} {
-    @content;
+     @content;
   }
   @-ms-keyframes #{$name} {
-    @content;
+     @content;
   }
   @keyframes #{$name} {
-    @content;
+     @content;
   }
 }
-
 @include fadeIn-animation-definition(fadeIn) {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -32,7 +30,6 @@
 section {
   @include fadeIn-animation(1s);
 }
-
 
 /* Helper classes */
 
@@ -68,6 +65,7 @@ dialog {
 
 .check-list-items {
   margin-bottom: 5px;
+
   span.check-list-item-date {
     font-style: italic;
     font-size: small;
@@ -76,6 +74,7 @@ dialog {
 
 .check-list-item-note {
   padding-left: 25px;
+
   p {
     font-style: italic;
   }
@@ -117,6 +116,14 @@ dialog {
   }
 }
 
+th.recent-items {
+  font-size: 14px;
+}
+
+.recent-item-link {
+  text-decoration: none;
+  color: rgba(0,0,0,.54);
+}
 
 /* MDL overrides */
 
@@ -128,6 +135,7 @@ td.align {
   th {
     text-align: left;
   }
+
   td {
     text-align: left;
   }
@@ -151,8 +159,8 @@ td.align {
 
 .add-btn {
   @extend .float-btn;
-  margin-right: 40px;
-  margin-bottom: 40px;
+  margin-right: 20px;
+  margin-bottom: 20px;
 }
 
 [loading-indicator] {

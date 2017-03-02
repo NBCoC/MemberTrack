@@ -35,5 +35,7 @@
         Task<SearchResultDto<PersonSearchDto>> Search(string contains);
 
         Task<PersonReportDto> GetReport();
+
+        Task<IEnumerable<RecentPersonDto>> GetRecentActivity();
     }
 }

@@ -108,6 +108,13 @@ export interface PersonReportDto {
     items: PersonReportItemDto[];
 }
 
+export interface RecentPersonDto {
+    id: number;
+    name: string;
+    lastModifiedDate?: Date;
+    status: number;
+}
+
 let getIndex = (array: any[], value: string | number): number => {
     let index = -1, count = array.length;
 

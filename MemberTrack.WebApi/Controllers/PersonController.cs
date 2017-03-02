@@ -134,6 +134,22 @@
             }
         }
 
+        [Route("[action]")]
+        [HttpGet]
+        public async Task<IActionResult> RecentActivity()
+        {
+            try
+            {
+                var data = await _personService.GetRecentActivity();
+
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return Exception(e);
+            }
+        }
+
         [HttpPost("ChildrenInfo/{id}")]
         public async Task<IActionResult> ChildrenInfo(long id, [FromBody] ChildrenInfoDto dto)
         {
