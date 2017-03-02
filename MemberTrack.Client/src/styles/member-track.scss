@@ -116,8 +116,18 @@ dialog {
   }
 }
 
-th.recent-items {
-  font-size: 14px;
+.recent-items {
+  font-size: 14px !important;
+}
+
+.recent-members {
+  @extend .recent-items;
+  color: rgba(9, 98, 241,.9) !important;
+}
+
+.recent-visitors {
+  @extend .recent-items;
+  color: rgba(203,203,108,.9) !important;
 }
 
 .recent-item-link {
