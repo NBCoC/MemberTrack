@@ -20,6 +20,7 @@ export class UsersViewModel extends BaseViewModel {
     public userDialogVm: UserDialogViewModel;
     private deleteMode: boolean;
     public isSystemAdmin: boolean;
+    public isAdmin: boolean;
 
     constructor(userService: UserService, authService: AuthService, eventAggregator: EventAggregator, dtoHelper: DtoHelper) {
         super('users');
@@ -29,6 +30,7 @@ export class UsersViewModel extends BaseViewModel {
         this.dtoHelper = dtoHelper;
         this.users = [];
         this.isSystemAdmin = false;
+        this.isAdmin = false;
         this.deleteMode = true;
     }
 
@@ -38,6 +40,7 @@ export class UsersViewModel extends BaseViewModel {
                 return;
             }
             this.isSystemAdmin = user.isSystemAdmin;
+            this.isAdmin = user.isAdmin;
         });
 
         this.userService.getAll().then(dtos => {
@@ -50,6 +53,9 @@ export class UsersViewModel extends BaseViewModel {
     }
 
     public displayUserDialog(dto?: UserDto): void {
+        if (!this.isAdmin) {
+            return;
+        }
         this.userDialogVm.show(Object.assign({}, dto));
     }
 
@@ -60,11 +66,17 @@ export class UsersViewModel extends BaseViewModel {
     }
 
     public displayPromptDialog(dto: UserDto): void {
+        if (!this.isAdmin) {
+            return;
+        }
         this.deleteMode = true;
         this.promptDialogVm.show('Delete', 'Are you sure want to delete this user?', dto.displayName, dto.id);
     }
 
     public displayResetDialog(dto: UserDto): void {
+        if (!this.isSystemAdmin) {
+            return;
+        }
         this.deleteMode = false;
         this.promptDialogVm.show('Reset Password for', 'Are you sure want to reset this user\'s password?', dto.displayName, dto.id);
     }

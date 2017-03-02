@@ -15,6 +15,9 @@ export class ChildrenInfoViewModel extends EventDispatcher {
     }
 
     public displayDialog(): void {
+        if (!this.isEditor) {
+            return;
+        }
         this.childrenInfoDialogVm.show(this.person.id, Object.assign({}, this.person.childrenInfo));
     }
 

@@ -15,6 +15,9 @@ export class AddressViewModel extends EventDispatcher {
     }
 
     public displayDialog(): void {
+        if (!this.isEditor) {
+            return;
+        }
         this.addressDialogVm.show(this.person.id, Object.assign({}, this.person.address));
     }
 

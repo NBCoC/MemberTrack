@@ -40,6 +40,9 @@ export class HomeViewModel {
     }
 
     public displayMemberDialog(): void {
+        if (!this.isEditor) {
+            return;
+        }
         this.memberDialogVm.show();
     }
 

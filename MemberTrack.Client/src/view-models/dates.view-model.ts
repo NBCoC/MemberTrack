@@ -15,6 +15,9 @@ export class DatesViewModel extends EventDispatcher {
     }
 
     public displayDialog(): void {
+        if (!this.isEditor) {
+            return;
+        }
         this.datesDialogVm.show(this.person.id, Object.assign({}, this.person.dates));
     }
 

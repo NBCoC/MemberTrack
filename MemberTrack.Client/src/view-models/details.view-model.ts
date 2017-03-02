@@ -15,6 +15,9 @@ export class DetailsViewModel extends EventDispatcher {
     }
 
     public displayDialog(): void {
+        if (!this.isEditor) {
+            return;
+        }
         this.memberDialogVm.show(Object.assign({}, this.person));
     }
 
