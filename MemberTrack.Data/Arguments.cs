@@ -20,11 +20,11 @@ namespace MemberTrack.Data
 
             var parser = new FluentCommandLineParser<Arguments>();
 
-            parser.Setup(arg => arg.Catalog).As('c', "Catalog").Required();
+            parser.Setup(arg => arg.Catalog).As('c', "Catalog");
 
-            parser.Setup(arg => arg.Datasource).As('d', "Datasource").Required();
+            parser.Setup(arg => arg.Datasource).As('d', "Datasource");
 
-            parser.Setup(arg => arg.ForceReseeding).As('f', "ForceReseeding").SetDefault(false);
+            parser.Setup(arg => arg.ForceReseeding).As('f', "ForceReseeding").SetDefault(true);
 
             var result = parser.Parse(args);
 

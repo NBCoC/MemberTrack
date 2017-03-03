@@ -29,7 +29,7 @@ namespace MemberTrack.DbUtil.Seedings
 
             if (seeded)
             {
-                Console.WriteLine("System accounts have already been seeded.  Use the -ForceReseeding:true command line option, if your intent was to repopulate the system accounts.");
+                Console.WriteLine("System accounts have already been seeded.  Use the -f command line option, if your intent was to repopulate the system accounts.");
                 return;
             }
 

@@ -13,7 +13,7 @@ namespace MemberTrack.DbUtil.Seedings
 
         protected override void ClearData()
         {
-            _databaseContext.Database.ExecuteSqlCommand($"TRUNCATE TABLE dbo.PersonCheckListItem");
+            _databaseContext.Database.ExecuteSqlCommand($"DELETE FROM dbo.PersonCheckListItem");
         }
 
         protected override void PopulateData()
