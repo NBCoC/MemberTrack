@@ -8,8 +8,8 @@ using MemberTrack.Data;
 namespace MemberTrack.DbUtil.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170303024119_QuizEntitiesCreated")]
-    partial class QuizEntitiesCreated
+    [Migration("20170303145847_NewDbMig")]
+    partial class NewDbMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -131,6 +131,8 @@ namespace MemberTrack.DbUtil.Migrations
                         .HasAnnotation("MaxLength", 300);
 
                     b.Property<int>("SortOrder");
+
+                    b.Property<int>("Status");
 
                     b.HasKey("Id");
 

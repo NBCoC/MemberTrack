@@ -339,7 +339,7 @@
                         OrderBy(p => p.LastModifiedDate).
                         Take(10).
                         ToListAsync();
-
+            
             var recentMembers =
                 await
                     _context.People.Include(x => x.CheckLists).

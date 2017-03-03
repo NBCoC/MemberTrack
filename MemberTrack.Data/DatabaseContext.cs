@@ -20,19 +20,19 @@ namespace MemberTrack.Data
 
         public DbSet<PersonCheckList> PersonCheckLists { get; set; }
 
-        //public DbSet<Quiz> Quizzes { get; set; }
+        public DbSet<Quiz> Quizzes { get; set; }
 
-        //public DbSet<Question> QuizQuestions { get; set; }
+        public DbSet<Question> QuizQuestions { get; set; }
 
-        //public DbSet<Answer> QuizAnswers { get; set; }
+        public DbSet<Answer> QuizAnswers { get; set; }
 
-        //public DbSet<TopicCategory> TopicCategories { get; set; }
+        public DbSet<TopicCategory> TopicCategories { get; set; }
 
-        //public DbSet<Topic> Topics { get; set; }
+        public DbSet<Topic> Topics { get; set; }
 
-        //public DbSet<SupportingScripture> SupportingScriptures { get; set; }
+        public DbSet<SupportingScripture> SupportingScriptures { get; set; }
 
-        //public DbSet<UserAnswer> UserAnswers { get; set; }
+        public DbSet<UserAnswer> UserAnswers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,13 +41,13 @@ namespace MemberTrack.Data
             PersonMap.Configure(builder);
             PersonCheckListItemMap.Configure(builder);
             PersonCheckListMap.Configure(builder);
-            //QuizMap.Configure(builder);
-            //QuestionMap.Configure(builder);
-            //AnswerMap.Configure(builder);
-            //TopicCategoryMap.Configure(builder);
-            //TopicMap.Configure(builder);
-            //SupportingScriptureMap.Configure(builder);
-            //UserAnswerMap.Configure(builder);
+            QuizMap.Configure(builder);
+            QuestionMap.Configure(builder);
+            AnswerMap.Configure(builder);
+            TopicCategoryMap.Configure(builder);
+            TopicMap.Configure(builder);
+            SupportingScriptureMap.Configure(builder);
+            UserAnswerMap.Configure(builder);
         }
     }
 }
