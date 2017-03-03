@@ -5,7 +5,10 @@ import { MemberDialogViewModel } from '../view-models/member-dialog.view-model';
 import { PersonService } from '../services/person.service';
 import { AuthService } from '../services/auth.service';
 import { PersonEvent } from '../core/custom-events';
-import { PersonReportDto } from '../core/dtos';
+import { PersonReportDto, RecentPersonDto } from '../core/dtos';
+
+const VisitorStatus = 1;
+const MemberStatus = 2;
 
 @autoinject
 export class HomeViewModel {
@@ -15,12 +18,16 @@ export class HomeViewModel {
     public memberDialogVm: MemberDialogViewModel;
     public report: PersonReportDto;
     public isEditor: boolean;
+    public recentVisitors: RecentPersonDto[];
+    public recentMembers: RecentPersonDto[];
 
     constructor(personService: PersonService, router: Router, authService: AuthService) {
         this.personService = personService;
         this.authService = authService;
         this.router = router;
         this.isEditor = false;
+        this.recentVisitors = [];
+        this.recentMembers = [];
     }
 
     public attached(): void {
@@ -36,6 +43,14 @@ export class HomeViewModel {
                 return;
             }
             this.report = data;
+        });
+
+        this.personService.getRecentActivity().then(data => {
+            if (!data) {
+                return;
+            }
+            this.recentVisitors = data.filter(item => { return item.status === VisitorStatus; });
+            this.recentMembers = data.filter(item => { return item.status === MemberStatus; });
         });
     }
 

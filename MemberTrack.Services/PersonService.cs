@@ -24,7 +24,7 @@
             _context = context;
             _userService = userService;
         }
-        
+
         public IDbContextTransaction BeginTransaction() => _context.Database.BeginTransaction();
 
         public async Task<IDbContextTransaction> BeginTransactionAsync(
@@ -156,12 +156,14 @@
             entity.Status = dto.Status;
             entity.AgeGroup = dto.AgeGroup ?? AgeGroupEnum.Unknown;
 
-            if (!entity.FirstVisitDate.HasValue && entity.Status == PersonStatusEnum.Visitor)
+            if (!entity.FirstVisitDate.HasValue &&
+                entity.Status == PersonStatusEnum.Visitor)
             {
                 entity.FirstVisitDate = DateTimeOffset.UtcNow;
             }
 
-            if (!entity.MembershipDate.HasValue && entity.Status == PersonStatusEnum.Member)
+            if (!entity.MembershipDate.HasValue &&
+                entity.Status == PersonStatusEnum.Member)
             {
                 entity.MembershipDate = DateTimeOffset.UtcNow;
             }
@@ -288,8 +290,7 @@
             var visitorGroups =
                 await
                     _context.People.Where(
-                            x =>
-                                (x.FirstVisitDate != null) && x.FirstVisitDate <= date && x.FirstVisitDate >= lastYear).
+                            x => (x.FirstVisitDate != null) && x.FirstVisitDate <= date && x.FirstVisitDate >= lastYear).
                         Select(x => new {x.FirstVisitDate}).
                         GroupBy(x => new {x.FirstVisitDate.Value.Year, x.FirstVisitDate.Value.Month}).
                         ToListAsync();
@@ -307,6 +308,93 @@
             }
 
             return dto;
+        }
+
+        public async Task<IEnumerable<RecentPersonDto>> GetRecentActivity()
+        {
+            var result = new List<RecentPersonDto>();
+
+            var visitorCheckItems = new List<CheckListItemTypeEnum>
+            {
+                CheckListItemTypeEnum.FirstVisit,
+                CheckListItemTypeEnum.MembershipRequestDate
+            };
+
+            var memberCheckItems = new List<CheckListItemTypeEnum>
+            {
+                CheckListItemTypeEnum.Ministry,
+                CheckListItemTypeEnum.LifeGroup
+            };
+
+            var checkListQuery =
+                _context.PersonCheckLists.Join(
+                    _context.PersonCheckListItems, pcl => pcl.PersonCheckListItemId, pcli => pcli.Id,
+                    (pcl, pcli) => new {pcl.PersonId, pcl.Date, pcli.CheckListItemType}).AsQueryable();
+
+            var recentVisitors =
+                await
+                    _context.People.Where(p => p.Status == PersonStatusEnum.Visitor && p.FirstVisitDate != null).
+                        Select(
+                            p =>
+                                new RecentPersonDto
+                                {
+                                    Id = p.Id,
+                                    Name = p.FirstName + " " + p.LastName,
+                                    Status = p.Status,
+                                    Date = p.FirstVisitDate,
+                                    RequiresAttention =
+                                        checkListQuery.Any(
+                                            clq =>
+                                                clq.PersonId == p.Id &&
+                                                !visitorCheckItems.Contains(clq.CheckListItemType)),
+                                    LastModifiedDate =
+                                        checkListQuery.Where(
+                                                clq =>
+                                                    clq.PersonId == p.Id &&
+                                                    visitorCheckItems.Contains(clq.CheckListItemType)).
+                                            Select(clq => clq.Date).
+                                            FirstOrDefault()
+                                }).
+                        Where(p => p.RequiresAttention).
+                        OrderBy(p => p.LastModifiedDate).
+                        ThenBy(p => p.Name).
+                        Take(20).
+                        ToListAsync();
+
+            var recentMembers =
+                await
+                    _context.People.Where(p => p.Status == PersonStatusEnum.Member && p.MembershipDate != null).
+                        Select(
+                            p =>
+                                new RecentPersonDto
+                                {
+                                    Id = p.Id,
+                                    Name = p.FirstName + " " + p.LastName,
+                                    Status = p.Status,
+                                    Date = p.MembershipDate,
+                                    RequiresAttention =
+                                        checkListQuery.Any(
+                                            clq =>
+                                                clq.PersonId == p.Id &&
+                                                !memberCheckItems.Contains(clq.CheckListItemType)),
+                                    LastModifiedDate =
+                                        checkListQuery.Where(
+                                                clq =>
+                                                    clq.PersonId == p.Id &&
+                                                    memberCheckItems.Contains(clq.CheckListItemType)).
+                                            Select(clq => clq.Date).
+                                            FirstOrDefault()
+                                }).
+                        Where(p => p.RequiresAttention).
+                        OrderBy(p => p.LastModifiedDate).
+                        ThenBy(p => p.Name).
+                        Take(20).
+                        ToListAsync();
+
+            result.AddRange(recentVisitors);
+            result.AddRange(recentMembers);
+
+            return result;
         }
     }
 }

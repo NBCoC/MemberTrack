@@ -6,7 +6,7 @@
   <membertrack-check-list-item-dialog view-model.ref="checkListItemDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-check-list-item-dialog>
   <!--Content-->
   <div class="mdl-grid demo-content">
-    <div class="mdl-card mdl-shadow--2dp full-width">
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
       <div class="mdl-card__title">
         <h2 class="mdl-card__title-text">Check List</h2>
       </div>
@@ -17,10 +17,13 @@
             <div repeat.for="item of group.items">
               <label membertrack-mdl="checkbox" class="mdl-js-ripple-effect" for="${item.id}">
                     <input type="checkbox" id="${item.id}" class="mdl-checkbox__input" checked.bind="item.isSelected" change.delegate="checkListItemChange($event, item)">
-                    <span class="mdl-checkbox__label">${item.description} &nbsp;<span class="check-list-item-date" if.bind="item.date">(checked on ${item.date | dateFormat : 'MMMM Do YYYY, h:mm:ss a'})</span></span>
+                    <span class="mdl-checkbox__label">${item.description}</span>
                 </label>
+              <div if.bind="item.date" class="check-list-item-note">
+                <p class="check-list-item-date">Completed on ${item.date | dateFormat : 'MMMM Do YYYY, h:mm:ss a'}</p>
+              </div>
               <div if.bind="item.note" class="check-list-item-note">
-                <p>${item.note}</p>
+                <p>Note: ${item.note}</p>
               </div>
             </div>
           </div>
