@@ -1,10 +1,9 @@
+import environment from '../environment';
 import { HttpClient, RequestMessage, HttpResponseMessage } from 'aurelia-http-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
 import { TokenDto } from '../core/dtos';
 import { SnackbarEvent, IsLoadingEvent } from '../core/custom-events';
-
-const API_URL = 'http://localhost:5000/membertrack/api/';
 
 const TOKEN_CACHE_KEY = 'membertrack.client.token.cache';
 
@@ -22,7 +21,7 @@ export abstract class BaseService {
         const _that = this;
 
         client.configure(config => {
-            config.withBaseUrl(API_URL);
+            config.withBaseUrl(environment.apiUrl);
             config.withHeader('Content-Type', 'application/json');
             config.withInterceptor({
                 request(message): RequestMessage {
