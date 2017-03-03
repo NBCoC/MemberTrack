@@ -1,9 +1,6 @@
 ﻿using MemberTrack.Data.Entities.Quizzes;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MemberTrack.Data.Mappings.Quizzes
 {
@@ -14,6 +11,7 @@ namespace MemberTrack.Data.Mappings.Quizzes
             builder.Entity<TopicCategory>().ToTable(nameof(Quiz) + nameof(TopicCategory));
 
             builder.Entity<TopicCategory>().HasKey(x => x.Id);
+            builder.Entity<TopicCategory>().HasAlternateKey(x => x.Name);
 
             builder.Entity<TopicCategory>().Property(x => x.Id).UseSqlServerIdentityColumn();
 

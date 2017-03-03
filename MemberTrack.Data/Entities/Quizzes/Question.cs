@@ -15,8 +15,8 @@ namespace MemberTrack.Data.Entities.Quizzes
 
         public long QuizId { get; set; }
 
-        public Quiz Quiz { get; set; }    
+        public Quiz Quiz { get; set; }
 
-        public List<Answer> Answers { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
     }
 }

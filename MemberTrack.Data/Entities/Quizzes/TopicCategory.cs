@@ -11,6 +11,6 @@ namespace MemberTrack.Data.Entities.Quizzes
 
         public string Description { get; set; }
 
-        public List<Topic> Topics { get; set; }
+        public virtual ICollection<Topic> Topics { get; set; } = new List<Topic>();
     }
 }   
