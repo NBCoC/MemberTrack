@@ -131,6 +131,8 @@ namespace MemberTrack.DbUtil.Migrations
 
                     b.Property<int>("SortOrder");
 
+                    b.Property<int>("Status");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Description")

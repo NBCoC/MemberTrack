@@ -314,26 +314,11 @@
         {
             var result = new List<RecentPersonDto>();
 
-            var visitorCheckItems = new List<CheckListItemTypeEnum>
-            {
-                CheckListItemTypeEnum.FirstVisit,
-                CheckListItemTypeEnum.MembershipRequestDate
-            };
-
-            var memberCheckItems = new List<CheckListItemTypeEnum>
-            {
-                CheckListItemTypeEnum.Ministry,
-                CheckListItemTypeEnum.LifeGroup
-            };
-
-            var checkListQuery =
-                _context.PersonCheckLists.Join(
-                    _context.PersonCheckListItems, pcl => pcl.PersonCheckListItemId, pcli => pcli.Id,
-                    (pcl, pcli) => new {pcl.PersonId, pcl.Date, pcli.CheckListItemType}).AsQueryable();
-
             var recentVisitors =
                 await
-                    _context.People.Where(p => p.Status == PersonStatusEnum.Visitor && p.FirstVisitDate != null).
+                    _context.People.Include(x => x.CheckLists).
+                        ThenInclude(x => x.PersonCheckListItem).
+                        Where(x => x.Status == PersonStatusEnum.Visitor && x.FirstVisitDate != null).
                         Select(
                             p =>
                                 new RecentPersonDto
@@ -343,27 +328,23 @@
                                     Status = p.Status,
                                     Date = p.FirstVisitDate,
                                     RequiresAttention =
-                                        checkListQuery.Any(
-                                            clq =>
-                                                clq.PersonId == p.Id &&
-                                                !visitorCheckItems.Contains(clq.CheckListItemType)),
+                                        p.CheckLists.Count(
+                                            cl => cl.PersonCheckListItem.Status == PersonStatusEnum.Visitor) !=
+                                        _context.PersonCheckListItems.Count(
+                                            pcli => pcli.Status == PersonStatusEnum.Visitor),
                                     LastModifiedDate =
-                                        checkListQuery.Where(
-                                                clq =>
-                                                    clq.PersonId == p.Id &&
-                                                    visitorCheckItems.Contains(clq.CheckListItemType)).
-                                            Select(clq => clq.Date).
-                                            FirstOrDefault()
+                                        p.CheckLists.OrderBy(cl => cl.Date).Select(cl => cl.Date).FirstOrDefault()
                                 }).
                         Where(p => p.RequiresAttention).
                         OrderBy(p => p.LastModifiedDate).
-                        ThenBy(p => p.Name).
-                        Take(20).
+                        Take(10).
                         ToListAsync();
 
             var recentMembers =
                 await
-                    _context.People.Where(p => p.Status == PersonStatusEnum.Member && p.MembershipDate != null).
+                    _context.People.Include(x => x.CheckLists).
+                        ThenInclude(x => x.PersonCheckListItem).
+                        Where(x => x.Status == PersonStatusEnum.Member && x.MembershipDate != null).
                         Select(
                             p =>
                                 new RecentPersonDto
@@ -373,22 +354,16 @@
                                     Status = p.Status,
                                     Date = p.MembershipDate,
                                     RequiresAttention =
-                                        checkListQuery.Any(
-                                            clq =>
-                                                clq.PersonId == p.Id &&
-                                                !memberCheckItems.Contains(clq.CheckListItemType)),
+                                        p.CheckLists.Count(
+                                            cl => cl.PersonCheckListItem.Status == PersonStatusEnum.Member) !=
+                                        _context.PersonCheckListItems.Count(
+                                            pcli => pcli.Status == PersonStatusEnum.Member),
                                     LastModifiedDate =
-                                        checkListQuery.Where(
-                                                clq =>
-                                                    clq.PersonId == p.Id &&
-                                                    memberCheckItems.Contains(clq.CheckListItemType)).
-                                            Select(clq => clq.Date).
-                                            FirstOrDefault()
+                                        p.CheckLists.OrderBy(cl => cl.Date).Select(cl => cl.Date).FirstOrDefault()
                                 }).
                         Where(p => p.RequiresAttention).
                         OrderBy(p => p.LastModifiedDate).
-                        ThenBy(p => p.Name).
-                        Take(20).
+                        Take(10).
                         ToListAsync();
 
             result.AddRange(recentVisitors);

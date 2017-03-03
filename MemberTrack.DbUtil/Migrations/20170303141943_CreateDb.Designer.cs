@@ -8,8 +8,8 @@ using MemberTrack.Data;
 namespace MemberTrack.DbUtil.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170203175347_RemoveChildrenInfoTable")]
-    partial class RemoveChildrenInfoTable
+    [Migration("20170303141943_CreateDb")]
+    partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,64 +41,6 @@ namespace MemberTrack.DbUtil.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("MemberTrack.Data.Entities.Document", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasAnnotation("MaxLength", 350);
-
-                    b.Property<string>("Extension")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 5);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 256);
-
-                    b.Property<long>("Size");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Document");
-                });
-
-            modelBuilder.Entity("MemberTrack.Data.Entities.DocumentData", b =>
-                {
-                    b.Property<long>("DocumentId");
-
-                    b.Property<byte[]>("Data")
-                        .IsRequired();
-
-                    b.HasKey("DocumentId");
-
-                    b.HasIndex("DocumentId")
-                        .IsUnique();
-
-                    b.ToTable("DocumentData");
-                });
-
-            modelBuilder.Entity("MemberTrack.Data.Entities.DocumentTag", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("DocumentId");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 75);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DocumentId");
-
-                    b.ToTable("DocumentTag");
-                });
-
             modelBuilder.Entity("MemberTrack.Data.Entities.Person", b =>
                 {
                     b.Property<long>("Id")
@@ -112,12 +54,18 @@ namespace MemberTrack.DbUtil.Migrations
                     b.Property<string>("ContactNumber")
                         .HasAnnotation("MaxLength", 15);
 
+                    b.Property<DateTimeOffset>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GETUTCDATE()");
+
                     b.Property<string>("Email")
                         .HasAnnotation("MaxLength", 256);
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasAnnotation("MaxLength", 75);
+
+                    b.Property<DateTimeOffset?>("FirstVisitDate");
 
                     b.Property<int>("Gender");
 
@@ -182,6 +130,10 @@ namespace MemberTrack.DbUtil.Migrations
                         .IsRequired()
                         .HasAnnotation("MaxLength", 300);
 
+                    b.Property<int>("SortOrder");
+
+                    b.Property<int>("Status");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Description")
@@ -223,22 +175,6 @@ namespace MemberTrack.DbUtil.Migrations
                     b.HasOne("MemberTrack.Data.Entities.Person", "Person")
                         .WithOne("Address")
                         .HasForeignKey("MemberTrack.Data.Entities.Address", "PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MemberTrack.Data.Entities.DocumentData", b =>
-                {
-                    b.HasOne("MemberTrack.Data.Entities.Document", "Document")
-                        .WithOne("DocumentData")
-                        .HasForeignKey("MemberTrack.Data.Entities.DocumentData", "DocumentId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MemberTrack.Data.Entities.DocumentTag", b =>
-                {
-                    b.HasOne("MemberTrack.Data.Entities.Document", "Document")
-                        .WithMany("DocumentTags")
-                        .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

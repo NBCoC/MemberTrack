@@ -9,30 +9,23 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
-BEGIN
-    CREATE TABLE [Document] (
-        [Id] bigint NOT NULL IDENTITY,
-        [Description] nvarchar(350),
-        [Extension] nvarchar(5) NOT NULL,
-        [Name] nvarchar(256) NOT NULL,
-        [Size] bigint NOT NULL,
-        CONSTRAINT [PK_Document] PRIMARY KEY ([Id])
-    );
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE TABLE [Person] (
         [Id] bigint NOT NULL IDENTITY,
         [AgeGroup] int NOT NULL,
         [BaptismDate] datetimeoffset,
         [ContactNumber] nvarchar(15),
+        [CreatedDate] datetimeoffset NOT NULL DEFAULT (GETUTCDATE()),
         [Email] nvarchar(256),
         [FirstName] nvarchar(75) NOT NULL,
+        [FirstVisitDate] datetimeoffset,
         [Gender] int NOT NULL,
+        [HasElementaryKids] bit NOT NULL,
+        [HasHighSchoolKids] bit NOT NULL,
+        [HasInfantKids] bit NOT NULL,
+        [HasJuniorHighKids] bit NOT NULL,
+        [HasToddlerKids] bit NOT NULL,
         [LastName] nvarchar(75) NOT NULL,
         [MembershipDate] datetimeoffset,
         [MiddleName] nvarchar(75),
@@ -43,19 +36,21 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE TABLE [PersonCheckListItem] (
         [Id] bigint NOT NULL IDENTITY,
         [CheckListItemType] int NOT NULL,
         [Description] nvarchar(300) NOT NULL,
+        [SortOrder] int NOT NULL,
+        [Status] int NOT NULL,
         CONSTRAINT [PK_PersonCheckListItem] PRIMARY KEY ([Id])
     );
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE TABLE [User] (
         [Id] bigint NOT NULL IDENTITY,
@@ -69,32 +64,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
-BEGIN
-    CREATE TABLE [DocumentData] (
-        [DocumentId] bigint NOT NULL,
-        [Data] varbinary(max) NOT NULL,
-        CONSTRAINT [PK_DocumentData] PRIMARY KEY ([DocumentId]),
-        CONSTRAINT [FK_DocumentData_Document_DocumentId] FOREIGN KEY ([DocumentId]) REFERENCES [Document] ([Id]) ON DELETE CASCADE
-    );
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
-BEGIN
-    CREATE TABLE [DocumentTag] (
-        [Id] bigint NOT NULL IDENTITY,
-        [DocumentId] bigint NOT NULL,
-        [Value] nvarchar(75) NOT NULL,
-        CONSTRAINT [PK_DocumentTag] PRIMARY KEY ([Id]),
-        CONSTRAINT [FK_DocumentTag_Document_DocumentId] FOREIGN KEY ([DocumentId]) REFERENCES [Document] ([Id]) ON DELETE CASCADE
-    );
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE TABLE [Address] (
         [PersonId] bigint NOT NULL,
@@ -109,20 +79,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
-BEGIN
-    CREATE TABLE [ChildrenInfo] (
-        [Id] bigint NOT NULL IDENTITY,
-        [AgeGroup] int NOT NULL,
-        [PersonId] bigint NOT NULL,
-        CONSTRAINT [PK_ChildrenInfo] PRIMARY KEY ([Id]),
-        CONSTRAINT [FK_ChildrenInfo_Person_PersonId] FOREIGN KEY ([PersonId]) REFERENCES [Person] ([Id]) ON DELETE CASCADE
-    );
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE TABLE [PersonCheckList] (
         [PersonId] bigint NOT NULL,
@@ -137,197 +94,52 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE UNIQUE INDEX [IX_Address_PersonId] ON [Address] ([PersonId]) WHERE [PersonId] IS NOT NULL;
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
-BEGIN
-    CREATE INDEX [IX_ChildrenInfo_PersonId] ON [ChildrenInfo] ([PersonId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
-BEGIN
-    CREATE UNIQUE INDEX [IX_DocumentData_DocumentId] ON [DocumentData] ([DocumentId]) WHERE [DocumentId] IS NOT NULL;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
-BEGIN
-    CREATE INDEX [IX_DocumentTag_DocumentId] ON [DocumentTag] ([DocumentId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE UNIQUE INDEX [IX_Person_Email] ON [Person] ([Email]) WHERE [Email] IS NOT NULL;
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE INDEX [IX_PersonCheckList_PersonCheckListItemId] ON [PersonCheckList] ([PersonCheckListItemId]);
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE INDEX [IX_PersonCheckList_PersonId] ON [PersonCheckList] ([PersonId]);
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE UNIQUE INDEX [IX_PersonCheckListItem_Description] ON [PersonCheckListItem] ([Description]) WHERE [Description] IS NOT NULL;
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     CREATE UNIQUE INDEX [IX_User_Email] ON [User] ([Email]) WHERE [Email] IS NOT NULL;
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20161230171811_CreateDB')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303141943_CreateDb')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20161230171811_CreateDB', N'1.0.0-rtm-21431');
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170203175347_RemoveChildrenInfoTable')
-BEGIN
-    DROP TABLE [ChildrenInfo];
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170203175347_RemoveChildrenInfoTable')
-BEGIN
-    ALTER TABLE [Person] ADD [HasElementaryKids] bit NOT NULL DEFAULT 0;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170203175347_RemoveChildrenInfoTable')
-BEGIN
-    ALTER TABLE [Person] ADD [HasHighSchoolKids] bit NOT NULL DEFAULT 0;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170203175347_RemoveChildrenInfoTable')
-BEGIN
-    ALTER TABLE [Person] ADD [HasInfantKids] bit NOT NULL DEFAULT 0;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170203175347_RemoveChildrenInfoTable')
-BEGIN
-    ALTER TABLE [Person] ADD [HasJuniorHighKids] bit NOT NULL DEFAULT 0;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170203175347_RemoveChildrenInfoTable')
-BEGIN
-    ALTER TABLE [Person] ADD [HasToddlerKids] bit NOT NULL DEFAULT 0;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170203175347_RemoveChildrenInfoTable')
-BEGIN
-    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20170203175347_RemoveChildrenInfoTable', N'1.0.0-rtm-21431');
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170216222741_RemoveDocumentTables')
-BEGIN
-    DROP TABLE [DocumentData];
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170216222741_RemoveDocumentTables')
-BEGIN
-    DROP TABLE [DocumentTag];
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170216222741_RemoveDocumentTables')
-BEGIN
-    DROP TABLE [Document];
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170216222741_RemoveDocumentTables')
-BEGIN
-    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20170216222741_RemoveDocumentTables', N'1.0.0-rtm-21431');
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170220204701_PersonFirstVisitDate')
-BEGIN
-    ALTER TABLE [Person] ADD [FirstVisitDate] datetimeoffset;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170220204701_PersonFirstVisitDate')
-BEGIN
-    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20170220204701_PersonFirstVisitDate', N'1.0.0-rtm-21431');
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170228142412_CheckListItemSortOrder')
-BEGIN
-    ALTER TABLE [PersonCheckListItem] ADD [SortOrder] int NOT NULL DEFAULT 0;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170228142412_CheckListItemSortOrder')
-BEGIN
-    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20170228142412_CheckListItemSortOrder', N'1.0.0-rtm-21431');
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170228160441_PersonCreatedDate')
-BEGIN
-    ALTER TABLE [Person] ADD [CreatedDate] datetimeoffset NOT NULL DEFAULT '0001-01-01T00:00:00.000+00:00';
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170228160441_PersonCreatedDate')
-BEGIN
-    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20170228160441_PersonCreatedDate', N'1.0.0-rtm-21431');
+    VALUES (N'20170303141943_CreateDb', N'1.0.0-rtm-21431');
 END;
 
 GO

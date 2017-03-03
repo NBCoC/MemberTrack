@@ -6,6 +6,8 @@ namespace MemberTrack.Data.Entities
     public class PersonCheckListItem : IEntity
     {
         public string Description { get; set; }
+        
+        public PersonStatusEnum Status { get; set; }
 
         public CheckListItemTypeEnum CheckListItemType { get; set; }
 
