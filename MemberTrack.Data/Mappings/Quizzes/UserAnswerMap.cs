@@ -1,5 +1,6 @@
 ﻿using MemberTrack.Data.Entities.Quizzes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,11 @@ namespace MemberTrack.Data.Mappings.Quizzes
 
             builder.Entity<UserAnswer>().Property(x => x.Id).UseSqlServerIdentityColumn();
 
-            builder.Entity<UserAnswer>().HasOne(x => x.User).WithMany().HasForeignKey(x => x.UserId).IsRequired();
+            builder.Entity<UserAnswer>().HasOne(x => x.User).WithMany()
+                .HasForeignKey(x => x.UserId).IsRequired().OnDelete(DeleteBehavior.Cascade); ;
 
-            builder.Entity<UserAnswer>().HasOne(x => x.Answer).WithMany().HasForeignKey(x => x.AnswerId).IsRequired();
+            builder.Entity<UserAnswer>().HasOne(x => x.Answer).WithMany()
+                .HasForeignKey(x => x.AnswerId).IsRequired().OnDelete(DeleteBehavior.Cascade); ;
 
         }
     }

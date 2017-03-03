@@ -14,9 +14,9 @@ namespace MemberTrack.Data.Entities.Quizzes
         public TopicCategory TopicCategory { get; set; }
 
         public long TopicCategoryId { get; set; }
-        
-        public List<Answer> Answers { get; set; }
 
-        public List<SupportingScripture> SupportingScriptures { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
+
+        public virtual ICollection<SupportingScripture> SupportingScriptures { get; set; } = new List<SupportingScripture>();
     }
 }

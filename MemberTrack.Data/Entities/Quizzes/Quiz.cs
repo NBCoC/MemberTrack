@@ -16,6 +16,6 @@ namespace MemberTrack.Data.Entities.Quizzes
 
         public bool RandomizeQuestions { get; set; }
 
-        public List<Question> Questions { get; set; }
+        public virtual ICollection<Question> Questions { get; set; } = new List<Question>();
     }
 }

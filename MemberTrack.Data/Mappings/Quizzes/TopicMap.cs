@@ -1,9 +1,6 @@
 ﻿using MemberTrack.Data.Entities.Quizzes;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MemberTrack.Data.Mappings.Quizzes
 {
@@ -21,7 +18,8 @@ namespace MemberTrack.Data.Mappings.Quizzes
 
             builder.Entity<Topic>().Property(x => x.Description).HasMaxLength(300);
 
-            builder.Entity<Topic>().HasOne(x => x.TopicCategory).WithMany(x => x.Topics).HasForeignKey(x => x.TopicCategoryId).IsRequired();
+            builder.Entity<Topic>().HasOne(x => x.TopicCategory).WithMany(x => x.Topics)
+                .HasForeignKey(x => x.TopicCategoryId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
         }
     }

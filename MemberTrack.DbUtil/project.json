@@ -5,7 +5,10 @@
   "buildOptions": {
     "emitEntryPoint": true,
     "copyToOutput": {
-      "includeFiles": [ "MemberTrack.sql" ]
+        "includeFiles": [
+            "MemberTrack.sql",
+            "Seedings\\SeedPersonCheckListItem.sql"
+        ]
     }
   },
 

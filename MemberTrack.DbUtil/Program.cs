@@ -5,6 +5,7 @@ namespace MemberTrack.DbUtil
     using Common;
     using Data;
     using Microsoft.EntityFrameworkCore;
+    using Seedings;
 
     public class Program
     {
@@ -26,8 +27,9 @@ namespace MemberTrack.DbUtil
 
                 using (var dbContext = new DatabaseContextFactory().Create(arguments.Datasource, arguments.Catalog))
                 {
-                    Console.WriteLine("Creating system account...");
-                    SeedSystemAccount(dbContext, arguments.ForceReseeding).Wait();
+                    Console.WriteLine("Seeding the database with data...");
+                    var seedManager = new SeedManager(dbContext, arguments.ForceReseeding);
+                    seedManager.Seed();
                 }
 
                 Console.WriteLine("Database seeded.");
@@ -39,40 +41,6 @@ namespace MemberTrack.DbUtil
             finally
             {
                 Console.WriteLine("END");
-            }
-        }
-
-        private static async Task SeedSystemAccount(DatabaseContext context, bool forced)
-        {
-            const string userTableName = "dbo.[User]";
-
-            try
-            {
-                var seeded = await context.Users.AnyAsync(x => SystemAccountHelper.IsSystemAccount(x.Id));
-
-                if (seeded && !forced) return;
-
-                foreach (var userAccount in SystemAccountHelper.SystemAccounts)
-                {
-                    if (forced)
-                    {
-                        context.Database.ExecuteSqlCommand(
-                            $"DELETE FROM {userTableName} WHERE Email = '{userAccount.Email}'");
-                    }
-
-                    var query = $@"SET IDENTITY_INSERT {userTableName} ON
-								INSERT INTO {userTableName}
-									(Id, DisplayName, Role, Password, Email) 
-								VALUES({userAccount.Id}, '{userAccount.DisplayName}', 
-                    {(int) userAccount.Role}, '{userAccount.Password}', '{userAccount.Email}')
-								SET IDENTITY_INSERT {userTableName} OFF";
-
-                    await context.Database.ExecuteSqlCommandAsync(query);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToDetail());
             }
         }
     }
