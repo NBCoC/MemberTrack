@@ -1,4 +1,5 @@
 import * as gulp from 'gulp';
+import clean from './clean';
 import transpile from './transpile';
 import processMarkup from './process-markup';
 import processCSS from './process-css';
@@ -9,6 +10,7 @@ import * as project from '../aurelia.json';
 export default gulp.series(
   readProjectConfiguration,
   gulp.parallel(
+    clean,
     transpile,
     processMarkup,
     processCSS,
