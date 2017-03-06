@@ -4,7 +4,7 @@ import { PersonEvent } from '../core/custom-events';
 import { PersonDto } from '../core/dtos';
 import { bindable, customElement } from 'aurelia-framework';
 
-@customElement('membertrack-children-info')
+@customElement('mt-children-info')
 export class ChildrenInfoViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
     @bindable isEditor: boolean;

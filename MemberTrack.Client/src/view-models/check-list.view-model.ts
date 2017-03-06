@@ -7,7 +7,7 @@ import { PromptEvent, PersonEvent } from '../core/custom-events';
 import { DtoHelper, PersonCheckListItemDto, PersonDto } from '../core/dtos';
 import { bindable, customElement } from 'aurelia-framework';
 
-@customElement('membertrack-check-list')
+@customElement('mt-check-list')
 export class CheckListViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
     @bindable isEditor: boolean;

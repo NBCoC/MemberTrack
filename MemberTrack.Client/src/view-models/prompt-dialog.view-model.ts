@@ -4,7 +4,7 @@ import { BaseDialog } from '../core/base-dialog';
 import { LookupItemDto } from '../core/dtos';
 import { PromptEvent } from '../core/custom-events';
 
-@customElement('membertrack-prompt-dialog')
+@customElement('mt-prompt-dialog')
 export class PromptDialogViewModel extends BaseDialog {
     public model: LookupItemDto = {} as LookupItemDto;
     public title: string;

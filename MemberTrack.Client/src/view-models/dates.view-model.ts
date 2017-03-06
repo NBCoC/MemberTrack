@@ -4,7 +4,7 @@ import { PersonEvent } from '../core/custom-events';
 import { PersonDto } from '../core/dtos';
 import { bindable, customElement } from 'aurelia-framework';
 
-@customElement('membertrack-dates')
+@customElement('mt-dates')
 export class DatesViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
     @bindable isEditor: boolean;

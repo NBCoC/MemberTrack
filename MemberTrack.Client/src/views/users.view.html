@@ -2,14 +2,14 @@
   <require from="../view-models/prompt-dialog.view-model"></require>
   <require from="../view-models/user-dialog.view-model"></require>
   <!--Dialog-->
-  <membertrack-prompt-dialog view-model.ref="promptDialogVm" dismiss.delegate="dismissPromptDialog($event)"></membertrack-prompt-dialog>
-  <membertrack-user-dialog view-model.ref="userDialogVm" dismiss.delegate="dismissUserDialog($event)"></membertrack-user-dialog>
+  <mt-prompt-dialog view-model.ref="promptDialogVm" dismiss.delegate="dismissPromptDialog($event)"></mt-prompt-dialog>
+  <mt-user-dialog view-model.ref="userDialogVm" dismiss.delegate="dismissUserDialog($event)"></mt-user-dialog>
   <!--Content-->
-  <section membertrack-view="users">
+  <section mt-view="users">
     <div class="mdl-grid demo-content">
       <div class="mdl-layout-spacer"></div>
       <div class="loading-text">${loadingText}</div>
-      <table membertrack-mdl="data-table" class="mdl-shadow--2dp" show.two-way="users.length">
+      <table mt-mdl="data-table" class="mdl-shadow--2dp" show.two-way="users.length">
         <thead>
           <tr>
             <th>Name</th>
@@ -24,13 +24,13 @@
             <td>${user.email}</td>
             <td>${user.roleName}</td>
             <td>
-              <button membertrack-mdl="button" class="mdl-button--accent" click.trigger="displayUserDialog(user)">
+              <button mt-mdl="button" class="mdl-button--accent" click.trigger="displayUserDialog(user)">
                     Edit
               </button>
-              <button membertrack-mdl="button" click.trigger="displayPromptDialog(user)">
+              <button mt-mdl="button" click.trigger="displayPromptDialog(user)">
                     Delete
                 </button>
-              <button membertrack-mdl="button" click.trigger="displayResetDialog(user)" if.bind="isSystemAdmin">
+              <button mt-mdl="button" click.trigger="displayResetDialog(user)" if.bind="isSystemAdmin">
                     Reset Password
                 </button>
             </td>
@@ -39,7 +39,7 @@
       </table>
       <div class="mdl-layout-spacer"></div>
     </div>
-    <button membertrack-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
+    <button mt-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
       click.trigger="displayUserDialog()">
       New User
       </button>

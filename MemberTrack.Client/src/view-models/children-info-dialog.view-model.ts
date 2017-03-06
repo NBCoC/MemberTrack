@@ -5,7 +5,7 @@ import { PersonService } from '../services/person.service';
 import { ChildrenInfoDto } from '../core/dtos';
 import { PersonEvent } from '../core/custom-events';
 
-@customElement('membertrack-children-info-dialog')
+@customElement('mt-children-info-dialog')
 export class ChildrenInfoDialogViewModel extends BaseDialog {
     private personService: PersonService;
     public model: ChildrenInfoDto;

@@ -8,7 +8,7 @@ import { PersonEvent } from '../core/custom-events';
 
 const Format = 'MM/DD/YYYY';
 
-@customElement('membertrack-dates-dialog')
+@customElement('mt-dates-dialog')
 export class DatesDialogViewModel extends BaseDialog {
     private personService: PersonService;
     public model: DatesDto;

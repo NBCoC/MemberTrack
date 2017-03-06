@@ -1,6 +1,6 @@
 import { customAttribute } from 'aurelia-framework';
 
-@customAttribute('membertrack-toggle-drawer')
+@customAttribute('mt-toggle-drawer')
 export class ToggleDrawerAttribute {
     private element: Element;
 

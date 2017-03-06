@@ -10,7 +10,7 @@ export abstract class BaseViewModel {
     }
 
     protected initMdl(): void {
-        let element = document.querySelector(`[membertrack-view="${this.viewId}"]`);
+        let element = document.querySelector(`[mt-view="${this.viewId}"]`);
 
         setTimeout(() => {
             MdlHelper.checkMdlComponents(element);

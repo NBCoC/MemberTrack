@@ -20,7 +20,7 @@ const MdlControls = {
     'selectfield': { type: 'MaterialSelectfield', classes: ['mdl-selectfield', 'mdl-js-selectfield'], rippleEffectSupport: false }
 };
 
-@customAttribute('membertrack-mdl')
+@customAttribute('mt-mdl')
 export class MdlAttribute {
     private element: Element;
 
@@ -33,7 +33,7 @@ export class MdlAttribute {
             throw 'componentHandler is not defined. Material library is required.';
         }
 
-        let attribute = this.element.attributes['membertrack-mdl'];
+        let attribute = this.element.attributes['mt-mdl'];
 
         let typeName = attribute.value;
 

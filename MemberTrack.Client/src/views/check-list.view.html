@@ -2,8 +2,8 @@
   <require from="../view-models/prompt-dialog.view-model"></require>
   <require from="../view-models/check-list-item-dialog.view-model"></require>
   <!--Dialog-->
-  <membertrack-prompt-dialog view-model.ref="promptDialogVm" dismiss.delegate="dismissPromptDialog($event)"></membertrack-prompt-dialog>
-  <membertrack-check-list-item-dialog view-model.ref="checkListItemDialogVm" dismiss.delegate="dismissDialog($event)"></membertrack-check-list-item-dialog>
+  <mt-prompt-dialog view-model.ref="promptDialogVm" dismiss.delegate="dismissPromptDialog($event)"></mt-prompt-dialog>
+  <mt-check-list-item-dialog view-model.ref="checkListItemDialogVm" dismiss.delegate="dismissDialog($event)"></mt-check-list-item-dialog>
   <!--Content-->
   <div class="mdl-grid demo-content">
     <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
@@ -15,7 +15,7 @@
           <div>
             <h6>${group.groupName}</h6>
             <div repeat.for="item of group.items">
-              <label membertrack-mdl="checkbox" class="mdl-js-ripple-effect" for="${item.id}">
+              <label mt-mdl="checkbox" class="mdl-js-ripple-effect" for="${item.id}">
                     <input type="checkbox" id="${item.id}" class="mdl-checkbox__input" checked.bind="item.isSelected" change.delegate="checkListItemChange($event, item)">
                     <span class="mdl-checkbox__label">${item.description}</span>
                 </label>

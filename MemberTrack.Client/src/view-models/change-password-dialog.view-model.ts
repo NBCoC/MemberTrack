@@ -6,7 +6,7 @@ import { SnackbarEvent } from '../core/custom-events';
 import { UserService } from '../services/user.service';
 import { UpdatePasswordDto } from '../core/dtos';
 
-@customElement('membertrack-change-password-dialog')
+@customElement('mt-change-password-dialog')
 export class ChangePasswordDialogViewModel extends BaseDialog {
     private userService: UserService;
     private eventAggregator: EventAggregator;

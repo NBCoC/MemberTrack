@@ -1,13 +1,13 @@
 <template>
   <require from="../view-models/member-dialog.view-model"></require>
   <!--Dialogs-->
-  <membertrack-member-dialog view-model.ref="memberDialogVm" dismiss.delegate="dismissMemberDialog($event)"></membertrack-member-dialog>
+  <mt-member-dialog view-model.ref="memberDialogVm" dismiss.delegate="dismissMemberDialog($event)"></mt-member-dialog>
   <!--Content-->
   <section>
-    <membertrack-report data.bind="report"></membertrack-report>
+    <mt-report data.bind="report"></mt-report>
 
     <div class="mdl-grid demo-content">
-      <table membertrack-mdl="data-table" class="mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+      <table mt-mdl="data-table" class="mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
         show.two-way="recentMembers.length">
         <thead>
           <tr>
@@ -27,7 +27,7 @@
         </tbody>
       </table>
 
-      <table membertrack-mdl="data-table" class="mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+      <table mt-mdl="data-table" class="mdl-shadow--2dp mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
         show.two-way="recentVisitors.length">
         <thead>
           <tr>
@@ -48,7 +48,7 @@
       </table>
     </div>
 
-    <button membertrack-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
+    <button mt-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
       click.trigger="displayMemberDialog()" if.bind="isEditor">
       New Member / Visitor
       </button>

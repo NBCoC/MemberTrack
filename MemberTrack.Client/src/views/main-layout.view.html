@@ -1,17 +1,17 @@
 <template>
   <require from="../view-models/change-password-dialog.view-model"></require>
   <!--Dialog-->
-  <membertrack-change-password-dialog view-model.ref="changePasswordDialogVm" dismiss.delegate="dismissChangePasswordDialog($event)"></membertrack-change-password-dialog>
+  <mt-change-password-dialog view-model.ref="changePasswordDialogVm" dismiss.delegate="dismissChangePasswordDialog($event)"></mt-change-password-dialog>
   <!--Content-->
-  <div membertrack-mdl="layout" class="demo-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  <div mt-mdl="layout" class="demo-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
     <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
       <div class="mdl-layout__header-row">
         <span class="mdl-layout-title">${viewTitle}</span>
         <div class="mdl-layout-spacer"></div>
-        <button membertrack-mdl="button" class="mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+        <button mt-mdl="button" class="mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
             <i class="material-icons">more_vert</i>
           </button>
-        <ul membertrack-mdl="menu" class="mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+        <ul mt-mdl="menu" class="mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
           <li class="mdl-menu__item" click.trigger="displayChangePasswordDialog($event)">Change Password</li>
           <li class="mdl-menu__item--full-bleed-divider"></li>
           <li class="mdl-menu__item" click.trigger="signOut($event)">Sign Out</li>
@@ -26,11 +26,11 @@
         </div>
       </header>
       <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-        <a class="mdl-navigation__link" membertrack-toggle-drawer href="#main/home">
+        <a class="mdl-navigation__link" mt-toggle-drawer href="#main/home">
           <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
-        <a class="mdl-navigation__link" membertrack-toggle-drawer href="#main/search">
+        <a class="mdl-navigation__link" mt-toggle-drawer href="#main/search">
           <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">search</i>Search</a>
-        <a class="mdl-navigation__link" membertrack-toggle-drawer href="#main/administration/users">
+        <a class="mdl-navigation__link" mt-toggle-drawer href="#main/administration/users">
           <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Users</a>
         <div class="mdl-layout-spacer"></div>
       </nav>

@@ -4,7 +4,7 @@ import { PersonDto } from '../core/dtos';
 import { AddressDialogViewModel } from './address-dialog.view-model';
 import { bindable, customElement } from 'aurelia-framework';
 
-@customElement('membertrack-address')
+@customElement('mt-address')
 export class AddressViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
     @bindable isEditor: boolean;

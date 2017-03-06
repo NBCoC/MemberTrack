@@ -6,7 +6,7 @@ import { LookupService } from '../services/lookup.service';
 import { PersonDto, LookupItemDto } from '../core/dtos';
 import { PersonEvent } from '../core/custom-events';
 
-@customElement('membertrack-member-dialog')
+@customElement('mt-member-dialog')
 export class MemberDialogViewModel extends BaseDialog {
     private personService: PersonService;
     private lookupService: LookupService;

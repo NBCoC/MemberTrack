@@ -1,8 +1,8 @@
 <template>
-  <section membertrack-view="search">
+  <section mt-view="search">
     <div class="mdl-grid demo-content">
       <div class="mdl-layout-spacer"></div>
-      <div membertrack-mdl="textfield" class="mdl-textfield--floating-label">
+      <div mt-mdl="textfield" class="mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="searchControl" name="searchControl"
           value.two-way="searchText & debounce:400">
           <label class="mdl-textfield__label" for="searchControl">Search for members...</label>
@@ -14,7 +14,7 @@
       <span class="loading-text" if.bind="!hasResults">
           No results found...
       </span>
-      <table membertrack-mdl="data-table" class="mdl-shadow--2dp" show.two-way="people.length">
+      <table mt-mdl="data-table" class="mdl-shadow--2dp" show.two-way="people.length">
         <thead>
           <tr>
             <th>Name</th>
@@ -29,7 +29,7 @@
             <td>${person.statusName}</td>
             <td>${person.ageGroupName}</td>
             <td>
-              <a membertrack-mdl="button" class="mdl-button--accent" href="#main/member-details/${person.id}">
+              <a mt-mdl="button" class="mdl-button--accent" href="#main/member-details/${person.id}">
                     View Details
               </a>
             </td>

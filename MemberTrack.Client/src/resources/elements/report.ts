@@ -2,7 +2,7 @@ import { PersonReportDto } from '../../core/dtos';
 import { bindable, customElement } from 'aurelia-framework';
 import * as Chart from 'chart.js';
 
-@customElement('membertrack-report')
+@customElement('mt-report')
 export class Report {
     @bindable data: PersonReportDto = null;
     private element: Element;
