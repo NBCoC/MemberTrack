@@ -35,10 +35,8 @@ Web API
 1. Using Visual Studio, open MemberTrack.WebApi project
 2. In the 'Standard' toolbar change the 'Debug Target' from 'IIS Express' to 'MemberTrack.WebApi'
 3. Run the project. A console app should launch stating that the Web API is running on port 5000.
-4. Navigate to http://localhost:5000/membertrack/api/user/contextuser to make sure its working...
-   You should get JSON like the following:
-	{"message":"No authentication handler is configured to handle the scheme: Automatic"}
-
+4. A browser should launch displaying page http://localhost:5000/membertrack/ that reads:
+	MemberTrack client placeholder...
 
 Client
 
