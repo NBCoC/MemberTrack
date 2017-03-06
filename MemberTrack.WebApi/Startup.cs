@@ -81,9 +81,11 @@ namespace MemberTrack.WebApi
 
             if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
-
+            
+            app.UseFileServer();
             app.UseCors(PolicyName);
             app.UseCustomExceptionHandler(loggerFactory);
             app.UseTokenProvider(Configuration["Audience"]);

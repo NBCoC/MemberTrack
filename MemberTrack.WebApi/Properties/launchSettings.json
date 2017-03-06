@@ -18,7 +18,8 @@
     },
     "MemberTrack.WepApi": {
       "commandName": "Project",
-      "launchUrl": "http://localhost:5000/api/values",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:5000/membertrack",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
