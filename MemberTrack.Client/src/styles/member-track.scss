@@ -29,6 +29,7 @@
 
 section {
   @include fadeIn-animation(1s);
+  overflow-y: auto;
 }
 
 /* Helper classes */
