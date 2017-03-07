@@ -6,23 +6,25 @@
       <div class="mdl-dialog__content">
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="email" id="emailControl" name="emailControl"
-            value.bind="model.email" required>
-            <label class="mdl-textfield__label" for="emailControl">Email...</label>
+            value.bind="model.email & validate" disabled.bind="model.id">
+          <label class="mdl-textfield__label" for="emailControl">Email...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="displayNameControl" name="displayNameControl"
-            value.bind="model.displayName" required>
-            <label class="mdl-textfield__label" for="displayNameControl">Display Name...</label>
+            value.bind="model.displayName & validate">
+          <label class="mdl-textfield__label" for="displayNameControl">Display Name...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="selectfield" class="mdl-selectfield--floating-label full-width">
-          <select id="roleControl" name="roleControl" class="mdl-selectfield__select" value.bind="model.role"
-            required>
+          <select id="roleControl" name="roleControl" class="mdl-selectfield__select" value.bind="model.role & validate">
             <option model.bind="null">Select role...</option>
             <option repeat.for="role of roles | sort : 'name'" model.bind="role.id">
               ${role.name}
             </option>
             </select>
-            <label class="mdl-selectfield__label" for="roleControl">Role...</label>
+          <label class="mdl-selectfield__label" for="roleControl">Role...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
       </div>
       <hr>

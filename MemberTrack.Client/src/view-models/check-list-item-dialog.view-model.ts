@@ -1,3 +1,4 @@
+import { ValidationControllerFactory } from 'aurelia-validation';
 import { customElement } from 'aurelia-framework';
 
 import { BaseDialog } from '../core/base-dialog';
@@ -11,8 +12,9 @@ export class CheckListItemDialogViewModel extends BaseDialog {
     public model: PersonCheckListItemDto;
     public memberId: number;
 
-    constructor(element: Element, personService: PersonService) {
-        super(element, 'check-list-item-dialog');
+    constructor(element: Element, personService: PersonService,
+        validationControllerFactory: ValidationControllerFactory) {
+        super(validationControllerFactory, element, 'check-list-item-dialog');
         this.personService = personService;
         this.model = {} as PersonCheckListItemDto;
     }
@@ -39,4 +41,6 @@ export class CheckListItemDialogViewModel extends BaseDialog {
             this.dismiss(new PersonEvent(dto));
         });
     }
+
+    protected registerValidation(): void { }
 }

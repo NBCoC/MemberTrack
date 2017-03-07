@@ -1,10 +1,10 @@
 import { customElement } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
-
 import { BaseDialog } from '../core/base-dialog';
 import { SnackbarEvent } from '../core/custom-events';
 import { UserService } from '../services/user.service';
 import { UpdatePasswordDto } from '../core/dtos';
+import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 
 @customElement('mt-change-password-dialog')
 export class ChangePasswordDialogViewModel extends BaseDialog {
@@ -13,8 +13,9 @@ export class ChangePasswordDialogViewModel extends BaseDialog {
     public model: UpdatePasswordDto;
     private contextUserId: number;
 
-    constructor(element: Element, userService: UserService, eventAggregator: EventAggregator) {
-        super(element, 'change-password-dialog');
+    constructor(element: Element, userService: UserService, eventAggregator: EventAggregator,
+        validationControllerFactory: ValidationControllerFactory) {
+        super(validationControllerFactory, element, 'change-password-dialog');
         this.userService = userService;
         this.eventAggregator = eventAggregator;
         this.model = {} as UpdatePasswordDto;
@@ -31,16 +32,25 @@ export class ChangePasswordDialogViewModel extends BaseDialog {
     }
 
     public changePassword(e: Event): void {
-        if (this.model.newPassword == null || this.model.oldPassword == null) {
-            return;
-        }
-
-        this.userService.updatePassword(this.contextUserId, this.model).then(ok => {
-            if (!ok) {
+        this.validate().then(isValid => {
+            if (!isValid) {
                 return;
             }
-            this.eventAggregator.publish(new SnackbarEvent('Password has been updated. Please sign in again...'));
-            this.dismiss();
+
+            this.userService.updatePassword(this.contextUserId, this.model).then(ok => {
+                if (!ok) {
+                    return;
+                }
+                this.eventAggregator.publish(new SnackbarEvent('Password has been updated. Please sign in again...'));
+                this.dismiss();
+            });
         });
+    }
+
+    protected registerValidation(): void {
+        ValidationRules
+            .ensure('newPassword').required()
+            .ensure('oldPassword').required()
+            .on(this.model);
     }
 }

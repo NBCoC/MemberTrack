@@ -1,3 +1,4 @@
+import { ValidationControllerFactory } from 'aurelia-validation';
 import { customElement } from 'aurelia-framework';
 
 import { BaseDialog } from '../core/base-dialog';
@@ -11,8 +12,9 @@ export class ChildrenInfoDialogViewModel extends BaseDialog {
     public model: ChildrenInfoDto;
     public memberId: number;
 
-    constructor(element: Element, personService: PersonService) {
-        super(element, 'children-info-dialog');
+    constructor(element: Element, personService: PersonService,
+        validationControllerFactory: ValidationControllerFactory) {
+        super(validationControllerFactory, element, 'children-info-dialog');
         this.personService = personService;
         this.model = {} as ChildrenInfoDto;
     }
@@ -42,4 +44,6 @@ export class ChildrenInfoDialogViewModel extends BaseDialog {
             this.dismiss(new PersonEvent(dto));
         });
     }
+
+    protected registerValidation(): void { }
 }

@@ -1,3 +1,4 @@
+import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 import { customElement } from 'aurelia-framework';
 
 import { BaseDialog } from '../core/base-dialog';
@@ -13,8 +14,9 @@ export class UserDialogViewModel extends BaseDialog {
     public model: UserDto;
     public roles: LookupItemDto[];
 
-    constructor(element: Element, userService: UserService, lookupService: LookupService) {
-        super(element, 'user-dialog');
+    constructor(element: Element, userService: UserService, lookupService: LookupService,
+        validationControllerFactory: ValidationControllerFactory) {
+        super(validationControllerFactory, element, 'user-dialog');
         this.userService = userService;
         this.lookupService = lookupService;
         this.model = {} as UserDto;
@@ -38,19 +40,29 @@ export class UserDialogViewModel extends BaseDialog {
     }
 
     public save(): void {
-        if (!this.model.displayName || !this.model.email || !this.model.role) {
-            return;
-        }
-
-        let func = this.model.id ?
-            this.userService.update(this.model.id, this.model) :
-            this.userService.insert(this.model);
-
-        func.then(dto => {
-            if (!dto) {
+        this.validate().then(isValid => {
+            if (!isValid) {
                 return;
             }
-            this.dismiss(new UserEvent(dto));
+
+            let func = this.model.id ?
+                this.userService.update(this.model.id, this.model) :
+                this.userService.insert(this.model);
+
+            func.then(dto => {
+                if (!dto) {
+                    return;
+                }
+                this.dismiss(new UserEvent(dto));
+            });
         });
+    }
+
+    protected registerValidation(): void {
+        ValidationRules
+            .ensure('displayName').required()
+            .ensure('role').required()
+            .ensure('email').required().email()
+            .on(this.model);
     }
 }

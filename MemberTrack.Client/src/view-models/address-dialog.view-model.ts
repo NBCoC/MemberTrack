@@ -1,10 +1,10 @@
 import { customElement } from 'aurelia-framework';
-
 import { BaseDialog } from '../core/base-dialog';
 import { AddressService } from '../services/address.service';
 import { LookupService } from '../services/lookup.service';
 import { AddressDto, LookupItemDto } from '../core/dtos';
 import { PersonEvent } from '../core/custom-events';
+import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 
 @customElement('mt-address-dialog')
 export class AddressDialogViewModel extends BaseDialog {
@@ -14,8 +14,9 @@ export class AddressDialogViewModel extends BaseDialog {
     public memberId: number;
     public states: LookupItemDto[];
 
-    constructor(element: Element, addressService: AddressService, lookupService: LookupService) {
-        super(element, 'address-dialog');
+    constructor(element: Element, addressService: AddressService, lookupService: LookupService,
+        validationControllerFactory: ValidationControllerFactory) {
+        super(validationControllerFactory, element, 'address-dialog');
         this.addressService = addressService;
         this.lookupService = lookupService;
         this.model = {} as AddressDto;
@@ -47,16 +48,26 @@ export class AddressDialogViewModel extends BaseDialog {
             return;
         }
 
-        if (!this.model.city || !this.model.state ||
-            !this.model.street || !this.model.zipCode) {
-            return;
-        }
-
-        this.addressService.insertOrUpdate(this.memberId, this.model).then(dto => {
-            if (!dto) {
+        this.validate().then(isValid => {
+            if (!isValid) {
                 return;
             }
-            this.dismiss(new PersonEvent(dto));
+
+            this.addressService.insertOrUpdate(this.memberId, this.model).then(dto => {
+                if (!dto) {
+                    return;
+                }
+                this.dismiss(new PersonEvent(dto));
+            });
         });
+    }
+
+    protected registerValidation(): void {
+        ValidationRules
+            .ensure('street').required()
+            .ensure('city').required()
+            .ensure('state').required()
+            .ensure('zipCode').required().matches(/\d{5}/)
+            .on(this.model);
     }
 }

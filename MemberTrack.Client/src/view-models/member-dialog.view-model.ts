@@ -1,6 +1,5 @@
 import { customElement } from 'aurelia-framework';
-import { ValidationControllerFactory, ValidationController, validateTrigger, ValidationRules } from 'aurelia-validation';
-import { CustomValidationRenderer } from '../resources/validation/custom-validation-renderer';
+import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 
 import { BaseDialog } from '../core/base-dialog';
 import { PersonService } from '../services/person.service';
@@ -12,21 +11,16 @@ import { PersonEvent } from '../core/custom-events';
 export class MemberDialogViewModel extends BaseDialog {
     private personService: PersonService;
     private lookupService: LookupService;
-    private validationController: ValidationController;
     public model: PersonDto;
     public genders: LookupItemDto[];
     public ageGroups: LookupItemDto[];
     public statusList: LookupItemDto[];
 
     constructor(element: Element, personService: PersonService, lookupService: LookupService,
-        controllerFactory: ValidationControllerFactory) {
-        super(element, 'member-dialog');
+        validationControllerFactory: ValidationControllerFactory) {
+        super(validationControllerFactory, element, 'member-dialog');
         this.personService = personService;
         this.lookupService = lookupService;
-        this.validationController = controllerFactory.createForCurrentScope();
-
-        this.validationController.addRenderer(new CustomValidationRenderer());
-        this.validationController.validateTrigger = validateTrigger.change;
 
         this.model = {} as PersonDto;
         this.genders = [];
@@ -51,13 +45,12 @@ export class MemberDialogViewModel extends BaseDialog {
         if (model) {
             this.model = model;
         }
-        this.registerValidaton();
         this.showModal();
     }
 
     public save(): void {
-        this.validationController.validate().then(validationResult => {
-            if (!validationResult.valid) {
+        this.validate().then(isValid => {
+            if (!isValid) {
                 return;
             }
 
@@ -74,17 +67,15 @@ export class MemberDialogViewModel extends BaseDialog {
         });
     }
 
-    private registerValidaton(): void {
+    protected registerValidation(): void {
         ValidationRules
             .ensure('firstName').required()
             .ensure('lastName').required()
             .ensure('gender').required()
             .ensure('ageGroup').required()
             .ensure('status').required()
-            .ensure('contactNumber').matches(/\b\d{3}[-]\d{3}[-]\d{4}\b/)
+            .ensure('contactNumber').matches(/\d{3}[-]\d{3}[-]\d{4}/)
             .ensure('email').email()
             .on(this.model);
-
-        this.validationController.validate();
     }
 }

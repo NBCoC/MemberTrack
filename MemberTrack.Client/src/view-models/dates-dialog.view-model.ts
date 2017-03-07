@@ -1,3 +1,4 @@
+import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
 import { customElement } from 'aurelia-framework';
 import * as moment from 'moment';
 
@@ -14,8 +15,8 @@ export class DatesDialogViewModel extends BaseDialog {
     public model: DatesDto;
     public memberId: number;
 
-    constructor(element: Element, personService: PersonService) {
-        super(element, 'dates-dialog');
+    constructor(element: Element, personService: PersonService, validationControllerFactory: ValidationControllerFactory) {
+        super(validationControllerFactory, element, 'dates-dialog');
         this.personService = personService;
         this.model = {} as DatesDto;
     }
@@ -54,17 +55,31 @@ export class DatesDialogViewModel extends BaseDialog {
             return;
         }
 
-        let data = {
-            baptismDate: !this.model.baptismDate ? null : new Date(this.model.baptismDate),
-            membershipDate: !this.model.membershipDate ? null : new Date(this.model.membershipDate),
-            firstVisitDate: !this.model.firstVisitDate ? null : new Date(this.model.firstVisitDate)
-        } as DatesDto;
-
-        this.personService.updateDates(this.memberId, data).then(dto => {
-            if (!dto) {
+        this.validate().then(isValid => {
+            if (!isValid) {
                 return;
             }
-            this.dismiss(new PersonEvent(dto));
+
+            let data = {
+                baptismDate: !this.model.baptismDate ? null : new Date(this.model.baptismDate),
+                membershipDate: !this.model.membershipDate ? null : new Date(this.model.membershipDate),
+                firstVisitDate: !this.model.firstVisitDate ? null : new Date(this.model.firstVisitDate)
+            } as DatesDto;
+
+            this.personService.updateDates(this.memberId, data).then(dto => {
+                if (!dto) {
+                    return;
+                }
+                this.dismiss(new PersonEvent(dto));
+            });
         });
+    }
+
+    protected registerValidation(): void {
+        ValidationRules
+            .ensure('baptismDate').matches(/\d+\/\d+\/\d{4}/)
+            .ensure('membershipDate').matches(/\d+\/\d+\/\d{4}/)
+            .ensure('firstVisitDate').matches(/\d+\/\d+\/\d{4}/)
+            .on(this.model);
     }
 }

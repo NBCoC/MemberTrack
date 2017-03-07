@@ -6,21 +6,21 @@
       <div class="mdl-dialog__content">
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="firstVisitControl" name="firstVisitControl"
-            pattern="\d+\/\d+\/\d{4}" value.bind="model.firstVisitDate">
+            pattern="\d+\/\d+\/\d{4}" value.bind="model.firstVisitDate & validate">
           <label class="mdl-textfield__label" for="firstVisitControl">1st Visit...</label>
-          <span class="mdl-textfield__error">Invalid date!</span>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="baptismControl" name="baptismControl"
-            pattern="\d+\/\d+\/\d{4}" value.bind="model.baptismDate">
+            pattern="\d+\/\d+\/\d{4}" value.bind="model.baptismDate & validate">
           <label class="mdl-textfield__label" for="baptismControl">Baptism...</label>
-          <span class="mdl-textfield__error">Invalid date!</span>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="membershipControl" name="membershipControl"
-            pattern="\d+\/\d+\/\d{4}" value.bind="model.membershipDate">
+            pattern="\d+\/\d+\/\d{4}" value.bind="model.membershipDate & validate">
           <label class="mdl-textfield__label" for="membershipControl">Membership Placement...</label>
-          <span class="mdl-textfield__error">Invalid date!</span>
+          <span class="mdl-textfield__error"></span>
         </div>
       </div>
       <hr>

@@ -6,28 +6,31 @@
       <div class="mdl-dialog__content">
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="streetControl" name="streetControl"
-            value.bind="model.street" required>
-            <label class="mdl-textfield__label" for="streetControl">Street...</label>
+            value.bind="model.street & validate">
+          <label class="mdl-textfield__label" for="streetControl">Street...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="cityControl" name="cityControl"
-            value.bind="model.city">
-            <label class="mdl-textfield__label" for="cityControl">City...</label>
+            value.bind="model.city & validate">
+          <label class="mdl-textfield__label" for="cityControl">City...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="selectfield" class="mdl-selectfield--floating-label full-width">
-          <select id="stateControl" name="stateControl" class="mdl-selectfield__select" value.bind="model.state"
-            required>
+          <select id="stateControl" name="stateControl" class="mdl-selectfield__select" value.bind="model.state & validate">
             <option model.bind="null">Select state...</option>
             <option repeat.for="state of states | sort : 'name'" model.bind="state.id">
               ${state.name}
             </option>
             </select>
-            <label class="mdl-selectfield__label" for="stateControl">State...</label>
+          <label class="mdl-selectfield__label" for="stateControl">State...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="zipCodeControl" name="zipCodeControl"
-            value.bind="model.zipCode" required>
-            <label class="mdl-textfield__label" for="zipCodeControl">Zip Code...</label>
+            value.bind="model.zipCode & validate">
+          <label class="mdl-textfield__label" for="zipCodeControl">Zip Code...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
       </div>
       <hr>

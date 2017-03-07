@@ -1,3 +1,4 @@
+import { ValidationControllerFactory } from 'aurelia-validation';
 import { customElement } from 'aurelia-framework';
 
 import { BaseDialog } from '../core/base-dialog';
@@ -10,8 +11,8 @@ export class PromptDialogViewModel extends BaseDialog {
     public title: string;
     public message: string;
 
-    constructor(element: Element) {
-        super(element, 'prompt-dialog');
+    constructor(element: Element, validationControllerFactory: ValidationControllerFactory) {
+        super(validationControllerFactory, element, 'prompt-dialog');
     }
 
     public attached(): void {
@@ -29,4 +30,6 @@ export class PromptDialogViewModel extends BaseDialog {
     public ok(): void {
         this.dismiss(new PromptEvent(this.model.id));
     }
+
+    protected registerValidation(): void { }
 }
