@@ -6,58 +6,65 @@
       <div class="mdl-dialog__content">
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="firstNameControl" name="firstNameControl"
-            value.bind="model.firstName" required>
-            <label class="mdl-textfield__label" for="firstNameControl">First Name...</label>
+            value.bind="model.firstName & validate">
+          <label class="mdl-textfield__label" for="firstNameControl">First Name...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="middleNameControl" name="middleNameControl"
             value.bind="model.middleName">
-            <label class="mdl-textfield__label" for="middleNameControl">Middle Name...</label>
+          <label class="mdl-textfield__label" for="middleNameControl">Middle Name...</label>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="lastNameControl" name="lastNameControl"
-            value.bind="model.lastName" required>
-            <label class="mdl-textfield__label" for="lastNameControl">Last Name...</label>
+            value.bind="model.lastName & validate">
+          <label class="mdl-textfield__label" for="lastNameControl">Last Name...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="email" id="emailControl" name="emailControl"
-            value.bind="model.email">
-            <label class="mdl-textfield__label" for="emailControl">Email...</label>
+            value.bind="model.email & validate">
+          <label class="mdl-textfield__label" for="emailControl">Email...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <input class="mdl-textfield__input" type="text" id="contactNumberControl" name="contactNumberControl"
-            value.bind="model.contactNumber">
-            <label class="mdl-textfield__label" for="contactNumberControl">Contact #...</label>
+            value.bind="model.contactNumber & validate">
+          <label class="mdl-textfield__label" for="contactNumberControl">Contact #...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="selectfield" class="mdl-selectfield--floating-label full-width">
-          <select id="genderControl" name="genderControl" class="mdl-selectfield__select" value.bind="model.gender"
+          <select id="genderControl" name="genderControl" class="mdl-selectfield__select" value.bind="model.gender & validate"
             required>
             <option model.bind="null">Select gender...</option>
             <option repeat.for="gender of genders | sort : 'name'" model.bind="gender.id">
               ${gender.name}
             </option>
             </select>
-            <label class="mdl-selectfield__label" for="genderControl">Gender...</label>
+          <label class="mdl-selectfield__label" for="genderControl">Gender...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="selectfield" class="mdl-selectfield--floating-label full-width">
           <select id="ageGroupControl" name="ageGroupControl" class="mdl-selectfield__select"
-            value.bind="model.ageGroup">
+            value.bind="model.ageGroup & validate">
             <option model.bind="null">Select age group...</option>
             <option repeat.for="ageGroup of ageGroups | sort : 'name'" model.bind="ageGroup.id">
               ${ageGroup.name}
             </option>
             </select>
-            <label class="mdl-selectfield__label" for="ageGroupControl">Age Group...</label>
+          <label class="mdl-selectfield__label" for="ageGroupControl">Age Group...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
         <div mt-mdl="selectfield" class="mdl-selectfield--floating-label full-width">
-          <select id="statusControl" name="statusControl" class="mdl-selectfield__select" value.bind="model.status"
+          <select id="statusControl" name="statusControl" class="mdl-selectfield__select" value.bind="model.status & validate"
             required>
             <option model.bind="null">Select status...</option>
             <option repeat.for="status of statusList | sort : 'name'" model.bind="status.id">
               ${status.name}
             </option>
             </select>
-            <label class="mdl-selectfield__label" for="statusControl">Status...</label>
+          <label class="mdl-selectfield__label" for="statusControl">Status...</label>
+          <span class="mdl-textfield__error"></span>
         </div>
       </div>
       <hr>

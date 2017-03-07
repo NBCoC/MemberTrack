@@ -16,7 +16,8 @@ LogManager.setLevel(LogManager.logLevel.debug);
 export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
-    .feature('resources');
+    .feature('resources')
+    .plugin('aurelia-validation');
 
   ViewLocator.prototype.convertOriginToViewUrl = (origin: Origin): string => {
     let moduleId = origin.moduleId;

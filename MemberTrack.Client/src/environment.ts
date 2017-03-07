@@ -1,5 +1,5 @@
 export default {
-  debug: false,
-  testing: false,
-  apiUrl: 'http://membertrack.azurewebsites.net/api/'
+  debug: true,
+  testing: true,
+  apiUrl: 'http://localhost:5000/membertrack/api/'
 };
