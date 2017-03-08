@@ -4,6 +4,9 @@
   <require from="../view-models/children-info.view-model"></require>
   <require from="../view-models/dates.view-model"></require>
   <require from="../view-models/check-list.view-model"></require>
+  <require from="../view-models/prompt-dialog.view-model"></require>
+  <!--Dialog-->
+  <mt-prompt-dialog view-model.ref="promptDialogVm" dismiss.delegate="dismissPromptDialog($event)"></mt-prompt-dialog>
   <!--Content-->
   <section mt-view="member-details">
     <mt-details person.bind="person" is-editor.bind="isEditor" change.delegate="personChanged($event)"></mt-details>
@@ -15,5 +18,10 @@
     <mt-dates person.bind="person" is-editor.bind="isEditor" change.delegate="personChanged($event)"></mt-dates>
 
     <mt-check-list person.bind="person" is-editor.bind="isEditor" change.delegate="personChanged($event)"></mt-check-list>
+
+    <button mt-mdl="button" type="button" class="mdl-button--raised mdl-js-ripple-effect mdl-button--primary add-btn"
+      click.trigger="displayPromptDialog()" if.bind="isEditor">
+      Delete Member / Visitor
+      </button>
   </section>
 </template>
