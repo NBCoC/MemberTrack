@@ -1,0 +1,16 @@
+<template>
+  <dialog id="uncheck-list-item-dialog" class="mdl-dialog">
+    <form role="form" submit.delegate="ok($event)">
+      <h6>Uncheck ${model.name}</h6>
+      <hr>
+      <div class="mdl-dialog__content">
+        <p>Are you sure you want to uncheck this item?</p>
+      </div>
+      <hr>
+      <div class="mdl-dialog__actions">
+        <button mt-mdl="button" type="button" click.trigger="cancel()">No</button>
+        <button mt-mdl="button" type="submit" class="mdl-button--accent">Yes</button>
+      </div>
+    </form>
+  </dialog>
+</template>

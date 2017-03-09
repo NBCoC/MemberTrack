@@ -1,18 +1,18 @@
 import { MdlHelper } from '../core/mdl-helper';
 import { PersonService } from '../services/person.service';
 import { EventDispatcher } from '../core/event-dispatcher';
-import { PromptDialogViewModel } from './prompt-dialog.view-model';
 import { CheckListItemDialogViewModel } from './check-list-item-dialog.view-model';
 import { PromptEvent, PersonEvent } from '../core/custom-events';
 import { DtoHelper, PersonCheckListItemDto, PersonDto } from '../core/dtos';
 import { bindable, customElement } from 'aurelia-framework';
+import { UncheckListItemDialogViewModel } from './uncheck-list-item-dialog.view-model';
 
 @customElement('mt-check-list')
 export class CheckListViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
     @bindable isEditor: boolean;
     public checkListItemDialogVm: CheckListItemDialogViewModel;
-    public promptDialogVm: PromptDialogViewModel;
+    public uncheckListItemDialogVm: UncheckListItemDialogViewModel;
     private personService: PersonService;
     private dtoHelper: DtoHelper;
 
@@ -41,10 +41,10 @@ export class CheckListViewModel extends EventDispatcher {
             this.checkListItemDialogVm.show(this.person.id, Object.assign({}, item));
             return;
         }
-        this.promptDialogVm.show('Uncheck', 'Are you sure you want to uncheck this item?', item.description, item.id);
+        this.uncheckListItemDialogVm.show(item.description, item.id);
     }
 
-    public dismissPromptDialog(e: CustomEvent): void {
+    public dismissUncheckListItemDialog(e: CustomEvent): void {
         let event = e.detail.args as PromptEvent;
 
         let index = this.dtoHelper.getIndexOf(this.person.checkListItems, event.data);

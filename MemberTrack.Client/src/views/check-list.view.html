@@ -1,8 +1,8 @@
 <template>
-  <require from="../view-models/prompt-dialog.view-model"></require>
+  <require from="../view-models/uncheck-list-item-dialog.view-model"></require>
   <require from="../view-models/check-list-item-dialog.view-model"></require>
   <!--Dialog-->
-  <mt-prompt-dialog view-model.ref="promptDialogVm" dismiss.delegate="dismissPromptDialog($event)"></mt-prompt-dialog>
+  <mt-uncheck-list-item-dialog view-model.ref="uncheckListItemDialogVm" dismiss.delegate="dismissUncheckListItemDialog($event)"></mt-uncheck-list-item-dialog>
   <mt-check-list-item-dialog view-model.ref="checkListItemDialogVm" dismiss.delegate="dismissDialog($event)"></mt-check-list-item-dialog>
   <!--Content-->
   <div class="mdl-grid demo-content">
