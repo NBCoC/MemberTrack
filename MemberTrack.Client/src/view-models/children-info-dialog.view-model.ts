@@ -1,12 +1,12 @@
-import { ValidationControllerFactory } from 'aurelia-validation';
-import { customElement } from 'aurelia-framework';
+import { ValidationControllerFactory } from "aurelia-validation";
+import { customElement } from "aurelia-framework";
 
-import { BaseDialog } from '../core/base-dialog';
-import { PersonService } from '../services/person.service';
-import { ChildrenInfoDto } from '../core/dtos';
-import { PersonEvent } from '../core/custom-events';
+import { BaseDialog } from "../core/base-dialog";
+import { PersonService } from "../services/person.service";
+import { ChildrenInfoDto } from "../core/dtos";
+import { PersonEvent } from "../core/custom-events";
 
-@customElement('mt-children-info-dialog')
+@customElement("mt-children-info-dialog")
 export class ChildrenInfoDialogViewModel extends BaseDialog {
     private personService: PersonService;
     public model: ChildrenInfoDto;
@@ -14,7 +14,7 @@ export class ChildrenInfoDialogViewModel extends BaseDialog {
 
     constructor(element: Element, personService: PersonService,
         validationControllerFactory: ValidationControllerFactory) {
-        super(validationControllerFactory, element, 'children-info-dialog');
+        super(validationControllerFactory, element, "children-info-dialog");
         this.personService = personService;
         this.model = {} as ChildrenInfoDto;
     }

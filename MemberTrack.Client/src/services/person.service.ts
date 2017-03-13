@@ -1,28 +1,28 @@
-import { autoinject, LogManager } from 'aurelia-framework';
-import { HttpClient } from 'aurelia-http-client';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import { autoinject, LogManager } from "aurelia-framework";
+import { HttpClient } from "aurelia-http-client";
+import { EventAggregator } from "aurelia-event-aggregator";
 
-import { BaseService } from './base.service';
+import { BaseService } from "./base.service";
 import {
     SearchResultDto, PersonDto, ChildrenInfoDto,
     PersonCheckListItemDto, DatesDto, PersonReportDto, RecentPersonDto
-} from '../core/dtos';
+} from "../core/dtos";
 
 @autoinject
 export class PersonService extends BaseService {
 
     constructor(client: HttpClient, eventAggregator: EventAggregator) {
-        super(client, LogManager.getLogger('PersonService'), eventAggregator);
+        super(client, LogManager.getLogger("PersonService"), eventAggregator);
     }
 
     public getRecentActivity(): Promise<RecentPersonDto[]> {
-        return this.client.get('person/recentActivity')
+        return this.client.get("person/recentActivity")
             .then(result => JSON.parse(result.response))
             .catch(this.handleError);
     }
 
     public getReport(): Promise<PersonReportDto> {
-        return this.client.get('person/report')
+        return this.client.get("person/report")
             .then(result => JSON.parse(result.response))
             .catch(this.handleError);
     }
@@ -40,7 +40,7 @@ export class PersonService extends BaseService {
     }
 
     public insert(dto: PersonDto): Promise<PersonDto> {
-        return this.client.post('person', dto)
+        return this.client.post("person", dto)
             .then(result => JSON.parse(result.response))
             .catch(this.handleError);
     }

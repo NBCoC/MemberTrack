@@ -1,13 +1,13 @@
-import { customElement } from 'aurelia-framework';
-import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
+import { customElement } from "aurelia-framework";
+import { ValidationControllerFactory, ValidationRules } from "aurelia-validation";
 
-import { BaseDialog } from '../core/base-dialog';
-import { PersonService } from '../services/person.service';
-import { LookupService } from '../services/lookup.service';
-import { PersonDto, LookupItemDto } from '../core/dtos';
-import { PersonEvent } from '../core/custom-events';
+import { BaseDialog } from "../core/base-dialog";
+import { PersonService } from "../services/person.service";
+import { LookupService } from "../services/lookup.service";
+import { PersonDto, LookupItemDto } from "../core/dtos";
+import { PersonEvent } from "../core/custom-events";
 
-@customElement('mt-member-dialog')
+@customElement("mt-member-dialog")
 export class MemberDialogViewModel extends BaseDialog {
     private personService: PersonService;
     private lookupService: LookupService;
@@ -18,7 +18,7 @@ export class MemberDialogViewModel extends BaseDialog {
 
     constructor(element: Element, personService: PersonService, lookupService: LookupService,
         validationControllerFactory: ValidationControllerFactory) {
-        super(validationControllerFactory, element, 'member-dialog');
+        super(validationControllerFactory, element, "member-dialog");
         this.personService = personService;
         this.lookupService = lookupService;
 
@@ -69,13 +69,13 @@ export class MemberDialogViewModel extends BaseDialog {
 
     protected registerValidation(): void {
         ValidationRules
-            .ensure('firstName').required()
-            .ensure('lastName').required()
-            .ensure('gender').required()
-            .ensure('ageGroup').required()
-            .ensure('status').required()
-            .ensure('contactNumber').matches(/\d{3}[-]\d{3}[-]\d{4}/)
-            .ensure('email').email()
+            .ensure("firstName").required()
+            .ensure("lastName").required()
+            .ensure("gender").required()
+            .ensure("ageGroup").required()
+            .ensure("status").required()
+            .ensure("contactNumber").matches(/\d{3}[-]\d{3}[-]\d{4}/)
+            .ensure("email").email()
             .on(this.model);
     }
 }

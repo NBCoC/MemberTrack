@@ -1,15 +1,15 @@
-import { autoinject } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import { autoinject } from "aurelia-framework";
+import { EventAggregator } from "aurelia-event-aggregator";
 import {
   Redirect,
   NavigationInstruction,
   RouterConfiguration,
   Next,
   Router
-} from 'aurelia-router';
+} from "aurelia-router";
 
-import { AuthService } from './services/auth.service';
-import { IsLoadingEvent } from './core/custom-events';
+import { AuthService } from "./services/auth.service";
+import { IsLoadingEvent } from "./core/custom-events";
 
 @autoinject
 export class App {
@@ -32,30 +32,30 @@ export class App {
   }
 
   public configureRouter(config: RouterConfiguration, router: Router): void {
-    config.title = 'MemberTrack';
-    config.addPipelineStep('authorize', AuthorizeStep);
-    config.mapUnknownRoutes('view-models/404.view-model');
-    config.fallbackRoute('main/home');
+    config.title = "MemberTrack";
+    config.addPipelineStep("authorize", AuthorizeStep);
+    config.mapUnknownRoutes("view-models/404.view-model");
+    config.fallbackRoute("main/home");
     config.map([
       {
-        route: ['', 'main'],
-        moduleId: 'view-models/main-layout.view-model',
-        name: 'main',
-        title: 'Main',
+        route: ["", "main"],
+        moduleId: "view-models/main-layout.view-model",
+        name: "main",
+        title: "Main",
         caseSensitive: true
       },
       {
-        route: 'sign-in',
-        moduleId: 'view-models/sign-in.view-model',
-        name: 'sign-in',
-        title: 'Sign In',
+        route: "sign-in",
+        moduleId: "view-models/sign-in.view-model",
+        name: "sign-in",
+        title: "Sign In",
         caseSensitive: true
       },
       {
-        route: '401',
-        moduleId: 'view-models/401.view-model',
-        name: '401',
-        title: '401',
+        route: "401",
+        moduleId: "view-models/401.view-model",
+        name: "401",
+        title: "401",
         caseSensitive: true
       }
     ]);
@@ -89,7 +89,7 @@ class AuthorizeStep {
           let isAdminView = navigationInstruction.getAllInstructions().some(i => (i.config as any).adminView);
 
           if (isAdminView && !user.isAdmin) {
-            return next.cancel(new Redirect('401'));
+            return next.cancel(new Redirect("401"));
           }
 
           return next();
@@ -98,11 +98,11 @@ class AuthorizeStep {
 
       this.authService.redirectUrl = navigationInstruction.fragment;
 
-      return next.cancel(new Redirect('sign-in'));
+      return next.cancel(new Redirect("sign-in"));
     });
   }
 
   private isSignInRoute(routeName: string): boolean {
-    return routeName === 'sign-in';
+    return routeName === "sign-in";
   }
 }

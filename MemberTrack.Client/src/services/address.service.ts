@@ -1,15 +1,15 @@
-import { autoinject, LogManager } from 'aurelia-framework';
-import { HttpClient } from 'aurelia-http-client';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import { autoinject, LogManager } from "aurelia-framework";
+import { HttpClient } from "aurelia-http-client";
+import { EventAggregator } from "aurelia-event-aggregator";
 
-import { BaseService } from './base.service';
-import { AddressDto, PersonDto } from '../core/dtos';
+import { BaseService } from "./base.service";
+import { AddressDto, PersonDto } from "../core/dtos";
 
 @autoinject
 export class AddressService extends BaseService {
 
     constructor(client: HttpClient, eventAggregator: EventAggregator) {
-        super(client, LogManager.getLogger('AddressService'), eventAggregator);
+        super(client, LogManager.getLogger("AddressService"), eventAggregator);
     }
 
     public insertOrUpdate(id: number, dto: AddressDto): Promise<PersonDto> {

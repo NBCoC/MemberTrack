@@ -1,11 +1,11 @@
-import environment from '../environment';
-import { HttpClient, RequestMessage, HttpResponseMessage } from 'aurelia-http-client';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import environment from "../environment";
+import { HttpClient, RequestMessage, HttpResponseMessage } from "aurelia-http-client";
+import { EventAggregator } from "aurelia-event-aggregator";
 
-import { TokenDto } from '../core/dtos';
-import { SnackbarEvent, IsLoadingEvent } from '../core/custom-events';
+import { TokenDto } from "../core/dtos";
+import { SnackbarEvent, IsLoadingEvent } from "../core/custom-events";
 
-const TOKEN_CACHE_KEY = 'membertrack.client.token.cache';
+const TOKEN_CACHE_KEY = "membertrack.client.token.cache";
 
 export abstract class BaseService {
     private static token: TokenDto = {} as TokenDto;
@@ -22,14 +22,14 @@ export abstract class BaseService {
 
         client.configure(config => {
             config.withBaseUrl(environment.apiUrl);
-            config.withHeader('Content-Type', 'application/json');
+            config.withHeader("Content-Type", "application/json");
             config.withInterceptor({
                 request(message): RequestMessage {
                     BaseService.eventAggregator.publish(new IsLoadingEvent(true));
 
                     _that.loadTokenCache();
 
-                    message.headers.add('Authorization', `${BaseService.token.token_type} ${BaseService.token.access_token}`);
+                    message.headers.add("Authorization", `${BaseService.token.token_type} ${BaseService.token.access_token}`);
 
                     return message;
                 },
@@ -66,7 +66,7 @@ export abstract class BaseService {
     }
 
     private isLocalStorageSupported(): boolean {
-        return (typeof (Storage) !== 'undefined');
+        return (typeof (Storage) !== "undefined");
     }
 
     protected isTokenAvailable(): boolean {
@@ -83,8 +83,8 @@ export abstract class BaseService {
         let result = Promise.resolve(false);
 
         if (error.statusCode === 0) {
-            let message = 'Server error (Web API). Your token might have expired. Please refresh the browser. ' +
-                'If this error continues, please contact System Administrator.';
+            let message = "Server error (Web API). Your token might have expired. Please refresh the browser. " +
+                "If this error continues, please contact System Administrator.";
 
             BaseService.logger.error(message);
             BaseService.eventAggregator.publish(new SnackbarEvent(message));
@@ -115,6 +115,6 @@ export abstract class BaseService {
             return;
         }
 
-        BaseService.logger.warn('Local Storage is not available');
+        BaseService.logger.warn("Local Storage is not available");
     }
 }

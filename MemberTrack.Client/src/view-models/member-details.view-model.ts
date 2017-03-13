@@ -1,11 +1,11 @@
-import { PersonEvent, PromptEvent } from '../core/custom-events';
-import { autoinject } from 'aurelia-framework';
-import { BaseViewModel } from '../core/base-view-model';
-import { PersonService } from '../services/person.service';
-import { AuthService } from '../services/auth.service';
-import { PersonDto } from '../core/dtos';
-import { PromptDialogViewModel } from './prompt-dialog.view-model';
-import { Router } from 'aurelia-router';
+import { PersonEvent, PromptEvent } from "../core/custom-events";
+import { autoinject } from "aurelia-framework";
+import { BaseViewModel } from "../core/base-view-model";
+import { PersonService } from "../services/person.service";
+import { AuthService } from "../services/auth.service";
+import { PersonDto } from "../core/dtos";
+import { PromptDialogViewModel } from "./prompt-dialog.view-model";
+import { Router } from "aurelia-router";
 
 @autoinject
 export class MemberDetailsViewModel extends BaseViewModel {
@@ -17,7 +17,7 @@ export class MemberDetailsViewModel extends BaseViewModel {
     public isEditor: boolean;
 
     constructor(personService: PersonService, authService: AuthService, router: Router) {
-        super('member-details');
+        super("member-details");
         this.personService = personService;
         this.authService = authService;
         this.router = router;
@@ -59,10 +59,10 @@ export class MemberDetailsViewModel extends BaseViewModel {
         if (!this.isEditor) {
             return;
         }
-        let message = 'Are you sure want to delete this member / visitor? Note that this cannot be undone!';
-        let name = this.person.firstName + ' ' + this.person.lastName;
+        let message = "Are you sure want to delete this member / visitor? Note that this cannot be undone!";
+        let name = this.person.firstName + " " + this.person.lastName;
 
-        this.promptDialogVm.show('Delete', message, name, this.person.id);
+        this.promptDialogVm.show("Delete", message, name, this.person.id);
     }
 
     public dismissPromptDialog(e: CustomEvent): void {
@@ -72,7 +72,7 @@ export class MemberDetailsViewModel extends BaseViewModel {
             if (!ok) {
                 return;
             }
-            this.router.navigateToRoute('home');
+            this.router.navigateToRoute("home");
         });
     }
 

@@ -1,12 +1,12 @@
-import { customElement } from 'aurelia-framework';
-import { BaseDialog } from '../core/base-dialog';
-import { AddressService } from '../services/address.service';
-import { LookupService } from '../services/lookup.service';
-import { AddressDto, LookupItemDto } from '../core/dtos';
-import { PersonEvent } from '../core/custom-events';
-import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
+import { customElement } from "aurelia-framework";
+import { BaseDialog } from "../core/base-dialog";
+import { AddressService } from "../services/address.service";
+import { LookupService } from "../services/lookup.service";
+import { AddressDto, LookupItemDto } from "../core/dtos";
+import { PersonEvent } from "../core/custom-events";
+import { ValidationControllerFactory, ValidationRules } from "aurelia-validation";
 
-@customElement('mt-address-dialog')
+@customElement("mt-address-dialog")
 export class AddressDialogViewModel extends BaseDialog {
     private addressService: AddressService;
     private lookupService: LookupService;
@@ -16,7 +16,7 @@ export class AddressDialogViewModel extends BaseDialog {
 
     constructor(element: Element, addressService: AddressService, lookupService: LookupService,
         validationControllerFactory: ValidationControllerFactory) {
-        super(validationControllerFactory, element, 'address-dialog');
+        super(validationControllerFactory, element, "address-dialog");
         this.addressService = addressService;
         this.lookupService = lookupService;
         this.model = {} as AddressDto;
@@ -64,10 +64,10 @@ export class AddressDialogViewModel extends BaseDialog {
 
     protected registerValidation(): void {
         ValidationRules
-            .ensure('street').required()
-            .ensure('city').required()
-            .ensure('state').required()
-            .ensure('zipCode').required().matches(/\d{5}/)
+            .ensure("street").required()
+            .ensure("city").required()
+            .ensure("state").required()
+            .ensure("zipCode").required().matches(/\d{5}/)
             .on(this.model);
     }
 }

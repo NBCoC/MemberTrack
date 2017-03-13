@@ -1,4 +1,4 @@
-import { Appender } from 'aurelia-logging';
+import { Appender } from "aurelia-logging";
 
 export class CustomLogAppender implements Appender {
 

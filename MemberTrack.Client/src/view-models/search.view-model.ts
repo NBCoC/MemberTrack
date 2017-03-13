@@ -1,8 +1,8 @@
-import { autoinject, ObserverLocator } from 'aurelia-framework';
+import { autoinject, ObserverLocator } from "aurelia-framework";
 
-import { PersonService } from '../services/person.service';
-import { PersonDto } from '../core/dtos';
-import { BaseViewModel } from '../core/base-view-model';
+import { PersonService } from "../services/person.service";
+import { PersonDto } from "../core/dtos";
+import { BaseViewModel } from "../core/base-view-model";
 
 @autoinject
 export class SearchViewModel extends BaseViewModel {
@@ -14,18 +14,18 @@ export class SearchViewModel extends BaseViewModel {
     private subscriber: any;
 
     constructor(personService: PersonService, observerLocator: ObserverLocator) {
-        super('search');
+        super("search");
         this.personService = personService;
         this.observerLocator = observerLocator;
         this.people = [];
         this.hasResults = true;
-        this.searchText = '';
+        this.searchText = "";
     }
 
     public attached(): void {
         const that = this;
 
-        that.subscriber = that.observerLocator.getObserver(that, 'searchText').subscribe((newValue: string) => {
+        that.subscriber = that.observerLocator.getObserver(that, "searchText").subscribe((newValue: string) => {
             that.personService.search(newValue).then(result => {
                 if (!result) {
                     return;

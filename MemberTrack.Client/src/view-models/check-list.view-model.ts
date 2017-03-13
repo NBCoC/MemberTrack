@@ -1,13 +1,13 @@
-import { MdlHelper } from '../core/mdl-helper';
-import { PersonService } from '../services/person.service';
-import { EventDispatcher } from '../core/event-dispatcher';
-import { CheckListItemDialogViewModel } from './check-list-item-dialog.view-model';
-import { PromptEvent, PersonEvent } from '../core/custom-events';
-import { DtoHelper, PersonCheckListItemDto, PersonDto } from '../core/dtos';
-import { bindable, customElement } from 'aurelia-framework';
-import { UncheckListItemDialogViewModel } from './uncheck-list-item-dialog.view-model';
+import { MdlHelper } from "../core/mdl-helper";
+import { PersonService } from "../services/person.service";
+import { EventDispatcher } from "../core/event-dispatcher";
+import { CheckListItemDialogViewModel } from "./check-list-item-dialog.view-model";
+import { PromptEvent, PersonEvent } from "../core/custom-events";
+import { DtoHelper, PersonCheckListItemDto, PersonDto } from "../core/dtos";
+import { bindable, customElement } from "aurelia-framework";
+import { UncheckListItemDialogViewModel } from "./uncheck-list-item-dialog.view-model";
 
-@customElement('mt-check-list')
+@customElement("mt-check-list")
 export class CheckListViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
     @bindable isEditor: boolean;
@@ -25,7 +25,7 @@ export class CheckListViewModel extends EventDispatcher {
     public dismissDialog(e: CustomEvent): boolean {
         let event = e.detail.args as PersonEvent;
 
-        return this.dispatchEvent('change', event);
+        return this.dispatchEvent("change", event);
     }
 
     public checkListItemChange(e: Event, item: PersonCheckListItemDto): void {
@@ -56,7 +56,7 @@ export class CheckListViewModel extends EventDispatcher {
                 return;
             }
 
-            return this.dispatchEvent('change', new PersonEvent(dto));
+            return this.dispatchEvent("change", new PersonEvent(dto));
         });
     }
 

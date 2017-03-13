@@ -1,18 +1,18 @@
-import { ValidationControllerFactory } from 'aurelia-validation';
-import { customElement } from 'aurelia-framework';
+import { ValidationControllerFactory } from "aurelia-validation";
+import { customElement } from "aurelia-framework";
 
-import { BaseDialog } from '../core/base-dialog';
-import { LookupItemDto } from '../core/dtos';
-import { PromptEvent } from '../core/custom-events';
+import { BaseDialog } from "../core/base-dialog";
+import { LookupItemDto } from "../core/dtos";
+import { PromptEvent } from "../core/custom-events";
 
-@customElement('mt-prompt-dialog')
+@customElement("mt-prompt-dialog")
 export class PromptDialogViewModel extends BaseDialog {
     public model: LookupItemDto = {} as LookupItemDto;
     public title: string;
     public message: string;
 
     constructor(element: Element, validationControllerFactory: ValidationControllerFactory) {
-        super(validationControllerFactory, element, 'prompt-dialog');
+        super(validationControllerFactory, element, "prompt-dialog");
     }
 
     public attached(): void {

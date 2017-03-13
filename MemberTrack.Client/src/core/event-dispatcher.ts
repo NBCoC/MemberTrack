@@ -15,7 +15,7 @@ export abstract class EventDispatcher {
                 }, bubbles: true
             });
         } else {
-            customEvent = document.createEvent('CustomEvent');
+            customEvent = document.createEvent("CustomEvent");
 
             customEvent.initCustomEvent(eventName, true, true, {
                 detail: {

@@ -1,4 +1,4 @@
-import { UserDto, PersonDto } from './dtos';
+import { UserDto, PersonDto } from "./dtos";
 
 export class PromptEvent {
     public data: number;

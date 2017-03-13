@@ -1,12 +1,12 @@
-import { customElement } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
-import { BaseDialog } from '../core/base-dialog';
-import { SnackbarEvent } from '../core/custom-events';
-import { UserService } from '../services/user.service';
-import { UpdatePasswordDto } from '../core/dtos';
-import { ValidationControllerFactory, ValidationRules } from 'aurelia-validation';
+import { customElement } from "aurelia-framework";
+import { EventAggregator } from "aurelia-event-aggregator";
+import { BaseDialog } from "../core/base-dialog";
+import { SnackbarEvent } from "../core/custom-events";
+import { UserService } from "../services/user.service";
+import { UpdatePasswordDto } from "../core/dtos";
+import { ValidationControllerFactory, ValidationRules } from "aurelia-validation";
 
-@customElement('mt-change-password-dialog')
+@customElement("mt-change-password-dialog")
 export class ChangePasswordDialogViewModel extends BaseDialog {
     private userService: UserService;
     private eventAggregator: EventAggregator;
@@ -15,7 +15,7 @@ export class ChangePasswordDialogViewModel extends BaseDialog {
 
     constructor(element: Element, userService: UserService, eventAggregator: EventAggregator,
         validationControllerFactory: ValidationControllerFactory) {
-        super(validationControllerFactory, element, 'change-password-dialog');
+        super(validationControllerFactory, element, "change-password-dialog");
         this.userService = userService;
         this.eventAggregator = eventAggregator;
         this.model = {} as UpdatePasswordDto;
@@ -41,7 +41,7 @@ export class ChangePasswordDialogViewModel extends BaseDialog {
                 if (!ok) {
                     return;
                 }
-                this.eventAggregator.publish(new SnackbarEvent('Password has been updated. Please sign in again...'));
+                this.eventAggregator.publish(new SnackbarEvent("Password has been updated. Please sign in again..."));
                 this.dismiss();
             });
         });
@@ -49,8 +49,8 @@ export class ChangePasswordDialogViewModel extends BaseDialog {
 
     protected registerValidation(): void {
         ValidationRules
-            .ensure('newPassword').required()
-            .ensure('oldPassword').required()
+            .ensure("newPassword").required()
+            .ensure("oldPassword").required()
             .on(this.model);
     }
 }

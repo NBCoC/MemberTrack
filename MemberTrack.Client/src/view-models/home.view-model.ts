@@ -1,11 +1,11 @@
-import { autoinject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
+import { autoinject } from "aurelia-framework";
+import { Router } from "aurelia-router";
 
-import { MemberDialogViewModel } from '../view-models/member-dialog.view-model';
-import { PersonService } from '../services/person.service';
-import { AuthService } from '../services/auth.service';
-import { PersonEvent } from '../core/custom-events';
-import { PersonReportDto, RecentPersonDto } from '../core/dtos';
+import { MemberDialogViewModel } from "../view-models/member-dialog.view-model";
+import { PersonService } from "../services/person.service";
+import { AuthService } from "../services/auth.service";
+import { PersonEvent } from "../core/custom-events";
+import { PersonReportDto, RecentPersonDto } from "../core/dtos";
 
 const VisitorStatus = 1;
 const MemberStatus = 2;
@@ -63,6 +63,6 @@ export class HomeViewModel {
 
     public dismissMemberDialog(e: CustomEvent): void {
         let event = e.detail.args as PersonEvent;
-        this.router.navigateToRoute('member-details', { id: event.data.id });
+        this.router.navigateToRoute("member-details", { id: event.data.id });
     }
 }

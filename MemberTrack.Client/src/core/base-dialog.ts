@@ -1,10 +1,10 @@
-import { EventDispatcher } from './event-dispatcher';
-import { ValidationControllerFactory, ValidationController, validateTrigger } from 'aurelia-validation';
-import { CustomValidationRenderer } from '../resources/validation/custom-validation-renderer';
+import { EventDispatcher } from "./event-dispatcher";
+import { ValidationControllerFactory, ValidationController, validateTrigger } from "aurelia-validation";
+import { CustomValidationRenderer } from "../resources/validation/custom-validation-renderer";
 
-import * as dialogPolyfill from 'dialog-polyfill/dialog-polyfill';
+import * as dialogPolyfill from "dialog-polyfill/dialog-polyfill";
 
-import { MdlHelper } from './mdl-helper';
+import { MdlHelper } from "./mdl-helper";
 
 export abstract class BaseDialog extends EventDispatcher {
     private dialogId: string;
@@ -54,7 +54,7 @@ export abstract class BaseDialog extends EventDispatcher {
     protected dismiss(args?: any): boolean {
         this.dialog.close();
 
-        return this.dispatchEvent('dismiss', args);
+        return this.dispatchEvent("dismiss", args);
     }
 
     public cancel(): void {

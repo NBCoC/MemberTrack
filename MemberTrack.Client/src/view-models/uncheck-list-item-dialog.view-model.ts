@@ -1,16 +1,16 @@
-import { ValidationControllerFactory } from 'aurelia-validation';
-import { customElement } from 'aurelia-framework';
+import { ValidationControllerFactory } from "aurelia-validation";
+import { customElement } from "aurelia-framework";
 
-import { BaseDialog } from '../core/base-dialog';
-import { LookupItemDto } from '../core/dtos';
-import { PromptEvent } from '../core/custom-events';
+import { BaseDialog } from "../core/base-dialog";
+import { LookupItemDto } from "../core/dtos";
+import { PromptEvent } from "../core/custom-events";
 
-@customElement('mt-uncheck-list-item-dialog')
+@customElement("mt-uncheck-list-item-dialog")
 export class UncheckListItemDialogViewModel extends BaseDialog {
     public model: LookupItemDto = {} as LookupItemDto;
 
     constructor(element: Element, validationControllerFactory: ValidationControllerFactory) {
-        super(validationControllerFactory, element, 'uncheck-list-item-dialog');
+        super(validationControllerFactory, element, "uncheck-list-item-dialog");
     }
 
     public attached(): void {

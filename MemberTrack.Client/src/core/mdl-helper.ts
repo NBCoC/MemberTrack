@@ -10,7 +10,7 @@ export class MdlHelper {
     }
 
     private static checkTextfield(element: Element): void {
-        let inputs = element.querySelectorAll('.mdl-js-textfield');
+        let inputs = element.querySelectorAll(".mdl-js-textfield");
 
         let count = inputs.length;
 
@@ -27,7 +27,7 @@ export class MdlHelper {
     }
 
     private static checkCheckbox(element: Element): void {
-        let inputs = element.querySelectorAll('.mdl-js-checkbox');
+        let inputs = element.querySelectorAll(".mdl-js-checkbox");
 
         let count = inputs.length;
 

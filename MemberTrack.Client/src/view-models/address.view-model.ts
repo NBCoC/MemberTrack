@@ -1,10 +1,10 @@
-import { EventDispatcher } from '../core/event-dispatcher';
-import { PersonEvent } from '../core/custom-events';
-import { PersonDto } from '../core/dtos';
-import { AddressDialogViewModel } from './address-dialog.view-model';
-import { bindable, customElement } from 'aurelia-framework';
+import { EventDispatcher } from "../core/event-dispatcher";
+import { PersonEvent } from "../core/custom-events";
+import { PersonDto } from "../core/dtos";
+import { AddressDialogViewModel } from "./address-dialog.view-model";
+import { bindable, customElement } from "aurelia-framework";
 
-@customElement('mt-address')
+@customElement("mt-address")
 export class AddressViewModel extends EventDispatcher {
     @bindable person: PersonDto = null;
     @bindable isEditor: boolean;
@@ -24,6 +24,6 @@ export class AddressViewModel extends EventDispatcher {
     public dismissDialog(e: CustomEvent): boolean {
         let event = e.detail.args as PersonEvent;
 
-        return this.dispatchEvent('change', event);
+        return this.dispatchEvent("change", event);
     }
 }

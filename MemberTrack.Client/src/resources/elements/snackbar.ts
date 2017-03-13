@@ -1,9 +1,9 @@
-import { customElement } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import { customElement } from "aurelia-framework";
+import { EventAggregator } from "aurelia-event-aggregator";
 
-import { SnackbarEvent } from '../../core/custom-events';
+import { SnackbarEvent } from "../../core/custom-events";
 
-@customElement('mt-snackbar')
+@customElement("mt-snackbar")
 export class Snackbar {
     private element: Element;
     private snackbarContainer: any;
@@ -16,7 +16,7 @@ export class Snackbar {
     }
 
     public attached(): void {
-        this.snackbarContainer = this.element.querySelector('div[mt-mdl="snackbar"]') as any;
+        this.snackbarContainer = this.element.querySelector(`div[mt-mdl="snackbar"]`) as any;
 
         this.subscriber = this.eventAggregator.subscribe(SnackbarEvent, (e: SnackbarEvent) => {
             let data = { message: e.data, timeout: 5000 };

@@ -1,13 +1,13 @@
-import { autoinject } from 'aurelia-framework';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import { autoinject } from "aurelia-framework";
+import { EventAggregator } from "aurelia-event-aggregator";
 
-import { PromptDialogViewModel } from '../view-models/prompt-dialog.view-model';
-import { UserDialogViewModel } from '../view-models/user-dialog.view-model';
-import { UserService } from '../services/user.service';
-import { AuthService } from '../services/auth.service';
-import { BaseViewModel } from '../core/base-view-model';
-import { UserDto, DtoHelper } from '../core/dtos';
-import { PromptEvent, UserEvent, SnackbarEvent } from '../core/custom-events';
+import { PromptDialogViewModel } from "../view-models/prompt-dialog.view-model";
+import { UserDialogViewModel } from "../view-models/user-dialog.view-model";
+import { UserService } from "../services/user.service";
+import { AuthService } from "../services/auth.service";
+import { BaseViewModel } from "../core/base-view-model";
+import { UserDto, DtoHelper } from "../core/dtos";
+import { PromptEvent, UserEvent, SnackbarEvent } from "../core/custom-events";
 
 @autoinject
 export class UsersViewModel extends BaseViewModel {
@@ -23,7 +23,7 @@ export class UsersViewModel extends BaseViewModel {
     public isAdmin: boolean;
 
     constructor(userService: UserService, authService: AuthService, eventAggregator: EventAggregator, dtoHelper: DtoHelper) {
-        super('users');
+        super("users");
         this.userService = userService;
         this.authService = authService;
         this.eventAggregator = eventAggregator;
@@ -70,7 +70,7 @@ export class UsersViewModel extends BaseViewModel {
             return;
         }
         this.deleteMode = true;
-        this.promptDialogVm.show('Delete', 'Are you sure want to delete this user?', dto.displayName, dto.id);
+        this.promptDialogVm.show("Delete", "Are you sure want to delete this user?", dto.displayName, dto.id);
     }
 
     public displayResetDialog(dto: UserDto): void {
@@ -78,7 +78,7 @@ export class UsersViewModel extends BaseViewModel {
             return;
         }
         this.deleteMode = false;
-        this.promptDialogVm.show('Reset Password for', 'Are you sure want to reset this user\'s password?', dto.displayName, dto.id);
+        this.promptDialogVm.show("Reset Password for", "Are you sure want to reset this user\'s password?", dto.displayName, dto.id);
     }
 
     public dismissPromptDialog(e: CustomEvent): void {
@@ -100,7 +100,7 @@ export class UsersViewModel extends BaseViewModel {
             if (!ok) {
                 return;
             }
-            this.eventAggregator.publish(new SnackbarEvent('Password has been reset!'));
+            this.eventAggregator.publish(new SnackbarEvent("Password has been reset!"));
         });
     }
 }

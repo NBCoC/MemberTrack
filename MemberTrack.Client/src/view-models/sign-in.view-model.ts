@@ -1,10 +1,10 @@
-import { autoinject } from 'aurelia-framework';
-import { Router } from 'aurelia-router';
-import { EventAggregator } from 'aurelia-event-aggregator';
+import { autoinject } from "aurelia-framework";
+import { Router } from "aurelia-router";
+import { EventAggregator } from "aurelia-event-aggregator";
 
-import { AuthService } from '../services/auth.service';
-import { SignInDto } from '../core/dtos';
-import { SnackbarEvent } from '../core/custom-events';
+import { AuthService } from "../services/auth.service";
+import { SignInDto } from "../core/dtos";
+import { SnackbarEvent } from "../core/custom-events";
 
 @autoinject
 export class SignInViewModel {
@@ -25,9 +25,9 @@ export class SignInViewModel {
             if (!ok) {
                 return;
             }
-            this.eventAggregator.publish(new SnackbarEvent('Welcome =)'));
+            this.eventAggregator.publish(new SnackbarEvent("Welcome =)"));
 
-            this.router.navigate(this.authService.redirectUrl || 'main/home');
+            this.router.navigate(this.authService.redirectUrl || "main/home");
         });
     }
 }

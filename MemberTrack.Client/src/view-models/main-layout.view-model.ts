@@ -1,9 +1,9 @@
-import { ChangePasswordDialogViewModel } from './change-password-dialog.view-model';
-import { autoinject, computedFrom } from 'aurelia-framework';
-import { RouterConfiguration, Router } from 'aurelia-router';
+import { ChangePasswordDialogViewModel } from "./change-password-dialog.view-model";
+import { autoinject, computedFrom } from "aurelia-framework";
+import { RouterConfiguration, Router } from "aurelia-router";
 
-import { AuthService } from '../services/auth.service';
-import { UserDto } from '../core/dtos';
+import { AuthService } from "../services/auth.service";
+import { UserDto } from "../core/dtos";
 
 @autoinject
 export class MainLayoutViewModel {
@@ -14,10 +14,10 @@ export class MainLayoutViewModel {
 
     constructor(authService: AuthService) {
         this.authService = authService;
-        this.contextUser = { displayName: 'Loading...' } as UserDto;
+        this.contextUser = { displayName: "Loading..." } as UserDto;
     }
 
-    @computedFrom('router.currentInstruction')
+    @computedFrom("router.currentInstruction")
     public get viewTitle(): string {
         return this.router.currentInstruction.config.title;
     }
@@ -25,38 +25,38 @@ export class MainLayoutViewModel {
     public configureRouter(config: RouterConfiguration, router: Router): void {
         config.map([
             {
-                route: '',
-                redirect: 'main/home'
+                route: "",
+                redirect: "main/home"
             },
             {
-                route: 'home',
-                moduleId: 'view-models/home.view-model',
-                name: 'home',
-                title: 'Home',
+                route: "home",
+                moduleId: "view-models/home.view-model",
+                name: "home",
+                title: "Home",
                 adminView: false,
                 caseSensitive: true
             },
             {
-                route: 'search',
-                moduleId: 'view-models/search.view-model',
-                name: 'search',
-                title: 'Member Search',
+                route: "search",
+                moduleId: "view-models/search.view-model",
+                name: "search",
+                title: "Member Search",
                 adminView: false,
                 caseSensitive: true
             },
             {
-                route: 'member-details/:id',
-                moduleId: 'view-models/member-details.view-model',
-                name: 'member-details',
-                title: 'Member Details',
+                route: "member-details/:id",
+                moduleId: "view-models/member-details.view-model",
+                name: "member-details",
+                title: "Member Details",
                 adminView: false,
                 caseSensitive: true
             },
             {
-                route: 'administration/users',
-                moduleId: 'view-models/users.view-model',
-                name: 'users',
-                title: 'User Administration',
+                route: "administration/users",
+                moduleId: "view-models/users.view-model",
+                name: "users",
+                title: "User Administration",
                 adminView: true,
                 caseSensitive: true
             }

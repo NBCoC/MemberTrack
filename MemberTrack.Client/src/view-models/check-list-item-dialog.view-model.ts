@@ -1,12 +1,12 @@
-import { ValidationControllerFactory } from 'aurelia-validation';
-import { customElement } from 'aurelia-framework';
+import { ValidationControllerFactory } from "aurelia-validation";
+import { customElement } from "aurelia-framework";
 
-import { BaseDialog } from '../core/base-dialog';
-import { PersonService } from '../services/person.service';
-import { PersonCheckListItemDto } from '../core/dtos';
-import { PersonEvent } from '../core/custom-events';
+import { BaseDialog } from "../core/base-dialog";
+import { PersonService } from "../services/person.service";
+import { PersonCheckListItemDto } from "../core/dtos";
+import { PersonEvent } from "../core/custom-events";
 
-@customElement('mt-check-list-item-dialog')
+@customElement("mt-check-list-item-dialog")
 export class CheckListItemDialogViewModel extends BaseDialog {
     private personService: PersonService;
     public model: PersonCheckListItemDto;
@@ -14,7 +14,7 @@ export class CheckListItemDialogViewModel extends BaseDialog {
 
     constructor(element: Element, personService: PersonService,
         validationControllerFactory: ValidationControllerFactory) {
-        super(validationControllerFactory, element, 'check-list-item-dialog');
+        super(validationControllerFactory, element, "check-list-item-dialog");
         this.personService = personService;
         this.model = {} as PersonCheckListItemDto;
     }

@@ -1,4 +1,4 @@
-import { MdlHelper } from './mdl-helper';
+import { MdlHelper } from "./mdl-helper";
 
 export abstract class BaseViewModel {
     private viewId: string;
@@ -6,7 +6,7 @@ export abstract class BaseViewModel {
 
     constructor(viewId: string) {
         this.viewId = viewId;
-        this.loadingText = 'Loading...';
+        this.loadingText = "Loading...";
     }
 
     protected initMdl(): void {
@@ -18,6 +18,6 @@ export abstract class BaseViewModel {
     }
 
     protected updateLoadingText(count: number): void {
-        this.loadingText = count > 0 ? '' : 'No items available.';
+        this.loadingText = count > 0 ? "" : "No items available.";
     }
 }
