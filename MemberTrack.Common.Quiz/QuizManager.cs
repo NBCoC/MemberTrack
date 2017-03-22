@@ -83,6 +83,7 @@ namespace MemberTrack.Common.Quiz
             return question;
         }
 
+        //The Name property on an Answer is to be evaluated before copying to its DTO.
         public string InterpolateAnswerName(Answer answer, int index)
         {
             string result = answer.Name.Replace("{Position}", (index + 1).ToString());
