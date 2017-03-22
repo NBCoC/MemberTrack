@@ -56,6 +56,8 @@ namespace MemberTrack.WebApi
 
             services.AddTransient<IPersonService, PersonService>();
 
+            services.AddTransient<ISystemPersonService, PersonService>();
+
             services.AddTransient<IAddressService, AddressService>();
         }
 

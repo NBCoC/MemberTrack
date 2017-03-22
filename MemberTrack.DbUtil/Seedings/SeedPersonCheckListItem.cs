@@ -1,4 +1,5 @@
 ﻿using MemberTrack.Data;
+using MemberTrack.Data.Seedings;
 using Microsoft.EntityFrameworkCore;
 
 namespace MemberTrack.DbUtil.Seedings

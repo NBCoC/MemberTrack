@@ -7,7 +7,7 @@ namespace MemberTrack.Data.Entities.Quizzes
         public long Id { get; set; }
 
         //They are interpolated strings.   For the Gifts quiz "{TopicWeight}", this is same as weight, i.e. 0, 1, 2, etc..
-        //For another quiz "{Position}", A, B, C, D …  {LetterPosition} is a calculated value, since answers may be randomized.)
+        //For another quiz 1, 2, 3, ... "{Position}",  0,1,2 ... {Index},  A, B, C, D ... {LetterPosition} are calculated values, since answers may be randomized.)
         public string Name { get; set; }
 
         public string Description { get; set; }

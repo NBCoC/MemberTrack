@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System;
+using MemberTrack.Data.Seedings;
 
 namespace MemberTrack.DbUtil.Seedings
 {

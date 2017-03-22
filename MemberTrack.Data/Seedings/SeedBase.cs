@@ -1,16 +1,13 @@
 ﻿using MemberTrack.Common;
-using MemberTrack.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
-namespace MemberTrack.DbUtil.Seedings
+namespace MemberTrack.Data.Seedings
 {
-    abstract class SeedBase
+    public abstract class SeedBase
     {
         protected readonly DatabaseContext _databaseContext;
         protected readonly bool _forceReseeding;

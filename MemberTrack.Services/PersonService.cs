@@ -14,7 +14,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Storage;
 
-    public class PersonService : IPersonService
+    public class PersonService : IPersonService, ISystemPersonService
     {
         private readonly DatabaseContext _context;
         private readonly IUserService _userService;
@@ -113,6 +113,17 @@
             return new SearchResultDto<PersonSearchDto>(query.ToDtos(), count);
         }
 
+        public async Task<long> SystemInsert(PersonInsertOrUpdateDto dto)
+        {
+            var entity = dto.ToEntity();
+
+            _context.People.Add(entity);
+
+            await _context.SaveChangesAsync();
+
+            return entity.Id;
+        }
+
         public async Task<long> Insert(string contextUserEmail, PersonInsertOrUpdateDto dto)
         {
             await _userService.ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Editor);
@@ -122,13 +133,24 @@
                 throw new ArgumentNullException(nameof(PersonInsertOrUpdateDto));
             }
 
-            var entity = dto.ToEntity();
+            return await SystemInsert(dto);
+        }
 
-            _context.People.Add(entity);
+        public async Task<long> SystemEnsurePersonExists(PersonInsertOrUpdateDto personDto)
+        {
+            //This code should run in a transaction at the controller level, since we 'find' and then possibly 'insert'
 
-            await _context.SaveChangesAsync();
+            //This method uses the email address and person's name to identify them.  
+            //NOTE:  This is an area where we may get duplicates.  For instance, someone may have different first names (i.e. nicknames, shortened names)
+            //       that they go by.
 
-            return entity.Id;
+            var person = await Find(p => personDto.Email == p.Email && personDto.FirstName == p.FirstName && personDto.LastName == p.LastName);
+            if (person == null)
+            {
+                return await SystemInsert(personDto);
+            }
+
+            return person.Id;
         }
 
         public async Task Update(string contextUserEmail, PersonInsertOrUpdateDto dto, long personId)

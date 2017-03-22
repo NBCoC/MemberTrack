@@ -1,66 +1,14 @@
-﻿using MemberTrack.Data;
-using MemberTrack.Data.Entities.Quizzes;
-using MemberTrack.DbUtil.Util;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using MemberTrack.Common;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace MemberTrack.DbUtil.Seedings
+namespace MemberTrack.Data.RawData
 {
-    class SeedSpiritualGiftsDiscoveryQuiz : SeedBase
+    public static class SpiritualGiftsDiscoveryQuizData
     {
-        const string QuizName = "Spiritual Gifts Discovery Quiz";
-        const string TopicCategory = "Spiritual Gifts";
+        public const string QuizName = "Spiritual Gifts Discovery Quiz";
+        public const string TopicCategory = "Spiritual Gifts";
 
-        public SeedSpiritualGiftsDiscoveryQuiz(DatabaseContext databaseContext, bool forceReseeding)
-            : base(databaseContext, forceReseeding)
-        {
-        }
-
-        protected override void ClearData()
-        {
-            var existingQuiz = _databaseContext.Quizzes.Include(q => q.Questions).FirstOrDefault(q => q.Name == QuizName);
-
-            //Is this quiz even in the database?
-            if (existingQuiz != null)
-            {
-                _databaseContext.Remove(existingQuiz);
-                _databaseContext.SaveChanges();
-            }
-
-            var existingTopicCategory = _databaseContext.TopicCategories.Include(t => t.Topics).FirstOrDefault(t => t.Name == TopicCategory);
-            if (existingTopicCategory != null)
-            {
-                _databaseContext.Remove(existingTopicCategory);
-                _databaseContext.SaveChanges();
-            }
-        }
-
-        protected override void PopulateData()
-        {
-            var quizId = AddQuiz();
-
-            var firstTopicId = AddTopics();
-
-            AddQuestions(quizId, firstTopicId);
-        }
-
-        private long AddQuiz()
-        {
-            var quiz = new Quiz
-            {
-                Name = QuizName,
-                Description = "Discovery your own spiritual gifts by taking this quiz.",
-                RandomizeQuestions = true
-            };
-
-            _databaseContext.Quizzes.Add(quiz);
-            _databaseContext.SaveChanges();
-            return quiz.Id;
-        }
-
-        private readonly TupleList<string, string, List<string>> _topics = new TupleList<string, string, List<string>>
+        public static readonly TupleList<string, string, List<string>> Topics = new TupleList<string, string, List<string>>
         {
             { "HELPS", "The gift of helps is the distinctive ability to work with and support other Christian's ministry efforts.",
                         new List<string> { "Mark 15:40-41", "Acts 9:36", "Romans 16:1-2", "1 Corinthians 12:28" } },
@@ -106,37 +54,8 @@ namespace MemberTrack.DbUtil.Seedings
                         new List<string> { "Colossians 1:9-12", "Colossians 4:12-13", "James 5:14-16" } },
         };
 
-
-        //The return value is the first topic ID.  All other topics are assuming to be sequencial after that number.
-        private long AddTopics()
-        {
-            var topicCategory = new TopicCategory { Name = TopicCategory };
-            _databaseContext.TopicCategories.Add(topicCategory);
-            _databaseContext.SaveChanges();
-
-            long firstTopicId = -1;
-            foreach(var topicData in _topics)
-            {          
-                var topic = new Topic { Name = topicData.Item1, Description = topicData.Item2, TopicCategoryId = topicCategory.Id };
-                _databaseContext.Topics.Add(topic);
-                _databaseContext.SaveChanges();
-
-                if (firstTopicId < 0)
-                    firstTopicId = topic.Id;
-
-                foreach (var supportingScriptureText in topicData.Item3)
-                {
-                    var supportingScripture = new SupportingScripture { ScriptureReference = supportingScriptureText, TopicId = topic.Id };
-                    _databaseContext.SupportingScriptures.Add(supportingScripture);
-                }
-                _databaseContext.SaveChanges();
-            }
-
-            return firstTopicId;
-        }
-
         //The other properties of a question are all the same in this quiz, so just make a list of the question text only
-        private readonly List<string> _quizQuestionText = new List<string>
+        public static readonly List<string> QuizQuestionText = new List<string>
         {
             "I enjoy working behind the scenes, taking care of little details.",
             "I usually step forward and assume leadership In a group where none exists.",
@@ -224,40 +143,13 @@ namespace MemberTrack.DbUtil.Seedings
             "Prayer is my favorite ministry in the church and I consistently spend a great deal of time at it.",
         };
 
-        private void AddQuestions(long quizId, long firstTopicId)
+        public static readonly List<string> AnswersText = new List<string>
         {
-            var questions = _quizQuestionText.Select(text => new Question
-            {
-                Description = text,
-                RandomizeAnswers = false,
-                AllowMultipleAnswers = false,
-                QuizId = quizId,
-            });
-
-            int counter = 0;
-            foreach(Question question in questions)
-            {
-                _databaseContext.QuizQuestions.Add(question);
-                _databaseContext.SaveChanges();
-
-                var topicId = firstTopicId + (counter % _topics.Count);
-                AddAnswers(question.Id, topicId);
-                counter++;
-            }
-
-        }
-
-
-        private void AddAnswers(long questionId, long topicId)
-        {
-            //All questions in this quiz have the same answers, but it relates to different topics.
-            _databaseContext.QuizAnswers.Add(new Answer { Name = "{TopicWeight}", QuestionId = questionId, TopicId = topicId, TopicWeight = 0, Description = "not at all" });
-            _databaseContext.QuizAnswers.Add(new Answer { Name = "{TopicWeight}", QuestionId = questionId, TopicId = topicId, TopicWeight = 1, Description = "little" });
-            _databaseContext.QuizAnswers.Add(new Answer { Name = "{TopicWeight}", QuestionId = questionId, TopicId = topicId, TopicWeight = 2, Description = "moderately" });
-            _databaseContext.QuizAnswers.Add(new Answer { Name = "{TopicWeight}", QuestionId = questionId, TopicId = topicId, TopicWeight = 3, Description = "considerably" });
-            _databaseContext.QuizAnswers.Add(new Answer { Name = "{TopicWeight}", QuestionId = questionId, TopicId = topicId, TopicWeight = 4, Description = "strongly" });
-
-            _databaseContext.SaveChanges();
-        }
+            "not at all",
+            "little",
+            "moderately",
+            "considerably",
+            "strongly",
+        };
     }
 }

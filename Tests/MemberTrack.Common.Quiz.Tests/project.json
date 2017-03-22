@@ -5,20 +5,16 @@
     "dependencies": {
         "dotnet-test-mstest": "1.1.2-preview",
         "MemberTrack.Common": "1.0.0.0",
+        "MemberTrack.Common.Quiz": "1.0.0.0",
         "MemberTrack.Data": "1.0.0.0",
-        "Microsoft.EntityFrameworkCore": "1.0.0",
-        "Microsoft.EntityFrameworkCore.InMemory": "1.0.0",
+        "Moq": "4.7.1",
         "MSTest.TestFramework": "1.1.11"
     },
 
     "frameworks": {
-        "net452": {
-            "frameworkAssemblies": {
-                "System.Data.Entity": "4.0.0.0"
-            }
-        }
+        "net452": {}
     },
     "tooling": {
-        "defaultNamespace": "MemberTrack.Data.Tests"
+        "defaultNamespace": "MemberTrack.Common.Quiz.Tests"
     }
 }

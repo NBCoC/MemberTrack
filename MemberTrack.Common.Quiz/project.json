@@ -1,0 +1,17 @@
+{
+    "title": "MemberTrack.Common.Quiz",
+    "version": "1.0.0.0",
+
+    "dependencies": {
+        "MemberTrack.Data": "1.0.0.0",
+        "Microsoft.EntityFrameworkCore": "1.0.0"
+    },
+
+    "frameworks": {
+        "net452": {}
+    },
+
+    "tooling": {
+        "defaultNamespace": "MemberTrack.Common.Quiz"
+    }
+}

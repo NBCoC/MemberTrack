@@ -295,3 +295,46 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+BEGIN
+    DROP TABLE [QuizUserAnswer];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+BEGIN
+    CREATE TABLE [QuizPersonAnswer] (
+        [Id] bigint NOT NULL IDENTITY,
+        [AnswerId] bigint NOT NULL,
+        [PersonId] bigint NOT NULL,
+        CONSTRAINT [PK_QuizPersonAnswer] PRIMARY KEY ([Id]),
+        CONSTRAINT [FK_QuizPersonAnswer_QuizAnswer_AnswerId] FOREIGN KEY ([AnswerId]) REFERENCES [QuizAnswer] ([Id]) ON DELETE CASCADE,
+        CONSTRAINT [FK_QuizPersonAnswer_Person_PersonId] FOREIGN KEY ([PersonId]) REFERENCES [Person] ([Id]) ON DELETE CASCADE
+    );
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+BEGIN
+    CREATE INDEX [IX_QuizPersonAnswer_AnswerId] ON [QuizPersonAnswer] ([AnswerId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+BEGIN
+    CREATE INDEX [IX_QuizPersonAnswer_PersonId] ON [QuizPersonAnswer] ([PersonId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20170314012621_''PersonAnswerTableChange''', N'1.0.0-rtm-21431');
+END;
+
+GO
+

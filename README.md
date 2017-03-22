@@ -21,7 +21,7 @@ Setup
 	
 Creating DB migrations
 
-1. To update an existing entity, make sure to update the correspoding mapping file (.CS) in .\MemberTrack.Data\Mappings directory
+1. To update an existing entity, make sure to update the corresponding mapping file (.CS) in .\MemberTrack.Data\Mappings directory
 2. To create a new entity, make sure to create a corresponding mapping file (.CS) in .\MemberTrack.Data\Mappings directory
 3. Open command prompt and navigate to the root directory of the .\MemberTrack.DbUtil project
 4. Run the following command:

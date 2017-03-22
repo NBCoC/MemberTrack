@@ -1,12 +1,8 @@
 ﻿using MemberTrack.Common;
 using MemberTrack.Data;
-using Microsoft.EntityFrameworkCore;
+using MemberTrack.Data.Seedings;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace MemberTrack.DbUtil.Seedings
 {

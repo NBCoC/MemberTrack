@@ -6,7 +6,7 @@ namespace MemberTrack.Data
     using Mappings.Quizzes;
     using Microsoft.EntityFrameworkCore;
 
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : DbContext, IDatabaseContext
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {}
 
@@ -32,7 +32,7 @@ namespace MemberTrack.Data
 
         public DbSet<SupportingScripture> SupportingScriptures { get; set; }
 
-        public DbSet<UserAnswer> UserAnswers { get; set; }
+        public DbSet<PersonAnswer> PersonAnswers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -47,7 +47,7 @@ namespace MemberTrack.Data
             TopicCategoryMap.Configure(builder);
             TopicMap.Configure(builder);
             SupportingScriptureMap.Configure(builder);
-            UserAnswerMap.Configure(builder);
+            PersonAnswerMap.Configure(builder);
         }
     }
 }
