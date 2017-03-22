@@ -61,6 +61,7 @@ namespace MemberTrack.Common.Quiz
             return answers;
         }
 
+        //Determines the next question to provide for the person based on the questions which they have not yet answered.
         public Question NextQuestion(Data.Entities.Quizzes.Quiz quiz, Person person, IEnumerable<Question> allQuestions, IEnumerable<PersonAnswer> allPersonAnswers)
         {
             var questions = allQuestions.Where(q => q.QuizId == quiz.Id);
