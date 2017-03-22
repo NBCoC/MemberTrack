@@ -27,6 +27,7 @@ namespace MemberTrack.Common.Quiz
             _randomizer = randomizer;
         }
 
+        //Determines the response to show the user after submitting their answer to a question.
         public string QuestionResponse(Person person, IEnumerable<Answer> answers)
         {
             //TODO:  For typical quizzes the responses are something like:
