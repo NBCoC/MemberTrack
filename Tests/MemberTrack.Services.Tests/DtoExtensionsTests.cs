@@ -28,7 +28,7 @@ namespace MemberTrack.Services.Tests
 
             foreach (PropertyInfo property in destination.GetType().GetProperties())
             {
-                //See if this property has an exception
+                //See if this property has an exception, before comparing its values.
                 Func<bool> propertyMatchFunc;
                 if (propertyExceptions != null && propertyExceptions.TryGetValue(property.Name, out propertyMatchFunc))
                 {
