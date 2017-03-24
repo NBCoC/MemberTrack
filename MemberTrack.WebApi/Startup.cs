@@ -57,8 +57,6 @@ namespace MemberTrack.WebApi
             services.AddTransient<IPersonService, PersonService>();
 
             services.AddTransient<ISystemPersonService, PersonService>();
-
-            services.AddTransient<IAddressService, AddressService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

@@ -11,9 +11,7 @@ export interface LookupItemDto {
 
 export interface LookupResultDto {
     roles: LookupItemDto[];
-    states: LookupItemDto[];
     personStatus: LookupItemDto[];
-    genders: LookupItemDto[];
     checkListItemTypes: LookupItemDto[];
     ageGroups: LookupItemDto[];
 }
@@ -39,22 +37,6 @@ export interface UserDto {
     isSystemAdmin: boolean;
 }
 
-export interface AddressDto {
-    state: number;
-    stateName: string;
-    street: string;
-    city: string;
-    zipCode: number;
-}
-
-export interface ChildrenInfoDto {
-    hasInfantKids: boolean;
-    hasToddlerKids: boolean;
-    hasElementaryKids: boolean;
-    hasJuniorHighKids: boolean;
-    hasHighSchoolKids: boolean;
-}
-
 export interface PersonCheckListItemDto {
     id: number;
     description: string;
@@ -66,28 +48,16 @@ export interface PersonCheckListItemDto {
     sortOrder: number;
 }
 
-export interface DatesDto {
-    baptismDate?: Date;
-    firstVisitDate?: Date;
-    membershipDate?: Date;
-}
-
 export interface PersonDto {
     id: number;
-    firstName: string;
-    middleName?: string;
-    lastName: string;
+    fullName: string;
     email?: string;
-    contactNumber?: string;
     status: number;
     statusName: string;
-    gender: number;
-    genderName: string;
     ageGroup?: number;
     ageGroupName: string;
-    dates: DatesDto;
-    address: AddressDto;
-    childrenInfo: ChildrenInfoDto;
+    firstVisitDate?: Date;
+    membershipDate?: Date;
     checkListItems: PersonCheckListItemDto[];
 }
 

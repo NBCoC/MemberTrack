@@ -23,11 +23,7 @@
         Task<long> Insert(string contextUserEmail, PersonInsertOrUpdateDto dto);
 
         Task Update(string contextUserEmail, PersonInsertOrUpdateDto dto, long personId);
-
-        Task UpdateDates(string contextUserEmail, DatesDto dto, long personId);
-
-        Task InsertChildrenInfo(string contextUserEmail, ChildrenInfoDto dto, long personId);
-
+        
         Task InsertOrRemoveCheckListItem(string contextUserEmail, PersonCheckListItemDto dto, long personId);
 
         Task<IEnumerable<PersonCheckListItemLookupDto>> GetCheckListItemLookup();

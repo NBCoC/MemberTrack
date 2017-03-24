@@ -1,5 +1,6 @@
 import { customElement } from "aurelia-framework";
 import { ValidationControllerFactory, ValidationRules } from "aurelia-validation";
+import * as moment from "moment";
 
 import { BaseDialog } from "../core/base-dialog";
 import { PersonService } from "../services/person.service";
@@ -7,12 +8,13 @@ import { LookupService } from "../services/lookup.service";
 import { PersonDto, LookupItemDto } from "../core/dtos";
 import { PersonEvent } from "../core/custom-events";
 
+const Format = "MM/DD/YYYY";
+
 @customElement("mt-member-dialog")
 export class MemberDialogViewModel extends BaseDialog {
     private personService: PersonService;
     private lookupService: LookupService;
     public model: PersonDto;
-    public genders: LookupItemDto[];
     public ageGroups: LookupItemDto[];
     public statusList: LookupItemDto[];
 
@@ -23,7 +25,6 @@ export class MemberDialogViewModel extends BaseDialog {
         this.lookupService = lookupService;
 
         this.model = {} as PersonDto;
-        this.genders = [];
         this.ageGroups = [];
         this.statusList = [];
     }
@@ -35,7 +36,6 @@ export class MemberDialogViewModel extends BaseDialog {
             if (!result) {
                 return;
             }
-            this.genders = result.genders;
             this.ageGroups = result.ageGroups;
             this.statusList = result.personStatus;
         });
@@ -44,6 +44,21 @@ export class MemberDialogViewModel extends BaseDialog {
     public show(model?: PersonDto): void {
         if (model) {
             this.model = model;
+
+            if (model.firstVisitDate) {
+                this.model.firstVisitDate = moment(model.firstVisitDate).format(Format) as any;
+            } else {
+                this.model.firstVisitDate = null;
+            }
+
+            if (model.membershipDate) {
+                this.model.membershipDate = moment(model.membershipDate).format(Format) as any;
+            } else {
+                this.model.membershipDate = null;
+            }
+        } else {
+            this.model.status = 0;
+            this.model.ageGroup = 0;
         }
         this.showModal();
     }
@@ -54,9 +69,16 @@ export class MemberDialogViewModel extends BaseDialog {
                 return;
             }
 
+            let data = {} as PersonDto;
+
+            Object.assign(data, this.model);
+
+            data.membershipDate = !this.model.membershipDate ? null : new Date(this.model.membershipDate);
+            data.firstVisitDate = !this.model.firstVisitDate ? null : new Date(this.model.firstVisitDate);
+
             let func = this.model.id ?
-                this.personService.update(this.model.id, this.model) :
-                this.personService.insert(this.model);
+                this.personService.update(this.model.id, data) :
+                this.personService.insert(data);
 
             func.then(dto => {
                 if (!dto) {
@@ -69,13 +91,12 @@ export class MemberDialogViewModel extends BaseDialog {
 
     protected registerValidation(): void {
         ValidationRules
-            .ensure("firstName").required()
-            .ensure("lastName").required()
-            .ensure("gender").required()
+            .ensure("fullName").required()
             .ensure("ageGroup").required()
             .ensure("status").required()
-            .ensure("contactNumber").matches(/\d{3}[-]\d{3}[-]\d{4}/)
             .ensure("email").email()
+            .ensure("membershipDate").matches(/\d+\/\d+\/\d{4}/)
+            .ensure("firstVisitDate").matches(/\d+\/\d+\/\d{4}/)
             .on(this.model);
     }
 }

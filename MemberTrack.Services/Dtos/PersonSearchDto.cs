@@ -7,18 +7,14 @@ namespace MemberTrack.Services.Dtos
     {
         public long Id { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string LastName { get; set; }
-
+        public string FullName { get; set; }
+        
         public PersonStatusEnum Status { get; set; }
 
         public string StatusName => Status.ToDescription();
 
-        public AgeGroupEnum? AgeGroup { get; set; }
+        public AgeGroupEnum AgeGroup { get; set; }
 
-        public string AgeGroupName => AgeGroup?.ToDescription();
+        public string AgeGroupName => AgeGroup.ToDescription();
     }
 }

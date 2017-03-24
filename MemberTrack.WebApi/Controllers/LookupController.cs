@@ -35,18 +35,12 @@ namespace MemberTrack.WebApi.Controllers
                             new ItemLookupDto(UserRoleEnum.Editor),
                             new ItemLookupDto(UserRoleEnum.Admin)
                         },
-                        States = new List<ItemLookupDto> {new ItemLookupDto(StateEnum.TX)},
                         PersonStatus =
                         new List<ItemLookupDto>
                         {
+                            new ItemLookupDto(PersonStatusEnum.Unknown),
                             new ItemLookupDto(PersonStatusEnum.Visitor),
                             new ItemLookupDto(PersonStatusEnum.Member)
-                        },
-                        Genders =
-                        new List<ItemLookupDto>
-                        {
-                            new ItemLookupDto(GenderEnum.Male),
-                            new ItemLookupDto(GenderEnum.Female)
                         },
                         CheckListItemTypes =
                         new List<ItemLookupDto>

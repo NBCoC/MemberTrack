@@ -40,7 +40,7 @@ export class MainLayoutViewModel {
                 route: "search",
                 moduleId: "view-models/search.view-model",
                 name: "search",
-                title: "Member Search",
+                title: "Member / Visitor Search",
                 adminView: false,
                 caseSensitive: true
             },
@@ -48,7 +48,7 @@ export class MainLayoutViewModel {
                 route: "member-details/:id",
                 moduleId: "view-models/member-details.view-model",
                 name: "member-details",
-                title: "Member Details",
+                title: "Member / Visitor Details",
                 adminView: false,
                 caseSensitive: true
             },

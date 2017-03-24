@@ -4,8 +4,8 @@ import { EventAggregator } from "aurelia-event-aggregator";
 
 import { BaseService } from "./base.service";
 import {
-    SearchResultDto, PersonDto, ChildrenInfoDto,
-    PersonCheckListItemDto, DatesDto, PersonReportDto, RecentPersonDto
+    SearchResultDto, PersonDto,
+    PersonCheckListItemDto, PersonReportDto, RecentPersonDto
 } from "../core/dtos";
 
 @autoinject
@@ -56,18 +56,6 @@ export class PersonService extends BaseService {
             .then(result => {
                 return true;
             })
-            .catch(this.handleError);
-    }
-
-    public insertOrUpdateChildrenInfo(id: number, dto: ChildrenInfoDto): Promise<PersonDto> {
-        return this.client.post(`person/childrenInfo/${id}`, dto)
-            .then(result => JSON.parse(result.response))
-            .catch(this.handleError);
-    }
-
-    public updateDates(id: number, dto: DatesDto): Promise<PersonDto> {
-        return this.client.post(`person/dates/${id}`, dto)
-            .then(result => JSON.parse(result.response))
             .catch(this.handleError);
     }
 

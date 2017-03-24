@@ -7,9 +7,7 @@ namespace MemberTrack.Data
     public interface IDatabaseContext
     {
         DbSet<User> Users { get; set; }
-
-        DbSet<Address> Addresses { get; set; }
-
+        
         DbSet<Person> People { get; set; }
 
         DbSet<PersonCheckListItem> PersonCheckListItems { get; set; }

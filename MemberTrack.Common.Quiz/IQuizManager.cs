@@ -1,9 +1,6 @@
-﻿using MemberTrack.Data.Entities;
+﻿using System.Collections.Generic;
+using MemberTrack.Data.Entities;
 using MemberTrack.Data.Entities.Quizzes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MemberTrack.Common.Quiz
 {

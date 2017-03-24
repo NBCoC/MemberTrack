@@ -5,7 +5,7 @@
       <div mt-mdl="textfield" class="mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" id="searchControl" name="searchControl"
           value.two-way="searchText & debounce:400">
-          <label class="mdl-textfield__label" for="searchControl">Search for members...</label>
+          <label class="mdl-textfield__label" for="searchControl">Search for members / visitors...</label>
       </div>
       <div class="mdl-layout-spacer"></div>
     </div>
@@ -24,8 +24,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr repeat.for="person of people | sort : 'firstName'">
-            <td>${person.firstName} ${person.lastName}</td>
+          <tr repeat.for="person of people | sort : 'fullName'">
+            <td>${person.fullName}</td>
             <td>${person.statusName}</td>
             <td>${person.ageGroupName}</td>
             <td>

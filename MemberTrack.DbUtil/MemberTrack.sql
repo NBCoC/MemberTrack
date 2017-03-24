@@ -9,26 +9,16 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [Person] (
         [Id] bigint NOT NULL IDENTITY,
         [AgeGroup] int NOT NULL,
-        [BaptismDate] datetimeoffset,
-        [ContactNumber] nvarchar(15),
         [CreatedDate] datetimeoffset NOT NULL DEFAULT (GETUTCDATE()),
         [Email] nvarchar(256),
-        [FirstName] nvarchar(75) NOT NULL,
         [FirstVisitDate] datetimeoffset,
-        [Gender] int NOT NULL,
-        [HasElementaryKids] bit NOT NULL,
-        [HasHighSchoolKids] bit NOT NULL,
-        [HasInfantKids] bit NOT NULL,
-        [HasJuniorHighKids] bit NOT NULL,
-        [HasToddlerKids] bit NOT NULL,
-        [LastName] nvarchar(75) NOT NULL,
+        [FullName] nvarchar(150) NOT NULL,
         [MembershipDate] datetimeoffset,
-        [MiddleName] nvarchar(75),
         [Status] int NOT NULL,
         CONSTRAINT [PK_Person] PRIMARY KEY ([Id])
     );
@@ -36,7 +26,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [PersonCheckListItem] (
         [Id] bigint NOT NULL IDENTITY,
@@ -50,7 +40,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [Quiz] (
         [Id] bigint NOT NULL IDENTITY,
@@ -65,7 +55,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [QuizTopicCategory] (
         [Id] bigint NOT NULL IDENTITY,
@@ -78,7 +68,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [User] (
         [Id] bigint NOT NULL IDENTITY,
@@ -92,22 +82,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE TABLE [Address] (
-        [PersonId] bigint NOT NULL,
-        [City] nvarchar(150) NOT NULL,
-        [State] int NOT NULL,
-        [Street] nvarchar(150) NOT NULL,
-        [ZipCode] int NOT NULL,
-        CONSTRAINT [PK_Address] PRIMARY KEY ([PersonId]),
-        CONSTRAINT [FK_Address_Person_PersonId] FOREIGN KEY ([PersonId]) REFERENCES [Person] ([Id]) ON DELETE CASCADE
-    );
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [PersonCheckList] (
         [PersonId] bigint NOT NULL,
@@ -122,7 +97,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [QuizQuestion] (
         [Id] bigint NOT NULL IDENTITY,
@@ -137,7 +112,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [QuizTopic] (
         [Id] bigint NOT NULL IDENTITY,
@@ -151,7 +126,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [QuizAnswer] (
         [Id] bigint NOT NULL IDENTITY,
@@ -168,7 +143,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [QuizSupportingScripture] (
         [Id] bigint NOT NULL IDENTITY,
@@ -182,127 +157,7 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE TABLE [QuizUserAnswer] (
-        [Id] bigint NOT NULL IDENTITY,
-        [AnswerId] bigint NOT NULL,
-        [UserId] bigint NOT NULL,
-        CONSTRAINT [PK_QuizUserAnswer] PRIMARY KEY ([Id]),
-        CONSTRAINT [FK_QuizUserAnswer_QuizAnswer_AnswerId] FOREIGN KEY ([AnswerId]) REFERENCES [QuizAnswer] ([Id]) ON DELETE CASCADE,
-        CONSTRAINT [FK_QuizUserAnswer_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
-    );
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE UNIQUE INDEX [IX_Address_PersonId] ON [Address] ([PersonId]) WHERE [PersonId] IS NOT NULL;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE UNIQUE INDEX [IX_Person_Email] ON [Person] ([Email]) WHERE [Email] IS NOT NULL;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_PersonCheckList_PersonCheckListItemId] ON [PersonCheckList] ([PersonCheckListItemId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_PersonCheckList_PersonId] ON [PersonCheckList] ([PersonId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE UNIQUE INDEX [IX_PersonCheckListItem_Description] ON [PersonCheckListItem] ([Description]) WHERE [Description] IS NOT NULL;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_QuizAnswer_QuestionId] ON [QuizAnswer] ([QuestionId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_QuizAnswer_TopicId] ON [QuizAnswer] ([TopicId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_QuizQuestion_QuizId] ON [QuizQuestion] ([QuizId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_QuizSupportingScripture_TopicId] ON [QuizSupportingScripture] ([TopicId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_QuizTopic_TopicCategoryId] ON [QuizTopic] ([TopicCategoryId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_QuizUserAnswer_AnswerId] ON [QuizUserAnswer] ([AnswerId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE INDEX [IX_QuizUserAnswer_UserId] ON [QuizUserAnswer] ([UserId]);
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    CREATE UNIQUE INDEX [IX_User_Email] ON [User] ([Email]) WHERE [Email] IS NOT NULL;
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170303145847_NewDbMig')
-BEGIN
-    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20170303145847_NewDbMig', N'1.0.0-rtm-21431');
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
-BEGIN
-    DROP TABLE [QuizUserAnswer];
-END;
-
-GO
-
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE TABLE [QuizPersonAnswer] (
         [Id] bigint NOT NULL IDENTITY,
@@ -316,24 +171,94 @@ END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE UNIQUE INDEX [IX_Person_Email] ON [Person] ([Email]) WHERE [Email] IS NOT NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE INDEX [IX_PersonCheckList_PersonCheckListItemId] ON [PersonCheckList] ([PersonCheckListItemId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE INDEX [IX_PersonCheckList_PersonId] ON [PersonCheckList] ([PersonId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE UNIQUE INDEX [IX_PersonCheckListItem_Description] ON [PersonCheckListItem] ([Description]) WHERE [Description] IS NOT NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE INDEX [IX_QuizAnswer_QuestionId] ON [QuizAnswer] ([QuestionId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE INDEX [IX_QuizAnswer_TopicId] ON [QuizAnswer] ([TopicId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE INDEX [IX_QuizPersonAnswer_AnswerId] ON [QuizPersonAnswer] ([AnswerId]);
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     CREATE INDEX [IX_QuizPersonAnswer_PersonId] ON [QuizPersonAnswer] ([PersonId]);
 END;
 
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170314012621_''PersonAnswerTableChange''')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE INDEX [IX_QuizQuestion_QuizId] ON [QuizQuestion] ([QuizId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE INDEX [IX_QuizSupportingScripture_TopicId] ON [QuizSupportingScripture] ([TopicId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE INDEX [IX_QuizTopic_TopicCategoryId] ON [QuizTopic] ([TopicCategoryId]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
+BEGIN
+    CREATE UNIQUE INDEX [IX_User_Email] ON [User] ([Email]) WHERE [Email] IS NOT NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170323205435_CreateDb')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20170314012621_''PersonAnswerTableChange''', N'1.0.0-rtm-21431');
+    VALUES (N'20170323205435_CreateDb', N'1.0.0-rtm-21431');
 END;
 
 GO

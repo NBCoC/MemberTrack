@@ -56,8 +56,7 @@
 
             var entity =
                 await
-                    _context.People.Include(p => p.Address).
-                        Include(p => p.CheckLists).
+                    _context.People.Include(p => p.CheckLists).
                         ThenInclude(cl => cl.PersonCheckListItem).
                         FirstOrDefaultAsync(predicate);
 
@@ -104,10 +103,9 @@
             var query =
                 await
                     _context.People.Where(
-                            x => x.FirstName.ToLower().Contains(contains) || x.LastName.ToLower().Contains(contains)).
+                            x => x.FullName.ToLower().Contains(contains)).
                         Take(25).
-                        OrderBy(x => x.FirstName).
-                        ThenBy(x => x.LastName).
+                        OrderBy(x => x.FullName).
                         ToListAsync();
 
             return new SearchResultDto<PersonSearchDto>(query.ToDtos(), count);
@@ -144,7 +142,8 @@
             //NOTE:  This is an area where we may get duplicates.  For instance, someone may have different first names (i.e. nicknames, shortened names)
             //       that they go by.
 
-            var person = await Find(p => personDto.Email == p.Email && personDto.FirstName == p.FirstName && personDto.LastName == p.LastName);
+            var person = await Find(p => personDto.Email == p.Email && personDto.FullName == p.FullName);
+
             if (person == null)
             {
                 return await SystemInsert(personDto);
@@ -169,14 +168,12 @@
                 throw new EntityNotFoundException(personId);
             }
 
-            entity.FirstName = dto.FirstName;
-            entity.MiddleName = dto.MiddleName;
-            entity.LastName = dto.LastName;
+            entity.FullName = dto.FullName;
             entity.Email = dto.Email;
-            entity.ContactNumber = dto.ContactNumber;
-            entity.Gender = dto.Gender;
+            entity.MembershipDate = dto.MembershipDate;
+            entity.FirstVisitDate = dto.FirstVisitDate;
             entity.Status = dto.Status;
-            entity.AgeGroup = dto.AgeGroup ?? AgeGroupEnum.Unknown;
+            entity.AgeGroup = dto.AgeGroup;
 
             if (!entity.FirstVisitDate.HasValue &&
                 entity.Status == PersonStatusEnum.Visitor)
@@ -192,54 +189,7 @@
 
             await _context.SaveChangesAsync();
         }
-
-        public async Task UpdateDates(string contextUserEmail, DatesDto dto, long personId)
-        {
-            await _userService.ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Editor);
-
-            if (dto == null)
-            {
-                throw new ArgumentNullException(nameof(DatesDto));
-            }
-
-            var entity = await _context.People.FirstOrDefaultAsync(p => p.Id == personId);
-
-            if (entity == null)
-            {
-                throw new EntityNotFoundException(personId);
-            }
-
-            entity.BaptismDate = dto.BaptismDate;
-            entity.FirstVisitDate = dto.FirstVisitDate;
-            entity.MembershipDate = dto.MembershipDate;
-
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task InsertChildrenInfo(string contextUserEmail, ChildrenInfoDto dto, long personId)
-        {
-            await _userService.ThrowIfNotInRole(contextUserEmail, UserRoleEnum.Editor);
-
-            if (dto == null)
-            {
-                throw new ArgumentNullException(nameof(ChildrenInfoDto));
-            }
-
-            var entity = await _context.People.FirstOrDefaultAsync(p => p.Id == personId);
-
-            if (entity == null)
-            {
-                throw new EntityNotFoundException(personId);
-            }
-
-            entity.HasElementaryKids = dto.HasElementaryKids;
-            entity.HasHighSchoolKids = dto.HasHighSchoolKids;
-            entity.HasInfantKids = dto.HasInfantKids;
-            entity.HasJuniorHighKids = dto.HasJuniorHighKids;
-            entity.HasToddlerKids = dto.HasToddlerKids;
-
-            await _context.SaveChangesAsync();
-        }
+        
 
         public async Task InsertOrRemoveCheckListItem(
             string contextUserEmail, PersonCheckListItemDto dto, long personId)
@@ -346,7 +296,7 @@
                                 new RecentPersonDto
                                 {
                                     Id = p.Id,
-                                    Name = p.FirstName + " " + p.LastName,
+                                    Name = p.FullName,
                                     Status = p.Status,
                                     Date = p.FirstVisitDate,
                                     RequiresAttention =
@@ -372,7 +322,7 @@
                                 new RecentPersonDto
                                 {
                                     Id = p.Id,
-                                    Name = p.FirstName + " " + p.LastName,
+                                    Name = p.FullName,
                                     Status = p.Status,
                                     Date = p.MembershipDate,
                                     RequiresAttention =

@@ -59,10 +59,10 @@ export class MemberDetailsViewModel extends BaseViewModel {
         if (!this.isEditor) {
             return;
         }
-        let message = "Are you sure want to delete this member / visitor? Note that this cannot be undone!";
-        let name = this.person.firstName + " " + this.person.lastName;
 
-        this.promptDialogVm.show("Delete", message, name, this.person.id);
+        let message = "Are you sure want to delete this member / visitor? Note that this cannot be undone!";
+
+        this.promptDialogVm.show("Delete", message, this.person.fullName, this.person.id);
     }
 
     public dismissPromptDialog(e: CustomEvent): void {
@@ -78,9 +78,6 @@ export class MemberDetailsViewModel extends BaseViewModel {
 
     private initDefaultModel(): void {
         this.person = {
-            dates: {},
-            address: {},
-            childrenInfo: {},
             checkListItems: []
         } as PersonDto;
     }

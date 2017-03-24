@@ -11,9 +11,7 @@ namespace MemberTrack.Data
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) {}
 
         public DbSet<User> Users { get; set; }
-
-        public DbSet<Address> Addresses { get; set; }
-
+        
         public DbSet<Person> People { get; set; }
 
         public DbSet<PersonCheckListItem> PersonCheckListItems { get; set; }
@@ -37,7 +35,6 @@ namespace MemberTrack.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             UserMap.Configure(builder);
-            AddressMap.Configure(builder);
             PersonMap.Configure(builder);
             PersonCheckListItemMap.Configure(builder);
             PersonCheckListMap.Configure(builder);

@@ -8,38 +8,14 @@ using MemberTrack.Data;
 namespace MemberTrack.DbUtil.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20170303145847_NewDbMig")]
-    partial class NewDbMig
+    [Migration("20170323205435_CreateDb")]
+    partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("MemberTrack.Data.Entities.Address", b =>
-                {
-                    b.Property<long>("PersonId");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 150);
-
-                    b.Property<int>("State");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 150);
-
-                    b.Property<int>("ZipCode");
-
-                    b.HasKey("PersonId");
-
-                    b.HasIndex("PersonId")
-                        .IsUnique();
-
-                    b.ToTable("Address");
-                });
 
             modelBuilder.Entity("MemberTrack.Data.Entities.Person", b =>
                 {
@@ -49,11 +25,6 @@ namespace MemberTrack.DbUtil.Migrations
 
                     b.Property<int>("AgeGroup");
 
-                    b.Property<DateTimeOffset?>("BaptismDate");
-
-                    b.Property<string>("ContactNumber")
-                        .HasAnnotation("MaxLength", 15);
-
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GETUTCDATE()");
@@ -61,32 +32,13 @@ namespace MemberTrack.DbUtil.Migrations
                     b.Property<string>("Email")
                         .HasAnnotation("MaxLength", 256);
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 75);
-
                     b.Property<DateTimeOffset?>("FirstVisitDate");
 
-                    b.Property<int>("Gender");
-
-                    b.Property<bool>("HasElementaryKids");
-
-                    b.Property<bool>("HasHighSchoolKids");
-
-                    b.Property<bool>("HasInfantKids");
-
-                    b.Property<bool>("HasJuniorHighKids");
-
-                    b.Property<bool>("HasToddlerKids");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 75);
+                        .HasAnnotation("MaxLength", 150);
 
                     b.Property<DateTimeOffset?>("MembershipDate");
-
-                    b.Property<string>("MiddleName")
-                        .HasAnnotation("MaxLength", 75);
 
                     b.Property<int>("Status");
 
@@ -169,6 +121,25 @@ namespace MemberTrack.DbUtil.Migrations
                     b.HasIndex("TopicId");
 
                     b.ToTable("QuizAnswer");
+                });
+
+            modelBuilder.Entity("MemberTrack.Data.Entities.Quizzes.PersonAnswer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("AnswerId");
+
+                    b.Property<long>("PersonId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("QuizPersonAnswer");
                 });
 
             modelBuilder.Entity("MemberTrack.Data.Entities.Quizzes.Question", b =>
@@ -283,25 +254,6 @@ namespace MemberTrack.DbUtil.Migrations
                     b.ToTable("QuizTopicCategory");
                 });
 
-            modelBuilder.Entity("MemberTrack.Data.Entities.Quizzes.UserAnswer", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("AnswerId");
-
-                    b.Property<long>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnswerId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("QuizUserAnswer");
-                });
-
             modelBuilder.Entity("MemberTrack.Data.Entities.User", b =>
                 {
                     b.Property<long>("Id")
@@ -330,14 +282,6 @@ namespace MemberTrack.DbUtil.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("MemberTrack.Data.Entities.Address", b =>
-                {
-                    b.HasOne("MemberTrack.Data.Entities.Person", "Person")
-                        .WithOne("Address")
-                        .HasForeignKey("MemberTrack.Data.Entities.Address", "PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("MemberTrack.Data.Entities.PersonCheckList", b =>
                 {
                     b.HasOne("MemberTrack.Data.Entities.PersonCheckListItem", "PersonCheckListItem")
@@ -364,6 +308,19 @@ namespace MemberTrack.DbUtil.Migrations
                         .OnDelete(DeleteBehavior.SetNull);
                 });
 
+            modelBuilder.Entity("MemberTrack.Data.Entities.Quizzes.PersonAnswer", b =>
+                {
+                    b.HasOne("MemberTrack.Data.Entities.Quizzes.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MemberTrack.Data.Entities.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("MemberTrack.Data.Entities.Quizzes.Question", b =>
                 {
                     b.HasOne("MemberTrack.Data.Entities.Quizzes.Quiz", "Quiz")
@@ -385,19 +342,6 @@ namespace MemberTrack.DbUtil.Migrations
                     b.HasOne("MemberTrack.Data.Entities.Quizzes.TopicCategory", "TopicCategory")
                         .WithMany("Topics")
                         .HasForeignKey("TopicCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MemberTrack.Data.Entities.Quizzes.UserAnswer", b =>
-                {
-                    b.HasOne("MemberTrack.Data.Entities.Quizzes.Answer", "Answer")
-                        .WithMany()
-                        .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MemberTrack.Data.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

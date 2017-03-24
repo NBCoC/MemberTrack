@@ -7,45 +7,35 @@
     <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
       <div class="mdl-card__supporting-text">
         <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-          <input class="mdl-textfield__input" type="text" id="fnControl" value.two-way="person.firstName"
-            readonly>
-          <label class="mdl-textfield__label" for="fnControl">First Name</label>
+          <input class="mdl-textfield__input" type="text" id="fnControl" value.two-way="person.fullName" readonly>
+          <label class="mdl-textfield__label" for="fnControl">Full Name</label>
         </div>
+
         <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-          <input class="mdl-textfield__input" type="text" id="mnControl" value.two-way="person.middleName"
-            readonly>
-          <label class="mdl-textfield__label" for="mnControl">Middle Name</label>
-        </div>
-        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-          <input class="mdl-textfield__input" type="text" id="lnControl" value.two-way="person.lastName"
-            readonly>
-          <label class="mdl-textfield__label" for="lnControl">Last Name</label>
-        </div>
-        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-          <input class="mdl-textfield__input" type="text" id="ageGroupControl" value.two-way="person.ageGroupName"
-            readonly>
-          <label class="mdl-textfield__label" for="ageGroupControl">Age Group</label>
-        </div>
-        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-          <input class="mdl-textfield__input" type="text" id="genderControl" value.two-way="person.genderName"
-            readonly>
-          <label class="mdl-textfield__label" for="genderControl">Gender</label>
-        </div>
-        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-          <input class="mdl-textfield__input" type="text" id="statusControl" value.two-way="person.statusName"
-            readonly>
-          <label class="mdl-textfield__label" for="statusControl">Status</label>
-        </div>
-        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-          <input class="mdl-textfield__input" type="text" id="contactNumberControl" value.two-way="person.contactNumber"
-            readonly>
-          <label class="mdl-textfield__label" for="contactNumberControl">Contact #</label>
-        </div>
-        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
-          <input class="mdl-textfield__input" type="email" id="emailControl" value.two-way="person.email"
-            readonly>
+          <input class="mdl-textfield__input" type="email" id="emailControl" value.two-way="person.email" readonly>
           <label class="mdl-textfield__label" for="emailControl">Email</label>
         </div>
+
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="ageGroupControl" value.two-way="person.ageGroupName" readonly>
+          <label class="mdl-textfield__label" for="ageGroupControl">Age Group</label>
+        </div>
+
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="statusControl" value.two-way="person.statusName" readonly>
+          <label class="mdl-textfield__label" for="statusControl">Status</label>
+        </div>
+
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="firstVisitDateControl" value="${person.firstVisitDate | dateFormat : 'MMMM Do YYYY'}" readonly>
+          <label class="mdl-textfield__label" for="firstVisitDateControl">1st Visit Date</label>
+        </div>
+
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="membershipDateControl" value="${person.membershipDate | dateFormat : 'MMMM Do YYYY'}" readonly>
+          <label class="mdl-textfield__label" for="membershipDateControl">Membership Placement Date</label>
+        </div>
+
       </div>
       <div class="mdl-card__actions mdl-card--border" if.bind="isEditor">
         <button mt-mdl="button" class="mdl-button--accent" click.trigger="displayDialog()">Edit</button>

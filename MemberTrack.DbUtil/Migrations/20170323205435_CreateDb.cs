@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace MemberTrack.DbUtil.Migrations
 {
-    public partial class NewDbMig : Migration
+    public partial class CreateDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,21 +16,11 @@ namespace MemberTrack.DbUtil.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AgeGroup = table.Column<int>(nullable: false),
-                    BaptismDate = table.Column<DateTimeOffset>(nullable: true),
-                    ContactNumber = table.Column<string>(maxLength: 15, nullable: true),
                     CreatedDate = table.Column<DateTimeOffset>(nullable: false, defaultValueSql: "GETUTCDATE()"),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
-                    FirstName = table.Column<string>(maxLength: 75, nullable: false),
                     FirstVisitDate = table.Column<DateTimeOffset>(nullable: true),
-                    Gender = table.Column<int>(nullable: false),
-                    HasElementaryKids = table.Column<bool>(nullable: false),
-                    HasHighSchoolKids = table.Column<bool>(nullable: false),
-                    HasInfantKids = table.Column<bool>(nullable: false),
-                    HasJuniorHighKids = table.Column<bool>(nullable: false),
-                    HasToddlerKids = table.Column<bool>(nullable: false),
-                    LastName = table.Column<string>(maxLength: 75, nullable: false),
+                    FullName = table.Column<string>(maxLength: 150, nullable: false),
                     MembershipDate = table.Column<DateTimeOffset>(nullable: true),
-                    MiddleName = table.Column<string>(maxLength: 75, nullable: true),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -100,27 +90,6 @@ namespace MemberTrack.DbUtil.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Address",
-                columns: table => new
-                {
-                    PersonId = table.Column<long>(nullable: false),
-                    City = table.Column<string>(maxLength: 150, nullable: false),
-                    State = table.Column<int>(nullable: false),
-                    Street = table.Column<string>(maxLength: 150, nullable: false),
-                    ZipCode = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Address", x => x.PersonId);
-                    table.ForeignKey(
-                        name: "FK_Address_Person_PersonId",
-                        column: x => x.PersonId,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,36 +212,30 @@ namespace MemberTrack.DbUtil.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuizUserAnswer",
+                name: "QuizPersonAnswer",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AnswerId = table.Column<long>(nullable: false),
-                    UserId = table.Column<long>(nullable: false)
+                    PersonId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QuizUserAnswer", x => x.Id);
+                    table.PrimaryKey("PK_QuizPersonAnswer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_QuizUserAnswer_QuizAnswer_AnswerId",
+                        name: "FK_QuizPersonAnswer_QuizAnswer_AnswerId",
                         column: x => x.AnswerId,
                         principalTable: "QuizAnswer",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_QuizUserAnswer_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
+                        name: "FK_QuizPersonAnswer_Person_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Address_PersonId",
-                table: "Address",
-                column: "PersonId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Person_Email",
@@ -307,6 +270,16 @@ namespace MemberTrack.DbUtil.Migrations
                 column: "TopicId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_QuizPersonAnswer_AnswerId",
+                table: "QuizPersonAnswer",
+                column: "AnswerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_QuizPersonAnswer_PersonId",
+                table: "QuizPersonAnswer",
+                column: "PersonId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_QuizQuestion_QuizId",
                 table: "QuizQuestion",
                 column: "QuizId");
@@ -322,16 +295,6 @@ namespace MemberTrack.DbUtil.Migrations
                 column: "TopicCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QuizUserAnswer_AnswerId",
-                table: "QuizUserAnswer",
-                column: "AnswerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_QuizUserAnswer_UserId",
-                table: "QuizUserAnswer",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_User_Email",
                 table: "User",
                 column: "Email",
@@ -341,28 +304,25 @@ namespace MemberTrack.DbUtil.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Address");
+                name: "PersonCheckList");
 
             migrationBuilder.DropTable(
-                name: "PersonCheckList");
+                name: "QuizPersonAnswer");
 
             migrationBuilder.DropTable(
                 name: "QuizSupportingScripture");
 
             migrationBuilder.DropTable(
-                name: "QuizUserAnswer");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "PersonCheckListItem");
 
             migrationBuilder.DropTable(
-                name: "Person");
-
-            migrationBuilder.DropTable(
                 name: "QuizAnswer");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Person");
 
             migrationBuilder.DropTable(
                 name: "QuizQuestion");

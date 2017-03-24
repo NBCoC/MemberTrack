@@ -16,30 +16,6 @@ namespace MemberTrack.DbUtil.Migrations
                 .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("MemberTrack.Data.Entities.Address", b =>
-                {
-                    b.Property<long>("PersonId");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 150);
-
-                    b.Property<int>("State");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 150);
-
-                    b.Property<int>("ZipCode");
-
-                    b.HasKey("PersonId");
-
-                    b.HasIndex("PersonId")
-                        .IsUnique();
-
-                    b.ToTable("Address");
-                });
-
             modelBuilder.Entity("MemberTrack.Data.Entities.Person", b =>
                 {
                     b.Property<long>("Id")
@@ -48,11 +24,6 @@ namespace MemberTrack.DbUtil.Migrations
 
                     b.Property<int>("AgeGroup");
 
-                    b.Property<DateTimeOffset?>("BaptismDate");
-
-                    b.Property<string>("ContactNumber")
-                        .HasAnnotation("MaxLength", 15);
-
                     b.Property<DateTimeOffset>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GETUTCDATE()");
@@ -60,32 +31,13 @@ namespace MemberTrack.DbUtil.Migrations
                     b.Property<string>("Email")
                         .HasAnnotation("MaxLength", 256);
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 75);
-
                     b.Property<DateTimeOffset?>("FirstVisitDate");
 
-                    b.Property<int>("Gender");
-
-                    b.Property<bool>("HasElementaryKids");
-
-                    b.Property<bool>("HasHighSchoolKids");
-
-                    b.Property<bool>("HasInfantKids");
-
-                    b.Property<bool>("HasJuniorHighKids");
-
-                    b.Property<bool>("HasToddlerKids");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 75);
+                        .HasAnnotation("MaxLength", 150);
 
                     b.Property<DateTimeOffset?>("MembershipDate");
-
-                    b.Property<string>("MiddleName")
-                        .HasAnnotation("MaxLength", 75);
 
                     b.Property<int>("Status");
 
@@ -327,14 +279,6 @@ namespace MemberTrack.DbUtil.Migrations
                         .IsUnique();
 
                     b.ToTable("User");
-                });
-
-            modelBuilder.Entity("MemberTrack.Data.Entities.Address", b =>
-                {
-                    b.HasOne("MemberTrack.Data.Entities.Person", "Person")
-                        .WithOne("Address")
-                        .HasForeignKey("MemberTrack.Data.Entities.Address", "PersonId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MemberTrack.Data.Entities.PersonCheckList", b =>
