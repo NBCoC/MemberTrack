@@ -11,7 +11,12 @@ import { CustomLogAppender } from "./core/custom-log-appender";
 });
 
 LogManager.addAppender(new CustomLogAppender());
-LogManager.setLevel(LogManager.logLevel.debug);
+
+if (environment.debug) {
+  LogManager.setLevel(LogManager.logLevel.debug);
+} else {
+  LogManager.setLevel(LogManager.logLevel.error);
+}
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
