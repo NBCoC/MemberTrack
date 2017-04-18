@@ -52,6 +52,8 @@ export interface PersonDto {
     id: number;
     fullName: string;
     email?: string;
+    contactNumber?: string;
+    description?: string;
     status: number;
     statusName: string;
     ageGroup?: number;

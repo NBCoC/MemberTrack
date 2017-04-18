@@ -94,7 +94,9 @@ export class MemberDialogViewModel extends BaseDialog {
             .ensure("fullName").required()
             .ensure("ageGroup").required()
             .ensure("status").required()
+            .ensure("description").maxLength(500)
             .ensure("email").email()
+            .ensure("contactNumber").matches(/\d{3}-\d{3}-\d{4}/)
             .ensure("membershipDate").matches(/\d+\/\d+\/\d{4}/)
             .ensure("firstVisitDate").matches(/\d+\/\d+\/\d{4}/)
             .on(this.model);

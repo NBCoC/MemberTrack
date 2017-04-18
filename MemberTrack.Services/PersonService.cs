@@ -138,7 +138,7 @@
         {
             //This code should run in a transaction at the controller level, since we 'find' and then possibly 'insert'
 
-            //This method uses the email address and person's name to identify them.  
+            //This method uses the email address and person's name to identify them.
             //NOTE:  This is an area where we may get duplicates.  For instance, someone may have different first names (i.e. nicknames, shortened names)
             //       that they go by.
 
@@ -172,6 +172,8 @@
             entity.Email = dto.Email;
             entity.MembershipDate = dto.MembershipDate;
             entity.FirstVisitDate = dto.FirstVisitDate;
+            entity.ContactNumber = dto.ContactNumber;
+            entity.Description = dto.Description;
             entity.Status = dto.Status;
             entity.AgeGroup = dto.AgeGroup;
 
@@ -189,7 +191,6 @@
 
             await _context.SaveChangesAsync();
         }
-        
 
         public async Task InsertOrRemoveCheckListItem(
             string contextUserEmail, PersonCheckListItemDto dto, long personId)
@@ -243,18 +244,20 @@
                             x =>
                                 (x.MembershipDate != null) && (x.MembershipDate <= date && x.MembershipDate >= lastYear) &&
                                 x.Status == PersonStatusEnum.Member).
-                        Select(x => new {x.MembershipDate}).
-                        GroupBy(x => new {x.MembershipDate.Value.Year, x.MembershipDate.Value.Month}).
+                        Select(x => new { x.MembershipDate }).
+                        GroupBy(x => new { x.MembershipDate.Value.Year, x.MembershipDate.Value.Month }).
                         ToListAsync();
 
             foreach (var group in memberGroups)
             {
                 var item = dto.Items.FirstOrDefault(x => x.Month == group.Key.Month);
 
-                if (item == null) continue;
+                if (item == null)
+                    continue;
 
                 if (group.Key.Month == date.Month &&
-                    group.Key.Year < date.Year) continue;
+                    group.Key.Year < date.Year)
+                    continue;
 
                 item.MemberCount += group.Count();
             }
@@ -263,18 +266,20 @@
                 await
                     _context.People.Where(
                             x => (x.FirstVisitDate != null) && x.FirstVisitDate <= date && x.FirstVisitDate >= lastYear).
-                        Select(x => new {x.FirstVisitDate}).
-                        GroupBy(x => new {x.FirstVisitDate.Value.Year, x.FirstVisitDate.Value.Month}).
+                        Select(x => new { x.FirstVisitDate }).
+                        GroupBy(x => new { x.FirstVisitDate.Value.Year, x.FirstVisitDate.Value.Month }).
                         ToListAsync();
 
             foreach (var group in visitorGroups)
             {
                 var item = dto.Items.FirstOrDefault(x => x.Month == group.Key.Month);
 
-                if (item == null) continue;
+                if (item == null)
+                    continue;
 
                 if (group.Key.Month == date.Month &&
-                    group.Key.Year < date.Year) continue;
+                    group.Key.Year < date.Year)
+                    continue;
 
                 item.VisitorCount += group.Count();
             }
@@ -311,7 +316,7 @@
                         OrderBy(p => p.LastModifiedDate).
                         Take(10).
                         ToListAsync();
-            
+
             var recentMembers =
                 await
                     _context.People.Include(x => x.CheckLists).

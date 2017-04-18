@@ -16,6 +16,12 @@
           <span class="mdl-textfield__error"></span>
         </div>
 
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
+          <input class="mdl-textfield__input" type="text" id="contactNumberControl" name="contactNumberControl" value.bind="model.contactNumber & validate">
+          <label class="mdl-textfield__label" for="contactNumberControl">Contact # (XXX-XXX-XXXX)...</label>
+          <span class="mdl-textfield__error"></span>
+        </div>
+
         <div mt-mdl="selectfield" class="mdl-selectfield--floating-label full-width">
           <select id="ageGroupControl" name="ageGroupControl" class="mdl-selectfield__select" value.bind="model.ageGroup & validate">
             <option model.bind="null">Select age group...</option>
@@ -40,13 +46,19 @@
 
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width" if.bind="model.id">
           <input class="mdl-textfield__input" type="text" id="firstVisitControl" name="firstVisitControl" pattern="\d+\/\d+\/\d{4}" value.bind="model.firstVisitDate & validate">
-          <label class="mdl-textfield__label" for="firstVisitControl">1st Visit Date...</label>
+          <label class="mdl-textfield__label" for="firstVisitControl">1st Visit Date (MM/DD/YYYY)...</label>
           <span class="mdl-textfield__error"></span>
         </div>
 
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width" if.bind="model.id">
           <input class="mdl-textfield__input" type="text" id="membershipControl" name="membershipControl" pattern="\d+\/\d+\/\d{4}" value.bind="model.membershipDate & validate">
-          <label class="mdl-textfield__label" for="membershipControl">Membership Placement Date...</label>
+          <label class="mdl-textfield__label" for="membershipControl">Membership Placement Date (MM/DD/YYYY)...</label>
+          <span class="mdl-textfield__error"></span>
+        </div>
+
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
+          <textarea class="mdl-textfield__input" type="text" id="descriptionControl" name="descriptionControl" rows="5" value.bind="model.description & validate"></textarea>
+          <label class="mdl-textfield__label" for="descriptionControl">Description...</label>
           <span class="mdl-textfield__error"></span>
         </div>
 
