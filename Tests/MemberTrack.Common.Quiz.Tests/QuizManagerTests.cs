@@ -182,6 +182,49 @@ namespace MemberTrack.Common.Quiz.Tests
         }
 
         [TestMethod]
+        public void NextQuestion_No_RandomizeQuestions()
+        {
+            var randomizer = new FakeReverseOrderRandomizer(100);
+
+            var quizManager = new QuizManager(randomizer);
+
+            var quiz = new MemberTrack.Data.Entities.Quizzes.Quiz
+            {
+                Id = 10,
+                RandomizeQuestions = false,
+            };
+
+            var question1 = new Question
+            {
+                Id = 1,
+                QuizId = quiz.Id,
+            };
+            var question2 = new Question
+            {
+                Id = 2,
+                QuizId = quiz.Id,
+            };
+            var question3 = new Question
+            {
+                Id = 3,
+                QuizId = quiz.Id,
+            };
+
+            quiz.Questions = new List<Question> { question1, question2, question3 };
+
+            var person = new Person
+            {
+                Id = 100
+            };
+
+            var personAnswers = new List<PersonAnswer>();
+
+            var choosenQuestion = quizManager.NextQuestion(quiz, person, quiz.Questions, personAnswers);
+            Assert.AreSame(question1, choosenQuestion);
+        }
+
+
+        [TestMethod]
         public void NextQuestion_RandomizeAnswers()
         {
             var randomizer = new FakeReverseOrderRandomizer(100);
@@ -245,6 +288,72 @@ namespace MemberTrack.Common.Quiz.Tests
             Assert.AreSame(answer3, question1.Answers.First());
             Assert.AreSame(answer2, question1.Answers.Skip(1).First());
             Assert.AreSame(answer1, question1.Answers.Skip(2).First());
+        }
+
+        [TestMethod]
+        public void NextQuestion_No_RandomizeAnswers()
+        {
+            var randomizer = new FakeReverseOrderRandomizer(100);
+
+            var quizManager = new QuizManager(randomizer);
+
+            var answer1 = new Answer
+            {
+                Id = 1000,
+            };
+
+            var answer2 = new Answer
+            {
+                Id = 1001,
+            };
+
+            var answer3 = new Answer
+            {
+                Id = 1002,
+            };
+
+            var quiz = new MemberTrack.Data.Entities.Quizzes.Quiz
+            {
+                Id = 10,
+                RandomizeQuestions = false,
+            };
+
+            var question1 = new Question
+            {
+                Id = 1,
+                QuizId = quiz.Id,
+                RandomizeAnswers = false,
+                Answers = new List<Answer> { answer1, answer2, answer3 },
+            };
+
+            var question2 = new Question
+            {
+                Id = 2,
+                QuizId = quiz.Id,
+            };
+            var question3 = new Question
+            {
+                Id = 3,
+                QuizId = quiz.Id,
+            };
+
+            quiz.Questions = new List<Question> { question1, question2, question3 };
+
+            var person = new Person
+            {
+                Id = 100
+            };
+
+            var personAnswers = new List<PersonAnswer>();
+
+            var choosenAnswer = quizManager.NextQuestion(quiz, person, quiz.Questions, personAnswers);
+            Assert.AreSame(question1, choosenAnswer);
+            Assert.AreEqual(question1.Answers.Count, choosenAnswer.Answers.Count);
+
+            //The answers should be in order.
+            Assert.AreSame(answer1, question1.Answers.First());
+            Assert.AreSame(answer2, question1.Answers.Skip(1).First());
+            Assert.AreSame(answer3, question1.Answers.Skip(2).First());
         }
 
 
