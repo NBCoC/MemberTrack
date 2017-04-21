@@ -15,7 +15,9 @@ namespace MemberTrack.Data.Mappings
 
             builder.Entity<Person>().Property(x => x.Email).HasMaxLength(256);
 
-            builder.Entity<Person>().HasIndex(x => x.Email).IsUnique();
+            builder.Entity<Person>().Property(x => x.ContactNumber).HasMaxLength(15);
+
+            builder.Entity<Person>().Property(x => x.Description).HasMaxLength(500);
 
             builder.Entity<Person>().Property(x => x.FullName).IsRequired().HasMaxLength(150);
 

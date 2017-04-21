@@ -18,6 +18,8 @@ namespace MemberTrack.Services.Dtos
                 Id = entity.Id,
                 FullName = entity.FullName,
                 Email = entity.Email,
+                ContactNumber = entity.ContactNumber,
+                Description = entity.Description,
                 AgeGroup = entity.AgeGroup,
                 Status = entity.Status,
                 FirstVisitDate = entity.FirstVisitDate,
@@ -67,6 +69,8 @@ namespace MemberTrack.Services.Dtos
             {
                 FullName = dto.FullName,
                 Email = dto.Email,
+                ContactNumber = dto.ContactNumber,
+                Description = dto.Description,
                 AgeGroup = dto.AgeGroup,
                 Status = dto.Status,
                 CreatedDate = DateTimeOffset.UtcNow,

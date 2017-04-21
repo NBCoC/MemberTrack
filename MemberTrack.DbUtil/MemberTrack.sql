@@ -263,3 +263,32 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170418162409_PersonContactNumber')
+BEGIN
+    DROP INDEX [IX_Person_Email] ON [Person];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170418162409_PersonContactNumber')
+BEGIN
+    ALTER TABLE [Person] ADD [ContactNumber] nvarchar(15);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170418162409_PersonContactNumber')
+BEGIN
+    ALTER TABLE [Person] ADD [Description] nvarchar(500);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20170418162409_PersonContactNumber')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20170418162409_PersonContactNumber', N'1.0.0-rtm-21431');
+END;
+
+GO
+

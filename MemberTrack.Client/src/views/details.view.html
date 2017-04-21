@@ -6,7 +6,7 @@
   <div class="mdl-grid demo-content">
     <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
       <div class="mdl-card__supporting-text">
-        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
           <input class="mdl-textfield__input" type="text" id="fnControl" value.two-way="person.fullName" readonly>
           <label class="mdl-textfield__label" for="fnControl">Full Name</label>
         </div>
@@ -14,6 +14,11 @@
         <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
           <input class="mdl-textfield__input" type="email" id="emailControl" value.two-way="person.email" readonly>
           <label class="mdl-textfield__label" for="emailControl">Email</label>
+        </div>
+
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
+          <input class="mdl-textfield__input" type="text" id="contactNumberControl" value.two-way="person.contactNumber" readonly>
+          <label class="mdl-textfield__label" for="contactNumberControl">Contact #</label>
         </div>
 
         <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--6-col">
@@ -36,6 +41,10 @@
           <label class="mdl-textfield__label" for="membershipDateControl">Membership Placement Date</label>
         </div>
 
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+          <textarea  class="mdl-textfield__input" type="text" id="descriptionControl" rows="5" value.two-way="person.description" readonly></textarea>
+          <label class="mdl-textfield__label" for="descriptionControl">Description</label>
+        </div>
       </div>
       <div class="mdl-card__actions mdl-card--border" if.bind="isEditor">
         <button mt-mdl="button" class="mdl-button--accent" click.trigger="displayDialog()">Edit</button>

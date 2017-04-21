@@ -1,27 +1,29 @@
 /* animations */
+
 @mixin fadeIn-animation($second) {
   -webkit-animation: fadeIn $second;
   animation: fadeIn $second;
 }
+
 @mixin fadeIn-animation-definition($name) {
-   @-webkit-keyframes #{$name}{
+  @-webkit-keyframes #{$name} {
     @content;
   }
   @-moz-keyframes #{$name} {
-     @content;
+    @content;
   }
   @-ms-keyframes #{$name} {
-     @content;
+    @content;
   }
   @keyframes #{$name} {
-     @content;
+    @content;
   }
 }
+
 @include fadeIn-animation-definition(fadeIn) {
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
@@ -31,6 +33,7 @@ section {
   @include fadeIn-animation(1s);
   overflow-y: auto;
 }
+
 
 /* Helper classes */
 
@@ -66,7 +69,6 @@ dialog {
 
 .check-list-items {
   margin-bottom: 5px;
-
   span.check-list-item-date {
     font-style: italic;
     font-size: small;
@@ -75,7 +77,6 @@ dialog {
 
 .check-list-item-note {
   padding-left: 25px;
-
   p {
     font-style: italic;
   }
@@ -142,6 +143,7 @@ dialog {
   font-size: smaller;
 }
 
+
 /* MDL overrides */
 
 td.align {
@@ -152,7 +154,6 @@ td.align {
   th {
     text-align: left;
   }
-
   td {
     text-align: left;
   }
@@ -202,4 +203,12 @@ td.align {
   color: black !important;
   background-image: url('nbcc.png');
   background-position: center !important;
+}
+
+.mdl-textfield__info {
+  color: gray;
+  position: absolute;
+  font-size: 12px;
+  margin-top: 3px;
+  display: block;
 }
