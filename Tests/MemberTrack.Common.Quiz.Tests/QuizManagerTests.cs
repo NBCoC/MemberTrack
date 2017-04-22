@@ -421,7 +421,7 @@ namespace MemberTrack.Common.Quiz.Tests
         [TestMethod]
         public void Intensional_Failed_Unit_Test()
         {
-            Assert.Fail("Intensional failure.");
+            Assert.Fail("Intensional  failure.");
         }
 
     }
