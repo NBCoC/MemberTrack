@@ -148,7 +148,7 @@ namespace MemberTrack.Common.Quiz.Tests
 
             var quiz = new MemberTrack.Data.Entities.Quizzes.Quiz
             {
-                Id = 10,                
+                Id = 10,
                 RandomizeQuestions = true,
             };
 
@@ -257,8 +257,8 @@ namespace MemberTrack.Common.Quiz.Tests
                 Id = 1,
                 QuizId = quiz.Id,
                 RandomizeAnswers = true,
-                Answers = new List<Answer> {  answer1, answer2, answer3 }, 
-            };            
+                Answers = new List<Answer> { answer1, answer2, answer3 },
+            };
 
             var question2 = new Question
             {
@@ -417,6 +417,12 @@ namespace MemberTrack.Common.Quiz.Tests
 
             Assert.AreEqual("99.", interpolated);
         }
-        
+
+        [TestMethod]
+        public void Intensional_Failed_Unit_Test()
+        {
+            Assert.Fail("Intensional failure.");
+        }
+
     }
 }
