@@ -416,6 +416,8 @@ namespace MemberTrack.Common.Quiz.Tests
             var interpolated = quizManager.InterpolateAnswerName(answer, 3);
 
             Assert.AreEqual("99.", interpolated);
+
+            SyntaxError();
         }
 
 
