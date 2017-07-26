@@ -418,11 +418,6 @@ namespace MemberTrack.Common.Quiz.Tests
             Assert.AreEqual("99.", interpolated);
         }
 
-        [TestMethod]
-        public void Intensional_Failed_Unit_Test()
-        {
-            Assert.Fail("Intensional  failure.");
-        }
 
     }
 }
