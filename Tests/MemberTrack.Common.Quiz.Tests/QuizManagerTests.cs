@@ -417,7 +417,6 @@ namespace MemberTrack.Common.Quiz.Tests
 
             Assert.AreEqual("99.", interpolated);
 
-            SyntaxError2();
         }
 
 
