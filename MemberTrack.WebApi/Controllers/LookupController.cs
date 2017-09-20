@@ -21,6 +21,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Get()
         {
             try
@@ -40,7 +41,8 @@ namespace MemberTrack.WebApi.Controllers
                         {
                             new ItemLookupDto(PersonStatusEnum.Unknown),
                             new ItemLookupDto(PersonStatusEnum.Visitor),
-                            new ItemLookupDto(PersonStatusEnum.Member)
+                            new ItemLookupDto(PersonStatusEnum.Member),
+                            new ItemLookupDto(PersonStatusEnum.Inactive)
                         },
                         CheckListItemTypes =
                         new List<ItemLookupDto>

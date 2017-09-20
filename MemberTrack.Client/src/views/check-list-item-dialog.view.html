@@ -5,6 +5,12 @@
       <hr>
       <div class="mdl-dialog__content">
         <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
+          <input class="mdl-textfield__input" type="text" id="dateControl" name="dateControl" pattern="\d+\/\d+\/\d{4}" value.bind="model.date & validate">
+          <label class="mdl-textfield__label" for="dateControl">Completion Date (MM/DD/YYYY)...</label>
+          <span class="mdl-textfield__error"></span>
+        </div>
+
+        <div mt-mdl="textfield" class="mdl-textfield--floating-label full-width">
           <textarea class="mdl-textfield__input" type="text" rows="3" id="noteControl" value.bind="model.note"></textarea>
           <label class="mdl-textfield__label" for="noteControl">Add a note...</label>
         </div>

@@ -21,6 +21,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Get(long id)
         {
             try
@@ -36,6 +37,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Get()
         {
             try
@@ -51,6 +53,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpPost]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Post([FromBody] UserInsertDto dto)
         {
             var trans = await _userService.BeginTransactionAsync();
@@ -74,6 +77,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Put(long id, [FromBody] UserUpdateDto dto)
         {
             var trans = await _userService.BeginTransactionAsync();
@@ -97,6 +101,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Delete(long id)
         {
             var trans = await _userService.BeginTransactionAsync();
@@ -118,6 +123,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpPut("UpdatePassword/{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> UpdatePassword(long id, [FromBody] UserUpdatePasswordDto dto)
         {
             var trans = await _userService.BeginTransactionAsync();
@@ -139,6 +145,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpPost("ResetPassword/{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> ResetPassword(long id)
         {
             var trans = await _userService.BeginTransactionAsync();
@@ -161,6 +168,7 @@ namespace MemberTrack.WebApi.Controllers
 
         [HttpGet]
         [Route("[action]")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> ContextUser()
         {
             try
@@ -177,6 +185,7 @@ namespace MemberTrack.WebApi.Controllers
 
         [HttpGet]
         [Route("[action]")]
+        [ResponseCache(NoStore = true)]
         public IActionResult IsAuthenticated()
         {
             // If token hasnt been issued or is expired, consumer wont be able to access this method...

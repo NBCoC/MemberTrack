@@ -19,6 +19,7 @@
         }
 
         [HttpGet("{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Get(long id)
         {
             try
@@ -34,6 +35,7 @@
         }
 
         [HttpDelete("{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Delete(long id)
         {
             var trans = await _personService.BeginTransactionAsync();
@@ -55,6 +57,7 @@
         }
 
         [HttpPost]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Post([FromBody] PersonInsertOrUpdateDto dto)
         {
             var trans = await _personService.BeginTransactionAsync();
@@ -78,6 +81,7 @@
         }
 
         [HttpPut("{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Put(long id, [FromBody] PersonInsertOrUpdateDto dto)
         {
             var trans = await _personService.BeginTransactionAsync();
@@ -102,6 +106,7 @@
 
         [Route("[action]")]
         [HttpGet]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Search(string contains)
         {
             try
@@ -118,6 +123,7 @@
 
         [Route("[action]")]
         [HttpGet]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Report()
         {
             try
@@ -134,6 +140,7 @@
 
         [Route("[action]")]
         [HttpGet]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> RecentActivity()
         {
             try
@@ -149,6 +156,7 @@
         }
         
         [HttpPost("CheckListItem/{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> CheckListItem(long id, [FromBody] PersonCheckListItemDto dto)
         {
             var trans = await _personService.BeginTransactionAsync();

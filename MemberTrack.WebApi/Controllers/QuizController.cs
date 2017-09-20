@@ -22,6 +22,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Get(long id)
         {
             try
@@ -37,6 +38,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> Get()
         {
             try
@@ -52,6 +54,7 @@ namespace MemberTrack.WebApi.Controllers
         }
 
         [HttpPost("NextQuestion/{quizId}")]
+        [ResponseCache(NoStore = true)]
         public async Task<IActionResult> NextQuestion(long quizId, [FromBody] PersonInsertOrUpdateDto personDto, [FromBody] QuizQuestionAnswerDto answersToPreviousQuestion)
         {
             var trans = await _personService.BeginTransactionAsync();

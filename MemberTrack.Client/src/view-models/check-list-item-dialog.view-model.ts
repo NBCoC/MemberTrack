@@ -1,4 +1,4 @@
-import { ValidationControllerFactory } from "aurelia-validation";
+import { ValidationControllerFactory, ValidationRules } from "aurelia-validation";
 import { customElement } from "aurelia-framework";
 
 import { BaseDialog } from "../core/base-dialog";
@@ -30,17 +30,33 @@ export class CheckListItemDialogViewModel extends BaseDialog {
     }
 
     public save(): void {
-        if (!this.memberId || !this.model.id) {
+        this.validate().then(isValid => {
+          if (!isValid) {
             return;
-        }
+          }
 
-        this.personService.insertOrRemoveCheckListItem(this.memberId, this.model).then(dto => {
-            if (!dto) {
-                return;
-            }
-            this.dismiss(new PersonEvent(dto));
+          if (!this.memberId || !this.model.id) {
+              return;
+          }
+
+          let data = {} as PersonCheckListItemDto;
+
+          Object.assign(data, this.model);
+
+          data.date = !this.model.date ? null : new Date(this.model.date);
+
+          this.personService.insertOrRemoveCheckListItem(this.memberId, data).then(dto => {
+              if (!dto) {
+                  return;
+              }
+              this.dismiss(new PersonEvent(dto));
+          });
         });
     }
 
-    protected registerValidation(): void { }
+    protected registerValidation(): void {
+        ValidationRules
+        .ensure("date").matches(/\d+\/\d+\/\d{4}/)
+        .on(this.model);
+    }
 }

@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyTitle>MemberTrack.WinServ</AssemblyTitle>
+    <VersionPrefix>1.0.0.0</VersionPrefix>
+    <TargetFramework>net452</TargetFramework>
+    <AssemblyName>MemberTrack.WinServ</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>MemberTrack.WinServ</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <PackageReference Include="System.Reactive" Version="3.0.0" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>

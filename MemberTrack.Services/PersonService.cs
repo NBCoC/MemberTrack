@@ -214,7 +214,7 @@
                     PersonId = personId,
                     PersonCheckListItemId = dto.Id,
                     Note = dto.Note,
-                    Date = DateTimeOffset.UtcNow
+                    Date = dto.Date ?? DateTimeOffset.UtcNow
                 };
 
                 _context.PersonCheckLists.Add(model);
@@ -265,7 +265,7 @@
             var visitorGroups =
                 await
                     _context.People.Where(
-                            x => (x.FirstVisitDate != null) && x.FirstVisitDate <= date && x.FirstVisitDate >= lastYear).
+                            x => x.Status != PersonStatusEnum.Inactive && (x.FirstVisitDate != null) && x.FirstVisitDate <= date && x.FirstVisitDate >= lastYear).
                         Select(x => new { x.FirstVisitDate }).
                         GroupBy(x => new { x.FirstVisitDate.Value.Year, x.FirstVisitDate.Value.Month }).
                         ToListAsync();

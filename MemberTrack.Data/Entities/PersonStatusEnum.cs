@@ -6,6 +6,7 @@ namespace MemberTrack.Data.Entities
     {
         [Description("Unknown")] Unknown = 0,
         [Description("Visitor")] Visitor = 1,
-        [Description("Member")] Member = 2
+        [Description("Member")] Member = 2,
+        [Description("Inactive")] Inactive = 3
     }
 }

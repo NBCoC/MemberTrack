@@ -1,35 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.Data", "MemberTrack.Data\MemberTrack.Data.xproj", "{D65709B3-0FD4-4270-9907-F2D5CB781AD7}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.Common", "MemberTrack.Common\MemberTrack.Common.xproj", "{A54139F0-9EAC-42DE-A4A2-A9C9FC258E05}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.Services", "MemberTrack.Services\MemberTrack.Services.xproj", "{A9A9EC6E-71D3-4C80-8AF7-11894DED23B0}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.DbUtil", "MemberTrack.DbUtil\MemberTrack.DbUtil.xproj", "{7CEB9E24-9CB6-4251-BDDB-4E80B83DAE4E}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.WinServ", "MemberTrack.WinServ\MemberTrack.WinServ.xproj", "{A2429DDA-B995-4392-BE25-84A569D0E20B}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.WebApi", "MemberTrack.WebApi\MemberTrack.WebApi.xproj", "{7AAA3FE8-5D63-474E-AB64-EE0DE4B1AB9C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E3EC8856-1635-406B-B856-4B2041E8341B}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.Data.Tests", "Tests\MemberTrack.Data.Tests\MemberTrack.Data.Tests.xproj", "{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8B201729-3D76-4AED-8953-CEFEF40BEA42}"
 	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.Common.Quiz", "MemberTrack.Common.Quiz\MemberTrack.Common.Quiz.xproj", "{763D7B08-9D17-4E1E-899D-08E7188DD886}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.Data", "MemberTrack.Data\MemberTrack.Data.csproj", "{D65709B3-0FD4-4270-9907-F2D5CB781AD7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.Common.Quiz.Tests", "Tests\MemberTrack.Common.Quiz.Tests\MemberTrack.Common.Quiz.Tests.xproj", "{DE871AB7-DDDC-4A82-9F41-C6E57012EF4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.Common", "MemberTrack.Common\MemberTrack.Common.csproj", "{A54139F0-9EAC-42DE-A4A2-A9C9FC258E05}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MemberTrack.Services.Tests", "Tests\MemberTrack.Services.Tests\MemberTrack.Services.Tests.xproj", "{6E33FCA3-8B24-42CB-98C1-D964836491E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.Services", "MemberTrack.Services\MemberTrack.Services.csproj", "{A9A9EC6E-71D3-4C80-8AF7-11894DED23B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.DbUtil", "MemberTrack.DbUtil\MemberTrack.DbUtil.csproj", "{7CEB9E24-9CB6-4251-BDDB-4E80B83DAE4E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.WinServ", "MemberTrack.WinServ\MemberTrack.WinServ.csproj", "{A2429DDA-B995-4392-BE25-84A569D0E20B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.WebApi", "MemberTrack.WebApi\MemberTrack.WebApi.csproj", "{7AAA3FE8-5D63-474E-AB64-EE0DE4B1AB9C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.Data.Tests", "Tests\MemberTrack.Data.Tests\MemberTrack.Data.Tests.csproj", "{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.Common.Quiz", "MemberTrack.Common.Quiz\MemberTrack.Common.Quiz.csproj", "{763D7B08-9D17-4E1E-899D-08E7188DD886}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.Common.Quiz.Tests", "Tests\MemberTrack.Common.Quiz.Tests\MemberTrack.Common.Quiz.Tests.csproj", "{DE871AB7-DDDC-4A82-9F41-C6E57012EF4B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemberTrack.Services.Tests", "Tests\MemberTrack.Services.Tests\MemberTrack.Services.Tests.csproj", "{6E33FCA3-8B24-42CB-98C1-D964836491E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,5 +84,8 @@ Global
 		{D20DAD2A-BD9A-4354-B9BB-EB0AC6B836B8} = {E3EC8856-1635-406B-B856-4B2041E8341B}
 		{DE871AB7-DDDC-4A82-9F41-C6E57012EF4B} = {E3EC8856-1635-406B-B856-4B2041E8341B}
 		{6E33FCA3-8B24-42CB-98C1-D964836491E1} = {E3EC8856-1635-406B-B856-4B2041E8341B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62FA44DA-993E-4A1F-9851-8D8E035A5EF7}
 	EndGlobalSection
 EndGlobal
